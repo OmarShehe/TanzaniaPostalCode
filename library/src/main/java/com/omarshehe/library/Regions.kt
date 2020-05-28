@@ -1,8 +1,8 @@
 package com.omarshehe.library
 
 object Regions {
-    fun getRegionsList(): MutableList<String> {
-        return mutableListOf<String>().apply {
+    fun getRegionsList(): ArrayList<String> {
+        return ArrayList<String>().apply {
             add("Arusha")
             add("Dar es Salaam")
             add("Dodoma")
@@ -25,7 +25,9 @@ object Regions {
             add("Pemba South (Zanzibar)")
             add("Pwani")
             add("Rukwa")
+            add("Ruvuma")
             add("Shinyanga")
+            add("Simiyu")
             add("Singida")
             add("Songwe")
             add("Tabora")
