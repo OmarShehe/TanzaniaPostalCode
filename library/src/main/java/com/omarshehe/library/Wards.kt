@@ -1,6 +1,6 @@
 package com.omarshehe.library
 
-class Words {
+class Wards {
     fun getAllWords():LinkedHashMap<String,ArrayList<String>>{
         return LinkedHashMap<String,ArrayList<String>>().apply {
             set("Kati", arrayListOf<String>().apply {

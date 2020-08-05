@@ -28,18 +28,131 @@ class Districts {
                 add("Kongwa")
                 add("Mpwapwa")
             })
-
-
+            set("Geita", arrayListOf<String>().apply {
+                add("Bukombe")
+                add("Chato")
+                add("Geita")
+                add("Mbogwe")
+                add("Nyang'hwale")
+            })
+            set("Iringa", arrayListOf<String>().apply {
+                add("Iringa Municipal")
+                add("Iringa Rural")
+                add("Kilolo")
+                add("Mafinga Town")
+                add("Mufindi")
+            })
+            set("Kagera", arrayListOf<String>().apply {
+                add("Biharamulo")
+                add("Bukoba Municipal")
+                add("Bukoba Rural")
+                add("Karagwe")
+                add("Kyerwa")
+                add("Missenyi")
+                add("Muleba")
+                add("Ngara")
+            })
+            set("Katavi", arrayListOf<String>().apply {
+                add("Mlele")
+                add("Mpanda Rural")
+                add("Mpanda Town")
+            })
+            set("Kigoma", arrayListOf<String>().apply {
+                add("Buhigwe")
+                add("Kakonko")
+                add("Kasulu Rural")
+                add("Kasulu Town")
+                add("Kibondo")
+                add("Kigoma Rural")
+                add("Kigoma-Ujiji Municipal")
+                add("Uvinza")
+            })
+            set("Kilimanjaro", arrayListOf<String>().apply {
+                add("Hai")
+                add("Moshi Municipal")
+                add("Moshi Rural")
+                add("Mwanga")
+                add("Rombo")
+                add("Same")
+                add("Siha")
+            })
+            set("Lindi", arrayListOf<String>().apply {
+                add("Kilwa")
+                add("Lindi Municipal")
+                add("Lindi Rural")
+                add("Liwale")
+                add("Nachingwea")
+                add("Ruangwa")
+            })
+            set("Manyara", arrayListOf<String>().apply {
+                add("Babati Rural")
+                add("Babati Town")
+                add("Hanang")
+                add("Kiteto")
+                add("Mbulu")
+                add("Simanjiro")
+            })
+            set("Mara", arrayListOf<String>().apply {
+                add("Bunda")
+                add("Butiama")
+                add("Musoma Municipal")
+                add("Musoma Rural")
+                add("Rorya")
+                add("Serengeti")
+                add("Tarime")
+            })
+            set("Mbeya", arrayListOf<String>().apply {
+                add("Chunya")
+                add("Kyela")
+                add("Mbarali")
+                add("Mbeya City")
+                add("Mbeya Rural")
+                add("Rungwe")
+            })
             set("Mjini Magharibi (Zanzibar)", arrayListOf<String>().apply {
                 add("Magharibi")
                 add("Mjini")
             })
-
-            set("Pemba North (Zanzibar)", arrayListOf<String>().apply {
+            set("Morogoro", arrayListOf<String>().apply {
+                add("Gairo")
+                add("Kilombero")
+                add("Kilosa")
+                add("Morogoro Municipal")
+                add("Morogoro Rural")
+                add("Mvomero")
+                add("Ulanga")
+            })
+            set("Mtwara", arrayListOf<String>().apply {
+                add("Masasi Rural")
+                add("Masasi Town")
+                add("Mtwara Municipal")
+                add("Mtwara Rural")
+                add("Nanyumbu")
+                add("Newala")
+                add("Tandahimba")
+            })
+            set("Mwanza", arrayListOf<String>().apply {
+                add("Ilemela Municipal")
+                add("Kwimba")
+                add("Magu")
+                add("Misungwi")
+                add("Nyamagana Municipal")
+                add("Sengerema")
+                add("Ukerewe")
+            })
+            set("Njombe", arrayListOf<String>().apply {
+                add("Ludewa")
+                add("Makambako Town")
+                add("Makete")
+                add("Njombe Rural")
+                add("Njombe Town")
+                add("Wanging'ombe")
+            })
+            set("Kaskazini Pemba (Zanzibar)", arrayListOf<String>().apply {
                 add("Micheweni")
                 add("Wete")
             })
-            set("Pemba South (Zanzibar)", arrayListOf<String>().apply {
+            set("Kusini Pemba (Zanzibar)", arrayListOf<String>().apply {
                 add("Chake Chake")
                 add("Mkoani")
             })
@@ -110,15 +223,14 @@ class Districts {
                 add("Pangani")
                 add("Tanga")
             })
-            set("Unguja North (Zanzibar)", arrayListOf<String>().apply {
+            set("Kaskazini Unguja (Zanzibar)", arrayListOf<String>().apply {
                 add("Kaskazini A")
                 add("Kaskazini B")
             })
-            set("Unguja South (Zanzibar)", arrayListOf<String>().apply {
+            set("Kusini Unguja (Zanzibar)", arrayListOf<String>().apply {
                 add("Kati")
                 add("Kusini")
             })
-
         }
 
     }

@@ -21,8 +21,8 @@ object Regions {
             add("Mtwara")
             add("Mwanza")
             add("Njombe")
-            add("Pemba North (Zanzibar)")
-            add("Pemba South (Zanzibar)")
+            add("Kaskazini Pemba (Zanzibar)")
+            add("Kusini Pemba (Zanzibar)")
             add("Pwani")
             add("Rukwa")
             add("Ruvuma")
@@ -32,8 +32,8 @@ object Regions {
             add("Songwe")
             add("Tabora")
             add("Tanga")
-            add("Unguja North (Zanzibar)")
-            add("Unguja South (Zanzibar)")
+            add("Kaskazini Unguja (Zanzibar)")
+            add("Kusini Unguja (Zanzibar)")
         }
     }
 }
