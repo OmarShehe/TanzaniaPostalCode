@@ -11,6 +11,8 @@ plugins {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // forminput-compose is published locally for now (./gradlew publishToMavenLocal in the FormInputs repo).
+        mavenLocal()
         google()
         mavenCentral()
     }

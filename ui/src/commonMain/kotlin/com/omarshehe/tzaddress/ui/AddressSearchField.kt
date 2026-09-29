@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.omarshehe.tzaddress.AddressPath
+import com.omarshehe.forminput.compose.ui.FormInputTextField
+import com.omarshehe.forminput.compose.ui.model.FormInputTextFieldState
+import com.omarshehe.forminput.compose.ui.model.FormInputType
 import com.omarshehe.tzaddress.AddressRepository
 import com.omarshehe.tzaddress.ui.resources.Res
 import com.omarshehe.tzaddress.ui.resources.search_error
@@ -50,17 +52,20 @@ public fun AddressSearchField(
     var suggestionsVisible by rememberSaveable { mutableStateOf(true) }
 
     Column(modifier) {
-        OutlinedTextField(
-            value = text,
+        FormInputTextField(
+            formInputData = FormInputTextFieldState(
+                value = text,
+                id = "address-search",
+                labelValue = label,
+                placeholderValue = placeholder,
+                type = FormInputType.TEXT,
+            ),
+            textModifier = Modifier.testTag(SEARCH_FIELD_TAG),
             onValueChange = {
-                text = it
+                text = it.value
                 suggestionsVisible = true
-                controller.onQueryChange(it)
+                controller.onQueryChange(it.value)
             },
-            modifier = Modifier.fillMaxWidth().testTag(SEARCH_FIELD_TAG),
-            label = { Text(label) },
-            placeholder = { Text(placeholder) },
-            singleLine = true,
         )
         if (suggestionsVisible) {
             when (val current = state) {

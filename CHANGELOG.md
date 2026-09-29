@@ -2,6 +2,10 @@
 
 Versions follow [semantic versioning](README.md#versioning). Every release records the dataset behind it.
 
+## Unreleased
+
+- `tz-address-ui`: the search field and the level dropdowns now use `forminput-compose` 2.0.0 (filled text field and dropdown styling).
+
 ## 0.1.0 (unreleased)
 
 First release.
