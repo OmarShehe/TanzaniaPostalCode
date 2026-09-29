@@ -1,78 +1,83 @@
 package com.omarshehe.tanzaniapostalcode
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.omarshehe.tzaddress.AddressMatch
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.omarshehe.tzaddress.AddressPath
 import com.omarshehe.tzaddress.data.AddressStore
 import com.omarshehe.tzaddress.data.createAddressRepository
+import com.omarshehe.tzaddress.ui.AddressPicker
+import com.omarshehe.tzaddress.ui.AddressSearchField
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-/** Sample: type-ahead search over the bundled Tanzanian address database. */
-class MainActivity : AppCompatActivity() {
+/** Sample: the two ready-made widgets over the bundled Tanzanian address database. */
+class MainActivity : ComponentActivity() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    private var repository: AddressStore? = null
-    private var searchJob: Job? = null
+    private var store by mutableStateOf<AddressStore?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val input = findViewById<EditText>(R.id.search)
-        val status = findViewById<TextView>(R.id.status)
-        val list = findViewById<ListView>(R.id.results)
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
-        list.adapter = adapter
-
-        status.setText(R.string.loading)
-        scope.launch {
-            try {
-                repository = createAddressRepository(applicationContext)
-                status.text = ""
-                runSearch(input.text.toString(), status, adapter)
-            } catch (e: Exception) {
-                status.setText(R.string.load_failed)
+        enableEdgeToEdge()
+        scope.launch { store = createAddressRepository(applicationContext) }
+        setContent {
+            MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
+                Surface(Modifier.fillMaxSize()) {
+                    val repository = store
+                    Column(
+                        Modifier.safeDrawingPadding().verticalScroll(rememberScrollState()).padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        if (repository == null) {
+                            Text("Loading addresses…")
+                        } else {
+                            var searched by rememberSaveable { mutableStateOf<String?>(null) }
+                            var picked by remember { mutableStateOf<AddressPath?>(null) }
+                            Text("Search", style = MaterialTheme.typography.titleMedium)
+                            AddressSearchField(repository, onSelected = { searched = it.describe() })
+                            searched?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+                            HorizontalDivider()
+                            Text("Pick", style = MaterialTheme.typography.titleMedium)
+                            AddressPicker(repository, value = picked, onValueChange = { picked = it })
+                            Text(picked?.describe() ?: "Nothing selected yet", style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                }
             }
         }
-        input.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) = runSearch(s?.toString().orEmpty(), status, adapter)
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-        })
-    }
-
-    private fun runSearch(query: String, status: TextView, adapter: ArrayAdapter<String>) {
-        val repo = repository ?: return
-        searchJob?.cancel()
-        searchJob = scope.launch {
-            val matches = repo.search(query)
-            adapter.clear()
-            adapter.addAll(matches.map(::describe))
-            status.text = if (query.isNotBlank() && matches.isEmpty()) getString(R.string.no_results) else ""
-        }
-    }
-
-    private fun describe(match: AddressMatch): String {
-        val path = match.path
-        val trail = listOfNotNull(path.region.name, path.district?.name, path.ward?.name, path.mtaa?.name)
-            .dropLast(1) // the node itself is already the label
-            .joinToString(" › ")
-        val postcode = match.postcode?.let { "  ($it)" }.orEmpty()
-        return "${match.label}$postcode\n$trail"
     }
 
     override fun onDestroy() {
         scope.cancel()
-        repository?.close()
+        store?.close()
         super.onDestroy()
     }
 }
+
+private fun AddressPath.describe(): String =
+    listOfNotNull(kitongoji?.name, mtaa?.name, ward?.let { "${it.name} (${it.postcode})" }, district?.name, region.name).joinToString(", ")
