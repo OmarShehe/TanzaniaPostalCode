@@ -27,12 +27,7 @@ tasks.register<JavaExec>("importPostcodes") {
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("com.omarshehe.tzaddress.importer.ImportMainKt")
     val root = rootProject.layout.projectDirectory.asFile
-    val props = listOf("pdf", "sourceEdition", "generatedAt", "outDir", "maxAnomalyRatio", "expectedRegions")
-    val values = props.mapNotNull { name -> providers.gradleProperty(name).orNull?.let { "--$name=$it" } }
-    val forced = providers.gradleProperty("force").isPresent
-    val defaults = listOfNotNull(
-        providers.gradleProperty("importer.maxAnomalyRatio").orNull?.let { "--maxAnomalyRatio=$it" },
-        providers.gradleProperty("importer.expectedRegions").orNull?.let { "--expectedRegions=$it" },
-    )
-    args = defaults + values + listOfNotNull("--force".takeIf { forced }) + listOf("--root=${root.absolutePath}")
+    val options = listOf("pdf", "sourceEdition", "generatedAt", "outDir", "expectedRegions", "maxAnomalyRatio", "force")
+    val passed = options.mapNotNull { name -> providers.gradleProperty(name).orNull?.let { "--$name=$it" } }
+    args = passed + "--root=${root.absolutePath}"
 }

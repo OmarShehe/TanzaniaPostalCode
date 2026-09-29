@@ -17,20 +17,45 @@ object LayoutDetector {
         ),
     )
 
+    /** Splits a page at every banner or repeated header, so a region that starts mid-page gets its own segment. */
     fun detect(lines: List<Line>): PageStructure {
         if (lines.isEmpty()) return PageStructure(PageKind.BLANK, null, null, emptyList())
-        var banner: Banner? = null
-        var layout: PageLayout? = null
-        val body = ArrayList<Line>()
+        val finished = ArrayList<PageSegment>()
+        var current = SegmentBuilder()
         for (line in lines) {
-            val match = BANNER.matchEntire(line.text.trim())
+            val banner = BANNER.matchEntire(line.text.trim())?.let { Banner(it.groupValues[1].trim(), it.groupValues[2]) }
             when {
-                match != null && banner == null -> banner = Banner(match.groupValues[1].trim(), match.groupValues[2])
-                isHeader(line) -> if (layout == null) layout = layoutOf(line)
-                else -> body += line
+                banner != null -> {
+                    if (!current.isFresh()) {
+                        finished += current.build()
+                        current = SegmentBuilder()
+                    }
+                    current.banner = banner
+                }
+                isHeader(line) -> {
+                    if (current.hasHeader) {
+                        finished += current.build()
+                        current = SegmentBuilder()
+                    }
+                    current.hasHeader = true
+                    current.layout = layoutOf(line)
+                }
+                else -> current.body += line
             }
         }
-        return PageStructure(PageKind.CONTENT, banner, layout, body)
+        finished += current.build()
+        val first = finished.first()
+        return PageStructure(PageKind.CONTENT, first.banner, first.layout, first.body, finished.drop(1))
+    }
+
+    private class SegmentBuilder {
+        var banner: Banner? = null
+        var layout: PageLayout? = null
+        var hasHeader = false
+        val body = ArrayList<Line>()
+
+        fun isFresh() = banner == null && !hasHeader && body.isEmpty()
+        fun build() = PageSegment(banner, layout, body.toList())
     }
 
     private fun isHeader(line: Line): Boolean {

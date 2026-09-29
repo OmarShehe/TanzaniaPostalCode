@@ -998,7 +998,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ubungo Nhc",
+                  "name": "Ubungo NHC",
                   "kitongojis": []
                 }
               ]
@@ -1042,7 +1042,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Mburahati Nhc",
+                  "name": "Mburahati NHC",
                   "kitongojis": []
                 },
                 {
@@ -3675,7 +3675,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc",
+                  "name": "NHC",
                   "kitongojis": []
                 },
                 {
@@ -3859,7 +3859,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Kwamdakeo Trm",
+                  "name": "Kwamdakeo TRM",
                   "kitongojis": []
                 },
                 {
@@ -4283,7 +4283,7 @@
               "name": "Amani",
               "mtaas": [
                 {
-                  "name": "Msasa Ibc",
+                  "name": "Msasa IBC",
                   "kitongojis": []
                 },
                 {
@@ -8323,11 +8323,11 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.h.c.",
+                  "name": "N.H.C.",
                   "kitongojis": []
                 },
                 {
-                  "name": "T.c.a.",
+                  "name": "T.C.A.",
                   "kitongojis": []
                 },
                 {
@@ -8479,7 +8479,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "A.i.c.c. Flats",
+                  "name": "A.I.C.C. Flats",
                   "kitongojis": []
                 }
               ]
@@ -10290,9 +10290,9 @@
                     "Slahhamo",
                     "Mangafi",
                     "Mali Asili",
-                    "T.f.a.",
+                    "T.F.A.",
                     "Barazani",
-                    "N.m.c",
+                    "N.M.C",
                     "Kati"
                   ]
                 }
@@ -11174,7 +11174,7 @@
               "name": "Kiboroloni",
               "mtaas": [
                 {
-                  "name": "Kdc",
+                  "name": "KDC",
                   "kitongojis": []
                 },
                 {
@@ -17237,7 +17237,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nmc",
+                  "name": "NMC",
                   "kitongojis": []
                 },
                 {
@@ -17401,7 +17401,7 @@
               "name": "Mtakuja",
               "mtaas": [
                 {
-                  "name": "Nyamalembo Ccm",
+                  "name": "Nyamalembo CCM",
                   "kitongojis": []
                 },
                 {
@@ -18189,7 +18189,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ccm",
+                  "name": "CCM",
                   "kitongojis": []
                 },
                 {
@@ -18483,7 +18483,7 @@
               "name": "Senga",
               "mtaas": [
                 {
-                  "name": "Buligi Ccm",
+                  "name": "Buligi CCM",
                   "kitongojis": []
                 },
                 {
@@ -18929,7 +18929,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nyarugusu Ccm",
+                  "name": "Nyarugusu CCM",
                   "kitongojis": []
                 },
                 {
@@ -18985,7 +18985,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ccm",
+                  "name": "CCM",
                   "kitongojis": []
                 },
                 {
@@ -19001,7 +19001,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ilangasika Ccm",
+                  "name": "Ilangasika CCM",
                   "kitongojis": []
                 },
                 {
@@ -26423,7 +26423,7 @@
                     "Buhemba",
                     "Mawasiliano",
                     "Anglikani",
-                    "Nhc",
+                    "NHC",
                     "Biambwi"
                   ]
                 }
@@ -27607,7 +27607,7 @@
                 {
                   "name": "Mugumu Mjini",
                   "kitongojis": [
-                    "Nhc",
+                    "NHC",
                     "Stendi Mpya",
                     "Polisi",
                     "Mapinduzi",
@@ -27630,7 +27630,7 @@
                   "name": "Mugumu",
                   "kitongojis": [
                     "Sedeco",
-                    "Mcu"
+                    "MCU"
                   ]
                 }
               ]
@@ -28522,19 +28522,19 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Mecco Kaskazini",
+                  "name": "MECCO Kaskazini",
                   "kitongojis": []
                 },
                 {
-                  "name": "Mecco Kusini",
+                  "name": "MECCO Kusini",
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc Mashariki",
+                  "name": "NHC Mashariki",
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc Magharibi",
+                  "name": "NHC Magharibi",
                   "kitongojis": []
                 }
               ]
@@ -29232,7 +29232,7 @@
                     "Mnadani",
                     "Mission",
                     "Kizugwa Ngoma",
-                    "Ccm",
+                    "CCM",
                     "Centre A"
                   ]
                 }
@@ -32674,7 +32674,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc",
+                  "name": "NHC",
                   "kitongojis": []
                 },
                 {
@@ -32858,7 +32858,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.h.c.",
+                  "name": "N.H.C.",
                   "kitongojis": []
                 }
               ]
@@ -48033,7 +48033,7 @@
                     "Mbuyuni",
                     "Igovu",
                     "Nghambo",
-                    "Nhc",
+                    "NHC",
                     "Ubenani",
                     "Kati",
                     "Kusini",
@@ -50545,7 +50545,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.h.c.",
+                  "name": "N.H.C.",
                   "kitongojis": []
                 }
               ]
@@ -50888,7 +50888,7 @@
                     "Sanga",
                     "Mahagye",
                     "Milade",
-                    "Unyambwa C.c.m.",
+                    "Unyambwa C.C.M.",
                     "Unyambwa Juu",
                     "Kinyakaya",
                     "Manguapyughu"
@@ -51526,7 +51526,7 @@
                 {
                   "name": "Ntonge",
                   "kitongojis": [
-                    "Ccm",
+                    "CCM",
                     "Igwerika"
                   ]
                 },
@@ -51577,7 +51577,7 @@
                 {
                   "name": "Msimihi",
                   "kitongojis": [
-                    "Ccm",
+                    "CCM",
                     "Mbiru",
                     "Ilaha",
                     "Mtungulu",
@@ -51662,7 +51662,7 @@
                 {
                   "name": "Ghata",
                   "kitongojis": [
-                    "Ccm",
+                    "CCM",
                     "Azimio",
                     "Maendeleo",
                     "Muungano",
@@ -51780,7 +51780,7 @@
                 {
                   "name": "Mghanga",
                   "kitongojis": [
-                    "Uwt",
+                    "UWT",
                     "Mhuvi",
                     "Dodoma",
                     "Kati",
@@ -51998,7 +51998,7 @@
                   "name": "Mpoku",
                   "kitongojis": [
                     "Msomolo",
-                    "Ccm",
+                    "CCM",
                     "Mghumo",
                     "Laniko \"A\"",
                     "Laniko \"B\"",
@@ -52008,7 +52008,7 @@
                 {
                   "name": "Matumbo",
                   "kitongojis": [
-                    "Ccm",
+                    "CCM",
                     "Mvae",
                     "Mughunga",
                     "Mughumo"
@@ -55486,11 +55486,11 @@
               "name": "Kitete",
               "mtaas": [
                 {
-                  "name": "Nhc ya Zamani",
+                  "name": "NHC ya Zamani",
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc Mpya",
+                  "name": "NHC Mpya",
                   "kitongojis": []
                 },
                 {
@@ -55704,7 +55704,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ttc",
+                  "name": "TTC",
                   "kitongojis": []
                 },
                 {
@@ -57395,7 +57395,7 @@
                     "Kitongo",
                     "Mbugani",
                     "Kahama Road",
-                    "N.h.c.",
+                    "N.H.C.",
                     "Tabora Road",
                     "Ushirika"
                   ]
@@ -60827,7 +60827,7 @@
                     "Nyete Juu",
                     "Kasagamba",
                     "Kaseke",
-                    "Ccm Centre",
+                    "CCM Centre",
                     "Majengo A",
                     "Majengo B"
                   ]
@@ -61191,7 +61191,7 @@
                   "kitongojis": [
                     "Bweru A",
                     "Bweru B",
-                    "Kiganza Ccm",
+                    "Kiganza CCM",
                     "Kiganza Senta",
                     "Bukemba",
                     "Kitobe",
@@ -62429,7 +62429,7 @@
                     "Mjini",
                     "Kumwayi",
                     "Nyagwilonge",
-                    "Dwt",
+                    "DWT",
                     "Mushenyi",
                     "Silabu",
                     "Nyakushungwa",
@@ -65963,7 +65963,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ffu",
+                  "name": "FFU",
                   "kitongojis": []
                 },
                 {
@@ -66099,7 +66099,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Dodoma Road Trm",
+                  "name": "Dodoma Road TRM",
                   "kitongojis": []
                 },
                 {
@@ -68354,10 +68354,10 @@
             },
             {
               "postcode": "51430",
-              "name": "Mpanga Tazara",
+              "name": "Mpanga TAZARA",
               "mtaas": [
                 {
-                  "name": "Mpanga Tazara",
+                  "name": "Mpanga TAZARA",
                   "kitongojis": []
                 }
               ]
@@ -68699,7 +68699,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Maanga Veta",
+                  "name": "Maanga VETA",
                   "kitongojis": []
                 },
                 {
@@ -68877,7 +68877,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ddc",
+                  "name": "DDC",
                   "kitongojis": []
                 }
               ]
@@ -69095,7 +69095,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Rrm",
+                  "name": "RRM",
                   "kitongojis": []
                 }
               ]
@@ -75329,7 +75329,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.h.c.",
+                  "name": "N.H.C.",
                   "kitongojis": []
                 },
                 {
@@ -75413,11 +75413,11 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Otc",
+                  "name": "OTC",
                   "kitongojis": []
                 },
                 {
-                  "name": "T.r.m.",
+                  "name": "T.R.M.",
                   "kitongojis": []
                 },
                 {
@@ -75463,7 +75463,7 @@
               "name": "Mazwi",
               "mtaas": [
                 {
-                  "name": "R.t.c.",
+                  "name": "R.T.C.",
                   "kitongojis": []
                 },
                 {
@@ -75471,7 +75471,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.h.c.",
+                  "name": "N.H.C.",
                   "kitongojis": []
                 },
                 {
@@ -75499,7 +75499,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "N.m.c.",
+                  "name": "N.M.C.",
                   "kitongojis": []
                 },
                 {
@@ -75989,9 +75989,9 @@
                   "kitongojis": [
                     "Mtukula",
                     "Dalini",
-                    "Ccm",
+                    "CCM",
                     "Godown",
-                    "R.c.",
+                    "R.C.",
                     "Zanzibar",
                     "Kilombelo"
                   ]
@@ -76924,7 +76924,7 @@
                     "Ilegeza",
                     "Mlasi",
                     "Kamama",
-                    "C.c.m. Baani",
+                    "C.C.M. Baani",
                     "Utulivu",
                     "Mkereketwa",
                     "Amani",
@@ -76949,7 +76949,7 @@
                     "Mbwendi",
                     "Mango",
                     "Chenka",
-                    "C.c.m.",
+                    "C.C.M.",
                     "Kisala",
                     "Kamchele",
                     "Kasembe",
@@ -78272,7 +78272,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "C.c.m.",
+                  "name": "C.C.M.",
                   "kitongojis": []
                 },
                 {
@@ -80866,12 +80866,12 @@
                 {
                   "name": "Ruanda",
                   "kitongojis": [
-                    "Cd",
+                    "CD",
                     "Nkongotingisa",
-                    "Ccb",
-                    "Cca",
-                    "Ca",
-                    "Cb"
+                    "CCB",
+                    "CCA",
+                    "CA",
+                    "CB"
                   ]
                 },
                 {
@@ -82995,7 +82995,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc",
+                  "name": "NHC",
                   "kitongojis": []
                 },
                 {
@@ -83175,7 +83175,7 @@
                   "kitongojis": [
                     "Kwivaha",
                     "Posta Kati",
-                    "Nhc",
+                    "NHC",
                     "Mgendela",
                     "Kihesa",
                     "Sido",
@@ -89431,7 +89431,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ttc Ufundi",
+                  "name": "TTC Ufundi",
                   "kitongojis": []
                 }
               ]
@@ -89704,7 +89704,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ffu Nandope",
+                  "name": "FFU Nandope",
                   "kitongojis": []
                 },
                 {
@@ -94158,7 +94158,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Nhc",
+                  "name": "NHC",
                   "kitongojis": []
                 },
                 {
@@ -97416,7 +97416,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ccm",
+                  "name": "CCM",
                   "kitongojis": []
                 },
                 {
@@ -97524,7 +97524,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Old Dsm Road",
+                  "name": "Old DSM Road",
                   "kitongojis": []
                 },
                 {
@@ -97548,7 +97548,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Ffu",
+                  "name": "FFU",
                   "kitongojis": []
                 }
               ]
@@ -97678,7 +97678,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Forest (Nhc)",
+                  "name": "Forest (NHC)",
                   "kitongojis": []
                 },
                 {
@@ -97718,7 +97718,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Old Dsm Road",
+                  "name": "Old DSM Road",
                   "kitongojis": []
                 },
                 {
@@ -98344,7 +98344,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Cct Forest",
+                  "name": "CCT Forest",
                   "kitongojis": []
                 },
                 {
@@ -98414,7 +98414,7 @@
                   "kitongojis": []
                 },
                 {
-                  "name": "Mafiga Sua",
+                  "name": "Mafiga SUA",
                   "kitongojis": []
                 }
               ]
@@ -99941,7 +99941,7 @@
                   "kitongojis": [
                     "Madizini",
                     "Lyanda",
-                    "Pwd",
+                    "PWD",
                     "Lugunga",
                     "Myombo Estate"
                   ]
@@ -103710,7 +103710,7 @@
               "name": "Uzi",
               "mtaas": [
                 {
-                  "name": "Uzi",
+                  "name": "UZI",
                   "kitongojis": []
                 },
                 {

@@ -91,4 +91,34 @@ class LayoutDetectorTest {
         assertEquals(PageKind.CONTENT, s.kind)
         assertNull(s.layout)
     }
+
+    @Test
+    fun secondBannerOnTheSamePage_startsALaterSegmentWithItsOwnHeaderAndRows() {
+        val rowsA = line(140.0, 77.0 to "MBEYA")
+        val rowsB = line(220.0, 77.0 to "DODOMA")
+        val s = structure(
+            banner(90.0, "MBEYA REGION - 53000"), headerB(110.0), rowsA,
+            banner(180.0, "DODOMA REGION - 41000"), headerB(200.0, geometryTwo), rowsB,
+        )
+        assertEquals(Banner("MBEYA", "53000"), s.banner)
+        assertEquals(listOf(rowsA), s.body)
+        val later = s.later.single()
+        assertEquals(Banner("DODOMA", "41000"), later.banner)
+        assertEquals(geometryTwo, later.layout?.columns?.map { it.x })
+        assertEquals(listOf(rowsB), later.body)
+    }
+
+    @Test
+    fun secondHeaderMidPage_startsALaterSegmentWithoutABanner() {
+        val s = structure(headerB(90.0), line(110.0, 77.0 to "a"), headerB(130.0, geometryTwo), line(150.0, 50.0 to "b"))
+        val later = s.later.single()
+        assertNull(later.banner)
+        assertEquals(geometryTwo, later.layout?.columns?.map { it.x })
+        assertEquals(1, later.body.size)
+    }
+
+    @Test
+    fun singleBannerPage_hasNoLaterSegments() {
+        assertEquals(emptyList(), structure(banner(90.0, "MBEYA REGION - 53000"), headerB(110.0)).later)
+    }
 }

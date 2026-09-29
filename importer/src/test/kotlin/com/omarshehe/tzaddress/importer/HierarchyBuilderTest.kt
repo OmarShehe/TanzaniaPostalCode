@@ -386,4 +386,52 @@ class HierarchyBuilderTest {
         assertEquals(listOf(AnomalyKind.UNEXPECTED_CELL), r.anomalies.map { it.kind })
         assertEquals(2, r.anomalies.single().line)
     }
+
+    @Test
+    fun twoRegionsOnOnePage_rowsGoToTheirOwnRegion() {
+        val g2 = geometryTwo
+        val r = build(
+            structure(
+                banner(90.0, "ARUSHA REGION - 23000"), headerB(110.0),
+                line(130.0, x[0] to "ARUSHA", x[1] to "23", x[2] to "MERU", x[3] to "231", x[4] to "W", x[5] to "23101", x[6] to "M"),
+                banner(180.0, "DODOMA REGION - 41000"), headerB(200.0, g2),
+                line(220.0, g2[0] to "DODOMA", g2[1] to "41", g2[2] to "CHAMWINO", g2[3] to "411", g2[4] to "W2", g2[5] to "41101", g2[6] to "M2"),
+            ),
+        )
+        assertEquals(listOf("23000", "41000"), r.regions.map { it.code })
+        assertEquals(listOf("M"), r.regions[0].districts.single().wards.single().mtaas.map { it.name })
+        assertEquals(listOf("M2"), r.regions[1].districts.single().wards.single().mtaas.map { it.name })
+        assertTrue(r.anomalies.isEmpty(), r.anomalies.toString())
+    }
+
+    @Test
+    fun secondHeaderMidPage_appliesItsColumnsToTheRowsBelowIt() {
+        val g2 = geometryTwo
+        val r = build(
+            structure(
+                *bHead,
+                line(130.0, x[0] to "MBEYA", x[1] to "53", x[2] to "MBEYA CBD", x[3] to "531", x[4] to "W1", x[5] to "53101", x[6] to "M1"),
+                headerB(170.0, g2),
+                line(190.0, g2[4] to "W2", g2[5] to "53102", g2[6] to "M2"),
+            ),
+        )
+        val wards = r.regions.single().districts.single().wards
+        assertEquals(listOf("W1", "W2"), wards.map { it.name })
+        assertEquals(listOf("53101", "53102"), wards.map { it.postcode })
+        assertTrue(r.anomalies.isEmpty(), r.anomalies.toString())
+    }
+
+    @Test
+    fun shortAllCapsNames_areAcronymsForMtaaAndKitongojiButWordsForWards() {
+        val r = build(
+            structure(
+                *bHead,
+                line(130.0, x[0] to "MBEYA", x[1] to "53", x[2] to "MBEYA CBD", x[3] to "531", x[4] to "KIA", x[5] to "53101", x[6] to "NHC", x[7] to "CCM"),
+            ),
+        )
+        val ward = r.regions.single().districts.single().wards.single()
+        assertEquals("Kia", ward.name)
+        assertEquals("NHC", ward.mtaas.single().name)
+        assertEquals(listOf("CCM"), ward.mtaas.single().kitongojis)
+    }
 }

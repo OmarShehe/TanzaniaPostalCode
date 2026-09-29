@@ -87,4 +87,16 @@ class ValidatorTest {
         assertTrue(result.notes.any { "Songwe" in it })
         assertTrue(result.passed)
     }
+
+    @Test fun emptyOrMalformedDistrictCode_fails() {
+        listOf("", "5", "5310", "ab").forEach { code ->
+            val d = dataset(
+                listOf(
+                    RegionDto("53000", "Mbeya", listOf(DistrictDto(code, "A", listOf(ward("53101"))))),
+                    RegionDto("11000", "Dar", listOf(DistrictDto("11", "B", listOf(ward("11101"))))),
+                ),
+            )
+            assertTrue(ViolationKind.BAD_DISTRICT_CODE in kinds(d), "code '$code'")
+        }
+    }
 }

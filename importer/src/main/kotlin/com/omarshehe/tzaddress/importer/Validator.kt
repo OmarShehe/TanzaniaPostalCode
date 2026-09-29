@@ -1,8 +1,6 @@
 package com.omarshehe.tzaddress.importer
 
 object Validator {
-    private val WARD_POSTCODE = Regex("^\\d{5}$")
-
     fun validate(dataset: DatasetDto, anomalyCount: Int, dataLineCount: Int, policy: Policy): ValidationResult {
         val violations = ArrayList<Violation>()
         val warnings = ArrayList<Warning>()
@@ -16,6 +14,10 @@ object Validator {
         val reportedDuplicates = HashSet<String>()
         for (region in dataset.regions) {
             for (district in region.districts) {
+                val districtCodeOk = PostcodeRules.district.matches(district.code)
+                if (!districtCodeOk) {
+                    violations += Violation(ViolationKind.BAD_DISTRICT_CODE, "District '${district.name}' (region ${region.code}) has code '${district.code}', expected 2 or 3 digits")
+                }
                 val previous = districtCodes.put(district.code, region.code)
                 if (previous != null) {
                     violations += Violation(ViolationKind.DUPLICATE_DISTRICT_CODE, "District code ${district.code} appears in regions $previous and ${region.code}")
@@ -24,10 +26,10 @@ object Validator {
                     warnings += Warning(WarningKind.DISTRICT_WITHOUT_WARDS, "District ${district.code} ${district.name} (region ${region.code}) has no wards")
                 }
                 for (ward in district.wards) {
-                    val wellFormed = WARD_POSTCODE.matches(ward.postcode)
+                    val wellFormed = PostcodeRules.ward.matches(ward.postcode)
                     if (!wellFormed) {
                         violations += Violation(ViolationKind.BAD_WARD_POSTCODE, "Ward '${ward.name}' has postcode '${ward.postcode}', expected 5 digits")
-                    } else if (!ward.postcode.startsWith(district.code)) {
+                    } else if (districtCodeOk && !ward.postcode.startsWith(district.code)) {
                         violations += Violation(ViolationKind.WARD_PREFIX_MISMATCH, "Ward ${ward.postcode} '${ward.name}' does not start with its district code ${district.code}")
                     }
                     if (!wardCodes.add(ward.postcode) && reportedDuplicates.add(ward.postcode)) {

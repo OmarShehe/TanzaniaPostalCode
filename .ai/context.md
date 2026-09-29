@@ -23,7 +23,7 @@ Planned (by ticket): `:data` (TZA-003), `:ui` (TZA-004).
 
 ## Importing the dataset
 - `./gradlew :importer:importPostcodes -Ppdf=/path/to/tzPostcodeList.pdf [-PsourceEdition=..] [-PgeneratedAt=2026-09-29T00:00:00Z] [-Pforce] [-PoutDir=dataset]` (about 10 s). Fixing `generatedAt` makes the JSON byte-identical between runs.
-- Fails the build on: region count != `importer.expectedRegions` (30), bad/duplicate ward postcodes, ward postcode not starting with its district code, duplicate district codes, suspect-anomaly ratio above `importer.maxAnomalyRatio` (0.005). Both settings live in `importer/gradle.properties`. On failure the report and CSV are still written; `-Pforce` also writes the JSON.
+- Fails the build on: region count != `-PexpectedRegions` (default 30), bad/duplicate ward postcodes, ward postcode not starting with its district code, bad (not 2-3 digit) or duplicate district codes, suspect-anomaly ratio above `-PmaxAnomalyRatio` (default 0.005). Defaults live in `ImportOptions`; override per run with `-P`. On failure the report and CSV are still written but `tz-address.json` is not (the report says so); `-Pforce` (or `-Pforce=true`) writes it anyway; `-Pforce=false` does not.
 - Opt-in real-PDF tests (independent per-region ward counts via `pdftotext`, determinism): `./gradlew :importer:test -Ppdf=/path/to/tzPostcodeList.pdf`. Without `-Ppdf` they are skipped.
 - The source is a 2012-07-30 snapshot: 30 regions, no Songwe (2016) or Kigamboni. Zanzibar shehia are stored as `Mtaa` (no kitongoji level). PDF column positions differ on every page; the parser reads each page's own header row.
 

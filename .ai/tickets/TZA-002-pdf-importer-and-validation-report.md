@@ -65,7 +65,7 @@ Must contain: dataset info; counts of regions/districts/wards/mtaas/kitongojis (
 
 ### Failure policy
 
-The task **fails the build** (non-zero exit) if any of: a region count different from `importer.expectedRegions` (30); duplicate ward postcode; a ward postcode not matching `^\d{5}$`; a ward postcode prefix inconsistent with its district code; anomaly rate above a threshold configured in `importer/gradle.properties` (`importer.maxAnomalyRatio`, default `0.005`). `-Pforce` writes outputs anyway but still marks the report `FAILED`.
+The task **fails the build** (non-zero exit) if any of: a region count different from `importer.expectedRegions` (30); duplicate ward postcode; a ward postcode not matching `^\d{5}$`; a ward postcode prefix inconsistent with its district code; anomaly rate above a threshold (`-PmaxAnomalyRatio`, default `0.005`; expected regions `-PexpectedRegions`, default `30`). `-Pforce` writes outputs anyway but still marks the report `FAILED`.
 
 ---
 
@@ -114,6 +114,8 @@ No API changes. File contract is the JSON schema above.
 - **Names:** typographic hyphens (U+2010–2015, U+2212) are normalised to `-`; `CBD` is kept upper-case; `es`, `wa`, `ya`, `la`, `na` are lower-case mid-name.
 - The PDF is not committed (unknown redistribution terms). The real-PDF checks (independent per-region ward counts, determinism) are opt-in via `-Ppdf`.
 - `.ai/context.md` was updated in this ticket (module map, import commands).
+- **Policy settings live in code, not `importer/gradle.properties`.** Gradle does not read a subproject's `gradle.properties` for `providers.gradleProperty`, so the file was silently ignored (found in code review). Defaults are in `ImportOptions` and overridden with `-P`.
+- **Code review fixes:** all-capital acronyms (CCM, NHC) are kept; district codes must be 2-3 digits; a failed run says `tz-address.json` was not written; regions or headers that start mid-page get their own segment; `-Pforce` is a real boolean.
 
 ---
 
@@ -139,7 +141,6 @@ None. (Decisions: repeatable task with build-failing validation; committed outpu
 | `settings.gradle.kts` | Modified (`include(":importer")`) |
 | `gradle/libs.versions.toml` | Modified (PDF library, kotlinx-serialization, test libs) |
 | `importer/build.gradle.kts` | New (`importPostcodes` task) |
-| `importer/gradle.properties` | New (`importer.maxAnomalyRatio`) |
 | `importer/src/main/kotlin/.../PdfColumnParser.kt`, `Normalizer.kt`, `DatasetWriter.kt`, `ReportWriter.kt`, `Validator.kt` | New |
 | `importer/src/test/kotlin/...` and `importer/src/test/resources/**` | New (fixtures + tests) |
 | `dataset/tz-address.json`, `dataset/import-report.md`, `dataset/import-anomalies.csv` | New (generated, committed) |

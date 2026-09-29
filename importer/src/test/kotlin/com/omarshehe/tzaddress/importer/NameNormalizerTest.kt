@@ -52,4 +52,35 @@ class NameNormalizerTest {
         assertEquals("Lyamungo-Kati", n("Lyamungo\u2013Kati"))
         assertEquals("Ol-Molog", n("ol\u2212molog"))
     }
+
+    @Test fun acronymsInsideMixedCaseNames_stayUpper() {
+        assertEquals("Nyamalembo CCM", n("Nyamalembo CCM"))
+        assertEquals("Buligi CCM", n("Buligi CCM"))
+    }
+
+    private fun acronym(s: String) = NameNormalizer.normalize(s, shortAllCapsAreAcronyms = true)
+
+    @Test fun shortAllUpperNames_areAcronymsWhenTheLevelAllowsIt() {
+        assertEquals("CCM", acronym("CCM"))
+        assertEquals("NHC", acronym("NHC"))
+        assertEquals("TTC UWT", acronym("TTC UWT"))
+        assertEquals("N.H.C.", acronym("N.H.C."))
+    }
+
+    @Test fun shortAllUpperNames_areWordsWhenTheLevelIsWardOrDistrict() {
+        assertEquals("Hai", n("HAI"))
+        assertEquals("Kia", n("KIA"))
+        assertEquals("Uzi", n("UZI"))
+    }
+
+    @Test fun connectorsInMixedCaseNames_stayLowerCase() {
+        assertEquals("Mgulu wa Ndege", n("Mgulu wa Ndege"))
+        assertEquals("Kakola na 9", n("Kakola Na 9"))
+        assertEquals("Taasisi ya KIA", n("Taasisi ya KIA"))
+    }
+
+    @Test fun shoutingNamesWithLongWords_areStillTitleCased() {
+        assertEquals("Ukuu", n("UKUU"))
+        assertEquals("Mji Mpya", n("MJI MPYA"))
+    }
 }

@@ -4,7 +4,7 @@ object ReportWriter {
     private const val MAX_LISTED_ANOMALIES = 50
     private const val MAX_LISTED_WARNINGS = 30
 
-    fun report(dataset: DatasetDto, validation: ValidationResult, anomalies: List<Anomaly>, dataLineCount: Int): String {
+    fun report(dataset: DatasetDto, validation: ValidationResult, anomalies: List<Anomaly>, dataLineCount: Int, datasetWritten: Boolean): String {
         val regions = dataset.regions.sortedBy { it.code }
         val districts = regions.sumOf { it.districts.size }
         val wards = regions.sumOf { r -> r.districts.sumOf { it.wards.size } }
@@ -20,6 +20,7 @@ object ReportWriter {
             appendLine("- Dataset version: ${dataset.info.version}")
             appendLine("- Source edition: ${dataset.info.sourceEdition}")
             appendLine("- Generated at: ${dataset.info.generatedAt}")
+            appendLine("- tz-address.json ${if (datasetWritten) "was written" else "was NOT written (validation failed); an existing copy is from an earlier run"}")
             appendLine()
             appendLine("## Totals")
             appendLine()

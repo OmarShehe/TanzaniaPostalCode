@@ -29,17 +29,21 @@ class HierarchyBuilder {
 
     fun addPage(page: Int, structure: PageStructure) {
         if (structure.kind == PageKind.BLANK) return
-        structure.banner?.let { startRegion(it) }
-        val layout = structure.layout
-        if (layout != null) {
-            lastLayout = layout
-        } else {
-            anomalies += Anomaly(page, 0, AnomalyKind.MISSING_HEADER, "no usable header row; reusing the previous page's columns")
-        }
-        val active = layout ?: lastLayout ?: return
-        structure.body.forEachIndexed { index, line ->
-            dataLines++
-            process(page, index + 1, RowParser.parse(line, active), line.text)
+        val segments = listOf(PageSegment(structure.banner, structure.layout, structure.body)) + structure.later
+        var lineIndex = 0
+        for (segment in segments) {
+            segment.banner?.let { startRegion(it) }
+            if (segment.layout != null) {
+                lastLayout = segment.layout
+            } else if (segment.body.isNotEmpty()) {
+                anomalies += Anomaly(page, lineIndex, AnomalyKind.MISSING_HEADER, "no usable header row; reusing the previous columns")
+            }
+            val active = segment.layout ?: lastLayout ?: continue
+            for (line in segment.body) {
+                lineIndex++
+                dataLines++
+                process(page, lineIndex, RowParser.parse(line, active), line.text)
+            }
         }
     }
 
@@ -161,7 +165,7 @@ class HierarchyBuilder {
                 val merged = WardNode(wardCode, prevWard.node.rawName + " " + wardName)
                 merged.mtaas += prevWard.node.mtaas
                 currentDistrict.wards[currentDistrict.wards.size - 1] = merged
-                if (!WARD_POSTCODE.matches(wardCode)) flag(AnomalyKind.BAD_WARD_POSTCODE)
+                if (!PostcodeRules.ward.matches(wardCode)) flag(AnomalyKind.BAD_WARD_POSTCODE)
                 ward = merged
             } else {
                 prevWard?.let { settleWard(it) }
@@ -170,7 +174,7 @@ class HierarchyBuilder {
                 val node = WardNode(code.orEmpty(), wardName).also { currentDistrict.wards += it }
                 if (code == null) {
                     pendingWard = PendingWard(node, currentDistrict, Anomaly(page, line, AnomalyKind.BAD_WARD_POSTCODE, text))
-                } else if (!WARD_POSTCODE.matches(code)) {
+                } else if (!PostcodeRules.ward.matches(code)) {
                     flag(AnomalyKind.BAD_WARD_POSTCODE)
                 }
                 ward = node
@@ -179,7 +183,7 @@ class HierarchyBuilder {
         } else if (wardCode != null) {
             if (prevWard != null) {
                 prevWard.node.postcode = wardCode
-                if (!WARD_POSTCODE.matches(wardCode)) flag(AnomalyKind.BAD_WARD_POSTCODE)
+                if (!PostcodeRules.ward.matches(wardCode)) flag(AnomalyKind.BAD_WARD_POSTCODE)
             } else {
                 stashedCode = StashedCode(wardCode, Anomaly(page, line, AnomalyKind.UNEXPECTED_CELL, text))
             }
@@ -195,7 +199,7 @@ class HierarchyBuilder {
                 flag(AnomalyKind.ORPHAN_ROW)
                 return
             }
-            mtaa = MtaaNode(NameNormalizer.normalize(name)).also { currentWard.mtaas += it }
+            mtaa = MtaaNode(NameNormalizer.normalize(name, shortAllCapsAreAcronyms = true)).also { currentWard.mtaas += it }
         }
 
         // Kitongoji
@@ -209,11 +213,7 @@ class HierarchyBuilder {
                 flag(AnomalyKind.KITONGOJI_WITHOUT_MTAA)
                 MtaaNode(currentWard.name).also { currentWard.mtaas += it; mtaa = it }
             }
-            target.kitongojis += NameNormalizer.normalize(name)
+            target.kitongojis += NameNormalizer.normalize(name, shortAllCapsAreAcronyms = true)
         }
-    }
-
-    private companion object {
-        val WARD_POSTCODE = Regex("^\\d{5}$")
     }
 }

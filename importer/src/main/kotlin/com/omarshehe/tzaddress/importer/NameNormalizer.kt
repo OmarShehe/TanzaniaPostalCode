@@ -1,23 +1,48 @@
 package com.omarshehe.tzaddress.importer
 
-/** Cleans names as printed in the source. Only all-upper or all-lower words are re-cased; mixed-case words are trusted. */
+/**
+ * Cleans names as printed in the source. Names printed in capitals are title-cased, unless they are short
+ * (acronyms such as CCM or NHC); all-lower words are capitalised; mixed-case words and acronyms inside
+ * mixed-case names are trusted.
+ */
 object NameNormalizer {
     private val connectors = setOf("na", "wa", "ya", "la", "es")
     private val acronyms = setOf("CBD")
+    private const val SHOUTING_WORD_LENGTH = 4
     private val roman = Regex("^[IVX]{2,4}$")
     private val whitespace = Regex("\\s+")
     private val typographicHyphens = Regex("[\\u2010-\\u2015\\u2212]")
 
-    fun normalize(raw: String): String =
+    /**
+     * [shortAllCapsAreAcronyms] applies to mtaa and kitongoji names, where a short all-capital name is an acronym
+     * (CCM). Wards and districts are sometimes printed entirely in capitals as ordinary words (HAI, KIA), so there it stays off.
+     */
+    fun normalize(raw: String, shortAllCapsAreAcronyms: Boolean = false): String =
         raw.replace('\u2019', '\'').replace('\u2018', '\'').replace('`', '\'')
             .replace('\u201C', '"').replace('\u201D', '"')
             .replace(typographicHyphens, "-")
             .trim().replace(whitespace, " ")
-            .split(" ").filter { it.isNotEmpty() }
-            .mapIndexed { index, token -> token(token, index) }
-            .joinToString(" ")
+            .let { cleaned ->
+                val shouting = isShouting(cleaned, shortAllCapsAreAcronyms)
+                cleaned.split(" ").filter { it.isNotEmpty() }
+                    .mapIndexed { index, token -> token(token, index, shouting) }
+                    .joinToString(" ")
+            }
 
-    private fun token(token: String, index: Int): String {
+    /**
+     * A name printed with no lowercase letters at all. When [acronymLevel] is set, such a name is only "shouting"
+     * if it contains a long word or a connector (wa, ya, ...); otherwise it is an acronym (CCM, NHC).
+     */
+    private fun isShouting(name: String, acronymLevel: Boolean): Boolean {
+        val letters = name.filter { it.isLetter() }
+        if (letters != letters.uppercase()) return false
+        if (!acronymLevel) return true
+        val words = name.split(" ")
+        return words.any { it.count { c -> c.isLetter() } >= SHOUTING_WORD_LENGTH } ||
+            words.drop(1).any { it.lowercase() in connectors }
+    }
+
+    private fun token(token: String, index: Int, shouting: Boolean): String {
         val letters = token.filter { it.isLetter() }
         return when {
             token.any { it.isDigit() } -> token
@@ -25,6 +50,7 @@ object NameNormalizer {
             token.uppercase() in acronyms -> token.uppercase()
             roman.matches(letters) && letters == letters.uppercase() -> token
             index > 0 && token.lowercase() in connectors -> token.lowercase()
+            !shouting && letters == letters.uppercase() -> token
             letters != letters.uppercase() && letters != letters.lowercase() -> token
             else -> capitalizeParts(token.lowercase())
         }
