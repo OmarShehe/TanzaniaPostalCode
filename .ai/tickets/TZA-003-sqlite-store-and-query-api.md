@@ -105,6 +105,20 @@ Kotlin API above; no network.
 
 ---
 
+## Scope notes (added during implementation)
+
+- **FTS spike:** passes on a real Android device (Pixel 9) with the bundled driver; the same test on the JVM is skipped with a visible message on Intel macOS, because the bundled SQLite driver ships no macOS x64 binary (Linux x64/arm64, Windows x64 and macOS arm64 are supported). iOS: klib compile only; the iOS runtime and the iOS spike are unverified (no Xcode).
+- **JVM tests use a test-only JDBC driver** (`sqlite-jdbc`) so they run on any host; production code on every target uses the bundled driver.
+- **Generator lives in `:importer`** (it owns the DTOs and needs `sqlite-jdbc`); `:data:generateAddressDb` runs it. It checks table counts against both the dataset and the totals in `dataset/import-report.md`, and writes a `tz-address.db.version` stamp (`version|sourceEdition|generatedAt`) beside the DB.
+- **Bundling:** JVM and Android ship the DB and stamp as classpath resources (generated, git-ignored). iOS reads them from the app bundle (`NSBundle`), so the host app must add both files to its target (documented in TZA-005); Compose resources were tried and dropped because their compiler plugin forces the Compose runtime onto plain JVM/server classpaths.
+- **Install check** compares the bundled stamp with the installed DB's `dataset_info`, not just `version` (the importer's version is a constant `1`); copies go through a temp file and an atomic rename.
+- **Read-only:** the common driver API has no read-only open flag, so the connection sets `PRAGMA query_only = ON`.
+- **Normalisation** (`AddressText`) lives in `:core` next to `AddressIds`, because the generator and the query side must share it; the FTS index stores the normalised text, so no separate normalised columns exist.
+- **Benchmark:** p95 for 3-letter prefixes on a physical Pixel 9 (not an emulator) is about 26 ms (p50 11 ms, n=120); recorded, not asserted.
+- **Repository creation is `suspend`** so `isValidPostcode` can stay non-suspend over a preloaded ward set.
+
+---
+
 ## Out of Scope
 
 - Compose UI (TZA-004).

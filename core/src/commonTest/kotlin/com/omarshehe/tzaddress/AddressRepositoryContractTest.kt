@@ -8,6 +8,8 @@ import com.omarshehe.tzaddress.model.Region
 import com.omarshehe.tzaddress.model.Ward
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
 
@@ -47,5 +49,66 @@ class AddressRepositoryContractTest {
         assertTrue(repository.wards("nope").isEmpty())
         assertTrue(repository.mtaas("nope").isEmpty())
         assertTrue(repository.kitongojis("nope").isEmpty())
+    }
+
+    @Test
+    fun byPostcode_returnsChain_orNullForUnknownOrMalformed() = runTest {
+        val path = repository.byPostcode("11101")
+        assertEquals("Dar es Salaam", path?.region?.name)
+        assertEquals("Ilala CBD", path?.district?.name)
+        assertEquals("Kivukoni", path?.ward?.name)
+        assertNull(path?.mtaa)
+        assertNull(repository.byPostcode("00000"))
+        assertNull(repository.byPostcode("abc"))
+        assertNull(repository.byPostcode(""))
+    }
+
+    @Test
+    fun byPrefix_matchesWardsOnly_andIgnoresBadInput() = runTest {
+        assertEquals(listOf("11101"), repository.byPrefix("111").map { it.ward?.postcode })
+        assertTrue(repository.byPrefix("999").isEmpty())
+        assertTrue(repository.byPrefix("1x").isEmpty())
+        assertTrue(repository.byPrefix("").isEmpty())
+    }
+
+    @Test
+    fun path_resolvesEveryLevel() = runTest {
+        assertEquals("Dar es Salaam", repository.path(Level.REGION, "11000")?.region?.name)
+        assertEquals("Ilala CBD", repository.path(Level.DISTRICT, "11")?.district?.name)
+        assertEquals("Kivukoni", repository.path(Level.WARD, "11101")?.ward?.name)
+        assertEquals("Kivukoni", repository.path(Level.MTAA, mtaaId)?.mtaa?.name)
+        val kitongoji = repository.path(Level.KITONGOJI, kitongojiId)
+        assertEquals("Sea View", kitongoji?.kitongoji?.name)
+        assertEquals("11101", kitongoji?.ward?.postcode)
+        assertNull(repository.path(Level.WARD, "nope"))
+    }
+
+    @Test
+    fun isValidPostcode_isTrueOnlyForKnownWards() {
+        assertTrue(repository.isValidPostcode("11101"))
+        assertFalse(repository.isValidPostcode("11000"))
+        assertFalse(repository.isValidPostcode("abc"))
+    }
+
+    @Test
+    fun search_blankQuery_isEmpty() = runTest {
+        assertTrue(repository.search("").isEmpty())
+        assertTrue(repository.search("   ").isEmpty())
+    }
+
+    @Test
+    fun search_matchCarriesNearestAncestorPostcode() = runTest {
+        val match = repository.search("sea").single()
+        assertEquals(Level.KITONGOJI, match.level)
+        assertEquals("11101", match.postcode)
+        assertEquals("Sea View", match.label)
+    }
+
+    @Test
+    fun level_all_listsEveryLevelFromRegionDown() {
+        assertEquals(
+            listOf(Level.REGION, Level.DISTRICT, Level.WARD, Level.MTAA, Level.KITONGOJI),
+            Level.all.toList(),
+        )
     }
 }
