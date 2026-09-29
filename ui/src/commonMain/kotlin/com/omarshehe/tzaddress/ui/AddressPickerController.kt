@@ -9,6 +9,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
  * Cascade rules for the five dependent dropdowns. Not thread-safe: call it from one dispatcher (the UI thread).
@@ -26,6 +28,9 @@ internal class AddressPickerController(
     private var error: String? = null
     private var lastValue: AddressPath? = null
     private var loadJob: Job? = null
+
+    // Two restores must not interleave across their suspension points; the later request runs last and wins.
+    private val restoreLock = Mutex()
 
     private val mutableState = MutableStateFlow(snapshot())
     val state: StateFlow<PickerUiState> = mutableState
@@ -62,7 +67,7 @@ internal class AddressPickerController(
     }
 
     /** Puts the pickers into the state of [path] (null = empty) without reporting a user change. */
-    suspend fun restore(path: AddressPath?) {
+    suspend fun restore(path: AddressPath?): Unit = restoreLock.withLock {
         loadJob?.cancel()
         options.clear(); loaded.clear(); selected.clear(); error = null
         load(Level.REGION)

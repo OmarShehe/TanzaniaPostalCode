@@ -90,6 +90,15 @@ class AddressSearchControllerTest {
         assertEquals(listOf("Kariakoo"), labels)
     }
 
+    @Test fun clearingTheFieldCancelsASearchThatIsAlreadyRunning() = runTest {
+        repo.searchHandler = { delay(1000); listOf(repo.match(Level.WARD, "11101", "Kivukoni")) }
+        val c = controller()
+        c.onQueryChange("kiv"); advanceTimeBy(300) // debounce fired, search is now in flight
+        c.onQueryChange("")
+        settle()
+        assertEquals(SearchUiState.Idle, c.state.value)
+    }
+
     @Test fun cancellationIsNotReportedAsAnError() = runTest {
         repo.searchHandler = { throw CancellationException("cancelled") }
         val c = controller()

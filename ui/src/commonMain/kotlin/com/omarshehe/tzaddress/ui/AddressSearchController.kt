@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
@@ -30,8 +29,8 @@ internal class AddressSearchController(
         query
             .debounce(debounceMillis)
             .distinctUntilChanged()
-            .filter { it.isNotBlank() }
-            .mapLatest { search(it) }
+            // Blank goes through mapLatest too, so clearing the field cancels a search that is still running.
+            .mapLatest { if (it.isBlank()) SearchUiState.Idle else search(it) }
             .onEach { mutableState.value = it }
             .launchIn(scope)
     }

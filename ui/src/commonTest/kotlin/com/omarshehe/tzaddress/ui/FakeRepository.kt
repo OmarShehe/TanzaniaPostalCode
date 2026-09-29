@@ -11,11 +11,13 @@ import com.omarshehe.tzaddress.model.Kitongoji
 import com.omarshehe.tzaddress.model.Mtaa
 import com.omarshehe.tzaddress.model.Region
 import com.omarshehe.tzaddress.model.Ward
+import kotlinx.coroutines.delay
 
 /** In-memory repository for UI tests: a small Dar es Salaam / Tanga hierarchy plus a programmable search. */
 class FakeRepository(
     var searchHandler: suspend (String) -> List<AddressMatch> = { emptyList() },
     var failBrowse: Boolean = false,
+    var browseDelay: Long = 0,
 ) : AddressRepository {
     val searchQueries = mutableListOf<String>()
 
@@ -36,11 +38,17 @@ class FakeRepository(
     private val kitongojis = listOf(seaView)
 
     override suspend fun info() = DatasetInfo("1", "test", "2026-01-01T00:00:00Z")
-    override suspend fun regions() = if (failBrowse) error("boom") else regions
-    override suspend fun districts(regionCode: String) = if (failBrowse) error("boom") else districts.filter { it.regionCode == regionCode }
-    override suspend fun wards(districtCode: String) = if (failBrowse) error("boom") else wards.filter { it.districtCode == districtCode }
-    override suspend fun mtaas(wardPostcode: String) = if (failBrowse) error("boom") else mtaas.filter { it.wardPostcode == wardPostcode }
-    override suspend fun kitongojis(mtaaId: String) = if (failBrowse) error("boom") else kitongojis.filter { it.mtaaId == mtaaId }
+    private suspend fun <T> browse(block: () -> T): T {
+        if (browseDelay > 0) delay(browseDelay)
+        if (failBrowse) error("boom")
+        return block()
+    }
+
+    override suspend fun regions() = browse { regions }
+    override suspend fun districts(regionCode: String) = browse { districts.filter { it.regionCode == regionCode } }
+    override suspend fun wards(districtCode: String) = browse { wards.filter { it.districtCode == districtCode } }
+    override suspend fun mtaas(wardPostcode: String) = browse { mtaas.filter { it.wardPostcode == wardPostcode } }
+    override suspend fun kitongojis(mtaaId: String) = browse { kitongojis.filter { it.mtaaId == mtaaId } }
 
     override suspend fun search(query: String, limit: Int, levels: Set<Level>): List<AddressMatch> {
         searchQueries += query

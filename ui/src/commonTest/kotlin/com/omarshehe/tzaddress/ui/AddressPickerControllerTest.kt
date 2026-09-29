@@ -8,7 +8,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 
@@ -170,5 +172,16 @@ class AddressPickerControllerTest {
         val c = controller()
         assertNotNull(c.state.value.error)
         assertFalse(c.level(Level.REGION).enabled)
+    }
+
+    @Test fun overlappingRestoresEndInTheLastRequestedState() = runTest {
+        val c = controller()
+        repo.browseDelay = 100
+        val path = assertNotNull(repo.path(Level.KITONGOJI, repo.seaView.id))
+        backgroundScope.launch { c.restore(path) }
+        backgroundScope.launch { c.restore(null) }
+        advanceTimeBy(5_000); runCurrent()
+        Level.entries.forEach { assertNull(c.level(it).selectedId, "$it must be empty after restore(null)") }
+        assertNull(c.currentValue)
     }
 }
