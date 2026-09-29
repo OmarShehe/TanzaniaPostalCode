@@ -177,3 +177,9 @@ Each release records the artifact version and the dataset (`DatasetInfo.version`
 ## Licence
 
 Code: [Apache License 2.0](LICENSE). The address data comes from a public postcode list (see [DATA_SOURCE.md](DATA_SOURCE.md)).
+
+## For AI coding assistants
+
+`.claude/skills/use-tz-address-kit/SKILL.md` is a skill that teaches an assistant such as Claude Code how to use this library: which artifact to pick, how to create
+the store on each platform (including the two iOS files), the search and lookup API, the Compose widgets and the common mistakes. Copy the folder into another
+project's `.claude/skills/` to use it there.
