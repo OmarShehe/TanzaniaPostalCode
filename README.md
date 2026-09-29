@@ -24,7 +24,7 @@ Tanzanian postcode list (see <https://www.tanzaniapostcode.com/> and
 |---|---|---|
 | `io.github.omarshehe:tz-address-core` | the model and the `AddressRepository` interface | Kotlin 2.2+ (iOS/native: 2.4+) |
 | `io.github.omarshehe:tz-address-data` | the bundled database and the repository (includes `core`) | Kotlin 2.2+ (iOS/native: 2.4+) |
-| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose) | Compose Multiplatform 1.12, built with Kotlin 2.4, and [`forminput-compose`](https://github.com/OmarShehe/FormInputs) 2.0.0 (pulled in transitively) |
+| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose) | Compose Multiplatform 1.12, built with Kotlin 2.4, and [`forminput-compose`](https://github.com/OmarShehe/FormInputs) 2.1.0 (pulled in transitively) |
 
 Targets: Android (minSdk 21 for `core`, **23** for `data` and `ui`, which their dependencies require), JVM 17, iOS (arm64 and
 simulator arm64). Backends and headless apps use `core` + `data` and

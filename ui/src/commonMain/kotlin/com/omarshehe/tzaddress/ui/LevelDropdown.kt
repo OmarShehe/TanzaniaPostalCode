@@ -5,10 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import com.omarshehe.forminput.compose.ui.FormInputDropDownOption
+import com.omarshehe.forminput.compose.ui.FormInputDropDownField
 import com.omarshehe.forminput.compose.ui.model.DropDownOptionModel
 import com.omarshehe.forminput.compose.ui.model.FormInputDropDownState
-import com.omarshehe.forminput.compose.ui.model.FormInputType
 import com.omarshehe.tzaddress.Level
 import com.omarshehe.tzaddress.ui.resources.Res
 import com.omarshehe.tzaddress.ui.resources.picker_none_listed
@@ -36,20 +35,19 @@ internal fun LevelDropdown(
 
     val data = remember(state.options, state.selectedId, label) {
         FormInputDropDownState(
+            id = levelTag(state.level),
+            label = label,
+            placeholder = selectPlaceholder,
             value = state.options.firstOrNull { it.id == state.selectedId }
                 ?.let { DropDownOptionModel(it.id, it.label) } ?: DropDownOptionModel(),
             options = state.options.map { DropDownOptionModel(it.id, it.label) },
-            id = levelTag(state.level),
-            labelValue = label,
-            placeholderValue = selectPlaceholder,
-            type = FormInputType.DROP_DOWN,
         )
     }
 
-    FormInputDropDownOption(
+    FormInputDropDownField(
         modifier = modifier.fillMaxWidth(),
         fieldModifier = Modifier.testTag(levelTag(state.level)),
-        formInputData = data,
+        state = data,
         enabled = state.enabled,
         supportingText = support,
         onSelected = { onSelect(it.value.id) },

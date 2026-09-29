@@ -23,7 +23,7 @@ composeMaterial3 = "1.9.0"
 activityCompose = "1.13.0"
 composeAndroidTest = "1.12.1"
 mavenPublish = "0.37.0"
-forminputCompose = "2.0.0"
+forminputCompose = "2.1.0"
 espresso = "3.7.0"
 
 [libraries]
