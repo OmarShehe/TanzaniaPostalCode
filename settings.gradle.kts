@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "TanzaniaPostalCode"
 include(":core")
+include(":importer")
 include(":app")

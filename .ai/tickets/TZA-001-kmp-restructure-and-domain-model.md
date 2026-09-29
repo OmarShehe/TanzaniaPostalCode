@@ -44,7 +44,7 @@ Kitongoji(id: String, name: String, mtaaId: String)       // no postcode in sour
 DatasetInfo(version: String, sourceEdition: String, generatedAt: String)
 ```
 
-Postcode rules (from the source list `tzPostcodeList.pdf`, 31 regions, 5 levels):
+Postcode rules (from the source list `tzPostcodeList.pdf`, 30 regions, 5 levels):
 - Region header is `<NAME> REGION - NNNNN` (e.g. Dar es Salaam `11000`); the region code stored is the value as printed. District codes are 2-3 digits (`11`, `231`); ward postcodes are 5 digits (`11101`).
 - Mtaa/village and kitongoji have **no** postcode in the source. Their `id` is deterministic: `"<parentId>/<slug(name)>"`, with `-2`, `-3` suffixes to disambiguate duplicates under the same parent (the source repeats names, e.g. `Rubumba` twice under one ward).
 - `Ward.postcode` is globally unique and is the ward identifier.
