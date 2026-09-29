@@ -114,6 +114,15 @@ No network API. Kotlin API per "Repository contract" above.
 
 ---
 
+## Scope notes (added during implementation)
+
+- iOS targets are `iosArm64` and `iosSimulatorArm64` only; `iosX64` (Intel simulator) was dropped as no longer worth supporting.
+- Immutability criterion is verified by a documented grep (no `var` in `core/.../model`) plus the contract test compiling against `List` types, not by a reflection unit test.
+- `./gradlew build` cannot fully pass on a machine without full Xcode: linking iOS test binaries needs it. iOS klib compilation (`compileKotlinIosArm64`, `compileKotlinIosSimulatorArm64`) passes without Xcode; iOS *test execution* is unverified until run on a machine with Xcode.
+- `.ai/context.md` (module map, build commands) was created in this ticket.
+
+---
+
 ## Out of Scope
 
 - Importing data from the PDF (TZA-002).
