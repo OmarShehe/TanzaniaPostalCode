@@ -30,11 +30,14 @@ class ImportOptions(
                 sourceEdition = values["sourceEdition"]?.takeIf { it.isNotBlank() },
                 generatedAt = values["generatedAt"]?.takeIf { it.isNotBlank() },
                 policy = Policy(
-                    expectedRegions = values["expectedRegions"]?.toInt() ?: DEFAULT_EXPECTED_REGIONS,
-                    maxAnomalyRatio = values["maxAnomalyRatio"]?.toDouble() ?: DEFAULT_MAX_ANOMALY_RATIO,
+                    expectedRegions = values["expectedRegions"]?.let { number("expectedRegions", it, String::toIntOrNull) } ?: DEFAULT_EXPECTED_REGIONS,
+                    maxAnomalyRatio = values["maxAnomalyRatio"]?.let { number("maxAnomalyRatio", it, String::toDoubleOrNull) } ?: DEFAULT_MAX_ANOMALY_RATIO,
                 ),
                 force = values["force"]?.let { it.lowercase() !in FALSE_VALUES } ?: false,
             )
         }
+
+        private fun <T> number(option: String, value: String, convert: (String) -> T?): T =
+            convert(value) ?: throw IllegalArgumentException("Invalid value for -P$option: '$value' is not a number")
     }
 }

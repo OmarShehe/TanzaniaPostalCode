@@ -7,7 +7,12 @@ import kotlin.system.exitProcess
 private const val DATASET_VERSION = "1"
 
 fun main(args: Array<String>) {
-    val options = ImportOptions.parse(args)
+    val options = try {
+        ImportOptions.parse(args)
+    } catch (e: IllegalArgumentException) {
+        System.err.println(e.message)
+        exitProcess(2)
+    }
     val pdf = options.pdf
     if (pdf == null || !pdf.isFile) {
         System.err.println("Usage: ./gradlew :importer:importPostcodes -Ppdf=/path/to/tzPostcodeList.pdf [-PsourceEdition=..] [-PgeneratedAt=..] [-Pforce] [-PoutDir=dataset] [-PexpectedRegions=30] [-PmaxAnomalyRatio=0.005]")

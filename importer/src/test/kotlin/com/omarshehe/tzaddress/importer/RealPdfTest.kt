@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assumptions.assumeTrue
 class RealPdfTest {
     private val pdf: File? = System.getenv("TZ_PDF")?.takeIf { it.isNotBlank() }?.let(::File)?.takeIf { it.isFile }
 
-    private val policy = Policy(expectedRegions = 30, maxAnomalyRatio = 0.005)
+    private val policy = Policy(ImportOptions.DEFAULT_EXPECTED_REGIONS, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO)
     private val info = InfoDto("1", "test", "2026-01-01T00:00:00Z")
 
     private fun parse(file: File) = ImportPipeline.parse(PdfWordExtractor.extract(file))

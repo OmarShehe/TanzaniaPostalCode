@@ -7,7 +7,8 @@ package com.omarshehe.tzaddress.importer
  */
 object NameNormalizer {
     private val connectors = setOf("na", "wa", "ya", "la", "es")
-    private val acronyms = setOf("CBD")
+    /** Acronyms that are always upper-case. Standalone all-caps acronyms cannot be told from shouted words by rule, so add them here. */
+    private val acronyms = setOf("CBD", "TANESCO")
     private const val SHOUTING_WORD_LENGTH = 4
     private val roman = Regex("^[IVX]{2,4}$")
     private val whitespace = Regex("\\s+")

@@ -13,7 +13,7 @@ class CommittedDatasetTest {
     @Test fun datasetExists() = assertTrue(file.isFile, "run :importer:importPostcodes and commit dataset/")
 
     @Test fun datasetPassesValidation() {
-        val result = Validator.validate(dataset, 0, 1, Policy(expectedRegions = 30, maxAnomalyRatio = 0.005))
+        val result = Validator.validate(dataset, 0, 1, Policy(ImportOptions.DEFAULT_EXPECTED_REGIONS, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO))
         assertTrue(result.passed, result.violations.toString())
     }
 

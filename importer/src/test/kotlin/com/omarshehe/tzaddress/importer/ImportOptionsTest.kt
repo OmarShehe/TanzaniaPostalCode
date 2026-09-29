@@ -3,6 +3,7 @@ package com.omarshehe.tzaddress.importer
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -50,5 +51,17 @@ class ImportOptionsTest {
         assertEquals(File("/repo/dataset"), parse("--root=/repo").outDir)
         assertEquals(File("/repo/out"), parse("--root=/repo", "--outDir=out").outDir)
         assertEquals(File("/abs/out"), parse("--root=/repo", "--outDir=/abs/out").outDir)
+    }
+
+    @Test fun nonNumericPolicyValues_failWithTheOptionNamed() {
+        val regions = assertFailsWith<IllegalArgumentException> { parse("--expectedRegions=abc") }
+        assertTrue("expectedRegions" in regions.message.orEmpty() && "abc" in regions.message.orEmpty())
+        val ratio = assertFailsWith<IllegalArgumentException> { parse("--maxAnomalyRatio=lots") }
+        assertTrue("maxAnomalyRatio" in ratio.message.orEmpty())
+    }
+
+    @Test fun defaultConstants_areTheDocumentedPolicy() {
+        assertEquals(30, ImportOptions.DEFAULT_EXPECTED_REGIONS)
+        assertEquals(0.005, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO)
     }
 }

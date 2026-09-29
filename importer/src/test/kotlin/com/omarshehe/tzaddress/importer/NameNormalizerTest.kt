@@ -83,4 +83,10 @@ class NameNormalizerTest {
         assertEquals("Ukuu", n("UKUU"))
         assertEquals("Mji Mpya", n("MJI MPYA"))
     }
+
+    @Test fun knownStandaloneAcronyms_stayUpperAtEveryLevel() {
+        assertEquals("TANESCO", n("TANESCO"))
+        assertEquals("TANESCO", NameNormalizer.normalize("TANESCO", shortAllCapsAreAcronyms = true))
+        assertEquals("Kituo Cha TANESCO", NameNormalizer.normalize("Kituo cha Tanesco", shortAllCapsAreAcronyms = true))
+    }
 }
