@@ -53,12 +53,12 @@ public fun AddressSearchField(
 
     Column(modifier) {
         FormInputTextField(
-            formInputData = FormInputTextFieldState(
-                value = text,
+            state = FormInputTextFieldState(
                 id = "address-search",
-                labelValue = label,
-                placeholderValue = placeholder,
                 type = FormInputType.TEXT,
+                value = text,
+                label = label,
+                placeholder = placeholder,
             ),
             textModifier = Modifier.testTag(SEARCH_FIELD_TAG),
             onValueChange = {
