@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.maven.publish)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.jetbrains.compose)
@@ -49,4 +50,16 @@ kotlin {
 
 compose.resources {
     packageOfResClass = "com.omarshehe.tzaddress.ui.resources"
+}
+
+mavenPublishing {
+    // Group, version and the shared POM fields come from gradle.properties.
+    coordinates(artifactId = "tz-address-ui")
+    pom {
+        name.set("TZ Address UI")
+        description.set("Compose Multiplatform address search field and cascading address picker.")
+    }
+    publishToMavenCentral()
+    // Signing is only required for a real release; a local publishToMavenLocal works without keys.
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) signAllPublications()
 }

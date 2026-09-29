@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.maven.publish)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
 }
@@ -34,6 +35,13 @@ tasks.withType<Test>().configureEach {
 
 kotlin {
     explicitApi()
+
+    // Published libraries compile against an older language/API level and stdlib so consumers on Kotlin 2.2+ can use them.
+    compilerOptions {
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+    }
+    coreLibrariesVersion = "2.2.0"
 
     androidLibrary {
         namespace = "com.omarshehe.tzaddress.data"
@@ -75,4 +83,16 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
         }
     }
+}
+
+mavenPublishing {
+    // Group, version and the shared POM fields come from gradle.properties.
+    coordinates(artifactId = "tz-address-data")
+    pom {
+        name.set("TZ Address Data")
+        description.set("Bundled read-only SQLite database of Tanzanian addresses with offline search, postcode lookup and browse.")
+    }
+    publishToMavenCentral()
+    // Signing is only required for a real release; a local publishToMavenLocal works without keys.
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) signAllPublications()
 }

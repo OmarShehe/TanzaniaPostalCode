@@ -40,5 +40,11 @@ The database `tz-address.db` (+ `tz-address.db.version` stamp) is **generated, n
 ## Workflow
 Local-only for now: no pushes. Integration branch `feature/tz-address-kit`; per-ticket branches `feature/TZA-NNN` merge into it.
 
+## Publishing
+- Artifacts (group `io.github.omarshehe`, version `VERSION_NAME` in `gradle.properties`): `tz-address-core` (`:core`), `tz-address-data` (`:data`), `tz-address-ui` (`:ui`). `:app` and `:importer` are never published. Plugin: `com.vanniktech.maven.publish`.
+- `./gradlew publishToMavenLocal` for local integration tests (consumer projects list `mavenLocal()` first and, for JVM, `google()` too: `androidx.sqlite` is only on Google Maven).
+- Release: push tag `v<VERSION_NAME>`; `.github/workflows/release.yml` (macOS runner) runs `.github/scripts/check-release.sh` (needs `LICENSE`, no `TODO(maintainer)` in `DATA_SOURCE.md`, tag = `VERSION_NAME`), requires secrets `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`, publishes, and attaches `tz-address.db` + `.version` to the GitHub release (iOS consumers need them in their app bundle).
+- `:core` and `:data` compile with language/API level 2.2 and stdlib 2.2.0 so Kotlin 2.2+ consumers can read them; `:ui` needs a newer Kotlin (Compose 1.12, built with 2.4.20).
+
 ## Known caveats
 - Kotlin/Native reports host `macos_x64` as deprecated (Intel Mac); harmless for now.
