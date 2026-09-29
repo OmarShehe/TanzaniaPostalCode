@@ -9,7 +9,7 @@
 
 ## Problem Statement
 
-With the model (TZA-001) and dataset (TZA-002) in place, nothing lets a project actually *use* the addresses. Consumers need Google-Places-style behaviour offline: type-ahead search, postcode ↔ address resolution, and cascading region → kitongoji browsing. The dataset is large (five levels across 31 regions), so holding it all as in-memory Kotlin objects (the old design) costs heap and startup time on mobile.
+With the model (TZA-001) and dataset (TZA-002) in place, nothing lets a project actually *use* the addresses. Consumers need Google-Places-style behaviour offline: type-ahead search, postcode ↔ address resolution, and cascading region → kitongoji browsing. The dataset is large (five levels across 30 regions), so holding it all as in-memory Kotlin objects (the old design) costs heap and startup time on mobile.
 
 ---
 
