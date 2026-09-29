@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.omarshehe.tanzaniapostalcode"
-    compileSdk = 37
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.omarshehe.tanzaniapostalcode"
-        minSdk = 23
-        targetSdk = 36
+        minSdk = libs.versions.minSdkApp.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":library"))
+    implementation(project(":core"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
