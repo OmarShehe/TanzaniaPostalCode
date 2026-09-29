@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core"))
     implementation(libs.pdfbox)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.sqlite.jdbc)
     testImplementation(libs.kotlin.test)
 }
 
