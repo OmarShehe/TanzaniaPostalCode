@@ -9,7 +9,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.omarshehe.tzaddress.AddressMatch
-import com.omarshehe.tzaddress.AddressRepository
+import com.omarshehe.tzaddress.data.AddressStore
 import com.omarshehe.tzaddress.data.createAddressRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 /** Sample: type-ahead search over the bundled Tanzanian address database. */
 class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    private var repository: AddressRepository? = null
+    private var repository: AddressStore? = null
     private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         scope.cancel()
+        repository?.close()
         super.onDestroy()
     }
 }

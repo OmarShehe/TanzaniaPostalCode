@@ -1,6 +1,7 @@
 package com.omarshehe.tzaddress.data
 
 import androidx.sqlite.SQLiteDriver
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.io.buffered
@@ -48,6 +49,8 @@ internal class DbInstaller(
                 } finally {
                     connection.close()
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (_: Exception) {
                 null
             }

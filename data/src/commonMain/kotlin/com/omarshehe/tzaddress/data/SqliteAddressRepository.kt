@@ -5,7 +5,6 @@ import androidx.sqlite.SQLiteDriver
 import androidx.sqlite.execSQL
 import com.omarshehe.tzaddress.AddressMatch
 import com.omarshehe.tzaddress.AddressPath
-import com.omarshehe.tzaddress.AddressRepository
 import com.omarshehe.tzaddress.AddressText
 import com.omarshehe.tzaddress.Level
 import com.omarshehe.tzaddress.model.DatasetInfo
@@ -23,13 +22,13 @@ import kotlinx.coroutines.withContext
 internal class SqliteAddressRepository private constructor(
     private val connection: SQLiteConnection,
     private val wardPostcodes: Set<String>,
-) : AddressRepository {
+) : AddressStore {
     private val lock = Mutex()
 
     private suspend fun <T> read(block: (SQLiteConnection) -> T): T =
         withContext(Dispatchers.Default) { lock.withLock { block(connection) } }
 
-    fun close() = connection.close()
+    override fun close() = connection.close()
 
     override suspend fun info(): DatasetInfo = read { c ->
         c.query("SELECT version, source_edition, generated_at FROM dataset_info") {
@@ -69,12 +68,14 @@ internal class SqliteAddressRepository private constructor(
         val match = SearchQuery.match(query) ?: return emptyList()
         if (levels.isEmpty()) return emptyList()
         val max = SearchQuery.clampLimit(limit)
+        val normalized = AddressText.normalize(query)
         val levelList = levels.joinToString(",") { "'${it.name}'" }
         return read { c ->
             val candidates = c.query(
                 "SELECT level, ref_id, name FROM search_index WHERE search_index MATCH ? AND level IN ($levelList) " +
-                    "ORDER BY bm25(search_index, 0.0, 0.0, 10.0, 1.0) LIMIT $CANDIDATES",
-                match,
+                    // Exact and prefix names first, so they can't be cut off by the candidate cap; names are stored normalised.
+                    "ORDER BY (name = ?) DESC, (name LIKE ? || '%') DESC, bm25(search_index, 0.0, 0.0, 10.0, 1.0) LIMIT $CANDIDATES",
+                match, normalized, normalized,
             ) { Triple(Level.valueOf(it.getText(0)), it.getText(1), it.getText(2)) }
             candidates
                 .map { (level, id, name) -> SearchRanking.Ranked(SearchRanking.score(query, name), level, name, id) }

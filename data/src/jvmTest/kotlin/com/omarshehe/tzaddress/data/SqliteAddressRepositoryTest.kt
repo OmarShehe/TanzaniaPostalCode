@@ -52,6 +52,12 @@ class SqliteAddressRepositoryTest {
         assertTrue(matches.first().score > matches.first { it.label == "Kariakoo Magharibi" }.score)
     }
 
+    @Test fun search_exactNamesSurviveTheCandidateCap() = runBlocking {
+        // "b" matches thousands of rows, and at least 97 places are named just B (also as "B" / 'B'): all lead the results.
+        val matches = repository.search("b", limit = 100)
+        assertTrue(matches.take(97).all { it.score == 4.0 }, matches.take(100).map { it.label to it.score }.toString())
+    }
+
     @Test fun search_blankAndClamping() = runBlocking {
         assertTrue(repository.search("").isEmpty())
         assertTrue(repository.search("   ").isEmpty())
