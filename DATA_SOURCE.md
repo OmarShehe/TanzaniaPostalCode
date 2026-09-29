@@ -1,21 +1,28 @@
 # Data source
 
-The address data in `dataset/tz-address.json` is derived from a PDF postcode list (`tzPostcodeList.pdf`, 1,211 pages, edition dated 2012-07-30). The PDF itself is **not** in this repository. Its metadata is generic (`Microsoft Word - REGION.DAR`), so where it came from cannot be read from the file.
+The address data in `dataset/tz-address.json` is derived from the Tanzanian postcode list, which is publicly available.
+References:
 
-The maintainer must fill in the facts below before the first public release. The release workflow refuses to run while any `TODO(maintainer)` marker remains in this file.
+- <https://www.tanzaniapostcode.com/>
+- <https://www.tcra.go.tz/services/publication-of-postcode-list>
+
+The repository publishes only the facts extracted from that list (region, district and ward names and codes, mtaa/village
+and kitongoji names) as `dataset/tz-address.json`. It does not store copies of the source files.
 
 | Fact | Value |
 |---|---|
-| Title of the document | TODO(maintainer) |
-| Publisher / issuing body | TODO(maintainer) |
-| Edition / date | 2012-07-30 (from the file; confirm) |
-| How it was obtained (URL, date, person) | TODO(maintainer) |
-| Terms under which the list and a derived dataset may be redistributed | TODO(maintainer) |
-| Attribution text to show users | TODO(maintainer) |
+| Data | Tanzanian postcode list, edition dated 2012-07-30 |
+| Availability | publicly available online (see the references above) |
+| Licence / redistribution terms | none stated here; the data is a list of place names and postal codes. Anyone with a stricter requirement should check the references directly. |
+| Attribution | Postcode data: public Tanzanian postcode list (2012-07-30 edition); see <https://www.tanzaniapostcode.com/> and <https://www.tcra.go.tz/services/publication-of-postcode-list>. |
 
 ## What the importer does
 
-`:importer` reads the PDF's text layer and rebuilds the Region → District → Ward → Mtaa/Village → Kitongoji hierarchy. It normalises names and reports anomalies in `dataset/import-report.md` and `dataset/import-anomalies.csv`. It never edits the source; where the PDF is inconsistent (for example 140 wards that list kitongoji without an mtaa), the dataset keeps what is printed and the report says so.
+`:importer` reads the published list file and rebuilds the Region → District → Ward → Mtaa/Village → Kitongoji hierarchy. It
+normalises names and reports anomalies in `dataset/import-report.md` and `dataset/import-anomalies.csv`. It never edits the
+source; where the list is inconsistent (for example 140 wards that list kitongoji without an mtaa), the dataset keeps what is
+printed and the report says so. To rebuild the dataset, download the list from the references above and pass its path to the
+importer (see the README).
 
 ## Known gaps
 

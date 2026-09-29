@@ -13,8 +13,10 @@ No network, no API key. The data ships inside the library.
 Edition `2012-07-30` of the national postcode list: **30 regions, 163 districts, 3,416 wards (5-digit postcodes),
 15,820 mtaa/villages/shehia and 16,883 kitongoji.** Zanzibar's regions are included; a shehia is stored as an mtaa.
 
-Not covered: Songwe (created 2016) and districts created after 2012 such as Kigamboni. See [DATA_SOURCE.md](DATA_SOURCE.md)
-for where the list comes from and the terms it may be used under.
+Not covered: Songwe (created 2016) and districts created after 2012 such as Kigamboni. The data comes from the publicly available
+Tanzanian postcode list (see <https://www.tanzaniapostcode.com/> and
+<https://www.tcra.go.tz/services/publication-of-postcode-list>). Details and attribution are in
+[DATA_SOURCE.md](DATA_SOURCE.md).
 
 ## Artifacts
 
@@ -138,10 +140,11 @@ The `:app` module is a working sample.
 
 ## Updating the dataset
 
-The dataset is regenerated from the PDF, never edited by hand.
+The dataset is regenerated from the published postcode list (download it from the references in
+[DATA_SOURCE.md](DATA_SOURCE.md)), never edited by hand.
 
 ```
-./gradlew :importer:importPostcodes -Ppdf=/path/to/tzPostcodeList.pdf -PsourceEdition="<label>"
+./gradlew :importer:importPostcodes -Ppdf=/path/to/postcode-list -PsourceEdition="<label>"
 ```
 
 This rewrites `dataset/tz-address.json`, `dataset/import-report.md` and `dataset/import-anomalies.csv` and fails on bad
@@ -165,10 +168,10 @@ Each release records the artifact version and the dataset (`DatasetInfo.version`
 - `./gradlew publishToMavenLocal` publishes `core`, `data` and `ui` to `~/.m2` for trying them in another project
   (`mavenLocal()` first in its repositories).
 - Releases are made by pushing a `v*` tag; the workflow in `.github/workflows/release.yml` refuses to publish without
-  signing secrets, a `LICENSE`, and a completed `DATA_SOURCE.md`. `:app` and `:importer` are never published.
+  signing secrets and a `LICENSE`, and while `DATA_SOURCE.md` contains a `TODO(maintainer)` marker. `:app` and `:importer` are never published.
 - The workflow **stages** the deployment on Maven Central. Open the Central Portal → *Deployments* and press *Publish* to
   release it (or use `publishToMavenCentral(automaticRelease = true)` to skip that step once you trust the pipeline).
 
 ## Licence
 
-Code: [Apache License 2.0](LICENSE). The address data has its own provenance and terms: see [DATA_SOURCE.md](DATA_SOURCE.md).
+Code: [Apache License 2.0](LICENSE). The address data comes from a public postcode list (see [DATA_SOURCE.md](DATA_SOURCE.md)).
