@@ -10,6 +10,8 @@ kotlinxIo = "0.9.1"
 compileSdk = "37"
 minSdkApp = "23"
 minSdkCore = "21"
+minSdkData = "23"
+minSdkUi = "23"
 targetSdk = "36"
 coreKtx = "1.19.1"
 appcompat = "1.8.0"
@@ -20,6 +22,7 @@ compose = "1.12.1"
 composeMaterial3 = "1.9.0"
 activityCompose = "1.13.0"
 composeAndroidTest = "1.12.1"
+mavenPublish = "0.37.0"
 espresso = "3.7.0"
 
 [libraries]
@@ -56,4 +59,5 @@ android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

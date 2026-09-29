@@ -1,0 +1,59 @@
+name: Release
+
+# Push a tag such as v0.1.0 (it must match VERSION_NAME in gradle.properties).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # The iOS targets can only be built on macOS.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check release prerequisites
+        run: .github/scripts/check-release.sh "$GITHUB_REF_NAME"
+
+      - name: Check signing and upload secrets are configured
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
+        run: |
+          missing=0
+          for name in MAVEN_CENTRAL_USERNAME MAVEN_CENTRAL_PASSWORD SIGNING_KEY SIGNING_KEY_PASSWORD; do
+            if [ -z "${!name}" ]; then echo "::error::Repository secret for $name is not set."; missing=1; fi
+          done
+          exit "$missing"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and test
+        run: ./gradlew :core:jvmTest :data:jvmTest :ui:jvmTest
+
+      - name: Publish to Maven Central
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
+        run: ./gradlew publishToMavenCentral --no-configuration-cache
+
+      # iOS artifacts carry no data (no classpath): consumers add these two files to their app bundle.
+      - name: Attach the database files to the GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --generate-notes \
+            data/build/generated/addressDb/tz-address.db \
+            data/build/generated/addressDb/tz-address.db.version

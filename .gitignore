@@ -9,3 +9,7 @@
 .idea/
 .kotlin/
 gradle/gradle-daemon-jvm.properties
+# Source lists are public but are not stored in this repository.
+*.pdf
+# Local workflow notes (tickets, specs, context) stay on disk and out of the repository.
+.ai/
