@@ -1,0 +1,17 @@
+<resources>
+    <string name="search_label">Search address</string>
+    <string name="search_placeholder">Type a place, e.g. Kivukoni</string>
+    <string name="search_no_matches">No matches</string>
+    <string name="search_error">Search failed. Try again.</string>
+    <string name="level_region">Region</string>
+    <string name="level_district">District</string>
+    <string name="level_ward">Ward</string>
+    <string name="level_mtaa">Mtaa / Village</string>
+    <string name="level_kitongoji">Kitongoji</string>
+    <string name="picker_select">Select…</string>
+    <string name="picker_optional">%1$s (optional)</string>
+    <string name="picker_none_listed">None listed</string>
+    <string name="picker_select_first">Select %1$s first</string>
+    <string name="picker_postcode">Postcode %1$s</string>
+    <string name="picker_error">Could not load addresses</string>
+</resources>

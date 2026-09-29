@@ -9,11 +9,10 @@ Offline Tanzanian address data (Region → District → Ward → Mtaa/Village �
 | `:importer` | Kotlin/JVM tool (never published) | Parses `tzPostcodeList.pdf` into `dataset/`. Package `com.omarshehe.tzaddress.importer`. Depends on `:core`; `:core` never depends on it. |
 | `:data` | KMP library (Android, JVM, iosArm64, iosSimulatorArm64) | `SqliteAddressRepository` over a bundled read-only SQLite DB (`androidx.sqlite` bundled driver, FTS5 search). Package `com.omarshehe.tzaddress.data`. Public API: the platform `createAddressRepository(...)` factories. |
 | `:data` | KMP library (Android, JVM, iosArm64, iosSimulatorArm64) | `SqliteAddressRepository` over a bundled read-only SQLite DB (`androidx.sqlite` bundled driver, FTS5 search). Package `com.omarshehe.tzaddress.data`. Public API: the platform `createAddressRepository(...)` factories. |
+| `:ui` | Compose Multiplatform library (Android, desktop JVM, iosArm64, iosSimulatorArm64) | Optional `AddressSearchField` and `AddressPicker`. Package `com.omarshehe.tzaddress.ui`. Depends on `:core` only (never `:data`); behaviour lives in `AddressSearchController` / `AddressPickerController`, strings in `composeResources` (en, sw). |
 | `:app` | Android application | Sample app; package `com.omarshehe.tanzaniapostalcode`. |
 
 Committed data: `dataset/tz-address.json` (canonical dataset), `dataset/import-report.md`, `dataset/import-anomalies.csv`. The source PDF is **not** in the repo (unknown redistribution terms).
-
-Planned (by ticket): `:ui` (TZA-004).
 
 The database `tz-address.db` (+ `tz-address.db.version` stamp) is **generated, not committed**: `:data:generateAddressDb` builds it from `dataset/tz-address.json` (via `:importer`, using `sqlite-jdbc`) and fails if table counts differ from `dataset/import-report.md`. JVM/Android bundle it as classpath resources; iOS reads it from the app bundle (the host app must add both files to its target).
 
@@ -25,6 +24,9 @@ The database `tz-address.db` (+ `tz-address.db.version` stamp) is **generated, n
 - **Intel Macs:** the bundled SQLite driver has no macOS x64 binary, so `BundledDriverFtsSpikeTest` skips there and `:data` JVM tests use a test-only JDBC driver (`JdbcSQLiteDriver`). Linux x64/arm64, Windows x64 and macOS arm64 are supported by the driver.
 - `./gradlew :data:jvmTest` (also builds the DB) and `./gradlew :data:connectedAndroidDeviceTest` (real device: FTS with the bundled driver, install + search, p95 benchmark to logcat tag `TzAddressBench`).
 - **Intel Macs:** the bundled SQLite driver has no macOS x64 binary, so `BundledDriverFtsSpikeTest` skips there and `:data` JVM tests use a test-only JDBC driver (`JdbcSQLiteDriver`). Linux x64/arm64, Windows x64 and macOS arm64 are supported by the driver.
+- `./gradlew :ui:jvmTest` (controller tests plus Compose UI tests on desktop JVM) and `./gradlew :app:connectedDebugAndroidTest` (both widgets over the real bundled DB on a device, including rotation).
+- `:ui` needs `androidResources { enable = true }` so its Compose strings reach the AAR (AGP-KMP library plugin default is off).
+- Apply the Compose plugins (`org.jetbrains.compose`, `org.jetbrains.kotlin.plugin.compose`) only in `:ui` and `:app`; on `:data`/`:core` they break the plain-JVM compile.
 - `./gradlew :app:assembleDebug :app:assembleRelease`
 - `./gradlew build` — fails on this machine at `:core:linkDebugTestIosSimulatorArm64` (linking iOS test binaries needs full Xcode; only Command Line Tools are installed). Locally use `-x linkDebugTestIosSimulatorArm64 -x iosSimulatorArm64Test -x linkDebugTestIosArm64`.
 - Checks: `grep -rnE "^import (android|java)\." core/src/commonMain` and `grep -rn "\bvar\b" core/src/commonMain/kotlin/com/omarshehe/tzaddress/model` must return nothing.

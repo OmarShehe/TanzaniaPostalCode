@@ -20,4 +20,5 @@ rootProject.name = "TanzaniaPostalCode"
 include(":core")
 include(":importer")
 include(":data")
+include(":ui")
 include(":app")
