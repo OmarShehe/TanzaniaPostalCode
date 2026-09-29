@@ -24,7 +24,8 @@ for where the list comes from and the terms it may be used under.
 | `io.github.omarshehe:tz-address-data` | the bundled database and the repository (includes `core`) | Kotlin 2.2+ (iOS/native: 2.4+) |
 | `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose) | Compose Multiplatform 1.12, built with Kotlin 2.4 |
 
-Targets: Android (minSdk 21), JVM 17, iOS (arm64 and simulator arm64). Backends and headless apps use `core` + `data` and
+Targets: Android (minSdk 21 for `core`, **23** for `data` and `ui`, which their dependencies require), JVM 17, iOS (arm64 and
+simulator arm64). Backends and headless apps use `core` + `data` and
 never pull in Compose.
 
 ## Install
@@ -165,6 +166,8 @@ Each release records the artifact version and the dataset (`DatasetInfo.version`
   (`mavenLocal()` first in its repositories).
 - Releases are made by pushing a `v*` tag; the workflow in `.github/workflows/release.yml` refuses to publish without
   signing secrets, a `LICENSE`, and a completed `DATA_SOURCE.md`. `:app` and `:importer` are never published.
+- The workflow **stages** the deployment on Maven Central. Open the Central Portal → *Deployments* and press *Publish* to
+  release it (or use `publishToMavenCentral(automaticRelease = true)` to skip that step once you trust the pipeline).
 
 ## Licence
 

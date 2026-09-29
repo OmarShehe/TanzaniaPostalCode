@@ -46,7 +46,7 @@ kotlin {
     androidLibrary {
         namespace = "com.omarshehe.tzaddress.data"
         compileSdk = libs.versions.compileSdk.get().toInt()
-        minSdk = libs.versions.minSdkCore.get().toInt()
+        minSdk = libs.versions.minSdkData.get().toInt() // sqlite-bundled needs API 23
 
         withHostTest {}
         withDeviceTest {

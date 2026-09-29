@@ -12,7 +12,7 @@ kotlin {
     androidLibrary {
         namespace = "com.omarshehe.tzaddress.ui"
         compileSdk = libs.versions.compileSdk.get().toInt()
-        minSdk = libs.versions.minSdkCore.get().toInt()
+        minSdk = libs.versions.minSdkUi.get().toInt() // Compose needs API 23
 
         // Off by default in the AGP-KMP library plugin; without it the Compose resources (strings) never reach the AAR assets.
         androidResources { enable = true }
