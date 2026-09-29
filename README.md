@@ -24,7 +24,7 @@ Tanzanian postcode list (see <https://www.tanzaniapostcode.com/> and
 |---|---|---|
 | `io.github.omarshehe:tz-address-core` | the model and the `AddressRepository` interface | Kotlin 2.2+ (iOS/native: 2.4+) |
 | `io.github.omarshehe:tz-address-data` | the bundled database and the repository (includes `core`) | Kotlin 2.2+ (iOS/native: 2.4+) |
-| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose) | Compose Multiplatform 1.12, built with Kotlin 2.4 |
+| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose) | Compose Multiplatform 1.12, built with Kotlin 2.4and [`forminput-compose`](https://github.com/OmarShehe/FormInputs) 2.0.0 (pulled in transitively) |
 
 Targets: Android (minSdk 21 for `core`, **23** for `data` and `ui`, which their dependencies require), JVM 17, iOS (arm64 and
 simulator arm64). Backends and headless apps use `core` + `data` and
@@ -131,6 +131,8 @@ The `:app` module is a working sample.
 
 ## Platform notes
 
+- **`tz-address-ui` and `forminput-compose`:** the widgets are built on `com.github.OmarShehe:forminput-compose`. Until that artifact is on a public
+  repository, publish it first (`./gradlew :forminput-compose:publishToMavenLocal` in the FormInputs repo) and keep `mavenLocal()` in `settings.gradle.kts`.
 - **Intel Macs:** the bundled SQLite driver has no macOS x64 binary. The JVM target runs on Linux (x64, arm64),
   Windows x64 and Apple-silicon macOS. On an Intel Mac, develop against Android or run the JVM code in Linux.
 - **Android and `tz-address-ui`:** Compose resources are packaged in the library; nothing to configure.
