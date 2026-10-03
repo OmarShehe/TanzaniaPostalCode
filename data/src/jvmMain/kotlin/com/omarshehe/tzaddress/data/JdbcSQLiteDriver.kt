@@ -14,8 +14,8 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.Types
 
-/** Test-only `androidx.sqlite` driver over sqlite-jdbc, for hosts the bundled driver has no binary for. */
-class JdbcSQLiteDriver : SQLiteDriver {
+/** The JVM `androidx.sqlite` driver: sqlite-jdbc, which ships native SQLite for macOS (Intel and Apple silicon), Windows, Linux and Alpine. */
+internal class JdbcSQLiteDriver : SQLiteDriver {
     override val hasConnectionPool: Boolean = false
 
     override fun open(fileName: String): SQLiteConnection {

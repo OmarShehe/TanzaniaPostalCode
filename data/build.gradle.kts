@@ -65,13 +65,21 @@ kotlin {
         androidMain.get().resources.srcDir(dbResources)
         commonMain.dependencies {
             api(project(":core"))
-            implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.androidx.sqlite)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.io.core)
         }
-        jvmTest.dependencies {
-            // The bundled driver has no Intel-macOS binary; tests run on this JDBC-backed driver instead.
+        // The JVM uses sqlite-jdbc (native SQLite for macOS Intel and Apple silicon, Windows, Linux); the bundled driver has no Intel-macOS binary.
+        jvmMain.dependencies {
             implementation(libs.sqlite.jdbc)
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.sqlite.bundled)
+        }
+        listOf("iosArm64Main", "iosSimulatorArm64Main").forEach { name ->
+            getByName(name).dependencies {
+                implementation(libs.androidx.sqlite.bundled)
+            }
         }
         getByName("androidDeviceTest").dependencies {
             implementation(libs.androidx.test.runner)

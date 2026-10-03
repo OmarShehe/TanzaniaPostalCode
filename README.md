@@ -31,8 +31,8 @@ Backends and headless apps use `core` + `data` and never pull in Compose. iOS li
 
 ```kotlin
 // Android: dependencies { … }.  Multiplatform: commonMain.dependencies { … }
-implementation("io.github.omarshehe:tz-address-data:0.1.0")
-implementation("io.github.omarshehe:tz-address-ui:0.1.0") // optional, the Compose widgets
+implementation("io.github.omarshehe:tz-address-data:0.1.1")
+implementation("io.github.omarshehe:tz-address-ui:0.1.1") // optional, the Compose widgets
 ```
 
 - **Repositories:** `mavenCentral()` and `google()`. On a JVM backend `google()` is needed too, because `androidx.sqlite` is only on Google's Maven.
@@ -88,8 +88,8 @@ Both use your `MaterialTheme`, ship English and Swahili strings, and survive rot
 listed in the source (some wards have no mtaa, most mtaa have no kitongoji) shows "None listed" and counts as complete.
 They are built on `forminput`, so a `FormInputTheme` around them changes their style and shape. The `:app` module is a working sample.
 
-**Intel Macs:** the bundled SQLite driver has no macOS x64 binary. The JVM target runs on Linux (x64, arm64),
-Windows x64 and Apple-silicon macOS; on an Intel Mac, develop against Android or run the JVM code in Linux.
+**JVM hosts:** the JVM target uses [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc), so it runs on macOS (Intel and
+Apple silicon), Windows (x64, arm64) and Linux (including Alpine). It adds about 13 MB to a JVM app; Android and iOS use the AndroidX bundled SQLite.
 
 ## Updating the dataset
 

@@ -2,6 +2,10 @@
 
 Versions follow [semantic versioning](README.md#versioning). Every release records the dataset behind it.
 
+## 0.1.1 (2026-10-03)
+
+- `tz-address-data`: the JVM target now uses sqlite-jdbc instead of the AndroidX bundled SQLite, so it runs on Intel Macs and Windows as well as Linux and Apple-silicon Macs. Android and iOS are unchanged. The dataset is unchanged (`DatasetInfo.version` = `1`).
+
 ## 0.1.0 (2026-10-03)
 
 First release.
