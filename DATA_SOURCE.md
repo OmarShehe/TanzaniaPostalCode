@@ -28,7 +28,7 @@ Each ward's `latitude` and `longitude` are derived from ward boundary polygons p
 | Licence of the positions | [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/1-0/) (the boundaries come from OpenStreetMap) |
 | Attribution | © OpenStreetMap contributors, via geoBoundaries. The same text is stored as `info.attribution` in `dataset/tz-address.json` and in the database (`dataset_info`), and returned by `info().attribution`. |
 
-The notice belongs with the dataset and in an app's credits; it is not repeated on each record. The boundary files are not stored in
+The boundary files are not stored in
 this repository.
 
 ### How a ward is matched

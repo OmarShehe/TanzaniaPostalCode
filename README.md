@@ -156,7 +156,7 @@ Code: [Apache License 2.0](LICENSE). The address data comes from a public postco
 
 **Ward positions** (`Ward.latitude`, `Ward.longitude`) are derived from OpenStreetMap data and are licensed under the
 [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/1-0/). If your app uses them, credit
-**© OpenStreetMap contributors** where your app shows credits (an About or credits screen is enough; there is no per-record notice).
+**© OpenStreetMap contributors** where your app shows credits (an About or credits screen is enough).
 The full text is in the dataset itself: `addresses.info().attribution`.
 
 ## For AI coding assistants
