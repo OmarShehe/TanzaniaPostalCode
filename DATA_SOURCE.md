@@ -28,8 +28,7 @@ Each ward's `latitude` and `longitude` are derived from ward boundary polygons p
 | Licence of the positions | [Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/1-0/) (the boundaries come from OpenStreetMap) |
 | Attribution | © OpenStreetMap contributors, via geoBoundaries. The same text is stored as `info.attribution` in `dataset/tz-address.json` and in the database (`dataset_info`), and returned by `info().attribution`. |
 
-The boundary files are not stored in
-this repository.
+The boundary files are not stored in this repository.
 
 ### How a ward is matched
 
@@ -40,7 +39,6 @@ by a name that is unique in both lists. A name that fits more than one ward, or 
 
 Result for this edition: 3,042 of 3,416 wards have a position (2,613 by district and name, 429 by unique name); 115 are ambiguous and 259 have no
 usable boundary (no boundary ward of that name, or the only one lies in a district that the list has only in another region). Zanzibar: 119 of 140.
-A unique-name match is refused when the boundary ward is in a district that the list has only in other regions, so a same-named ward elsewhere is not used.
 
 ## What the importer does
 
@@ -52,6 +50,6 @@ importer (see the README).
 
 ## Known gaps
 
-- 374 wards have no position (the list is in `dataset/ward-points-anomalies.csv`); positions are for centring a map, not property locations.
+- 374 wards have no position (the list is in `dataset/ward-points-anomalies.csv`).
 - 30 regions only: Songwe (2016) and post-2012 districts such as Kigamboni are not in this edition.
 - Names appear as printed, including 16 entries with a source numbering prefix (for example `60. Kaseme A Mabamba`).

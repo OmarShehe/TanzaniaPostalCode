@@ -80,7 +80,7 @@ val lon = ward?.longitude  // both are set, or both are null
 
 The position is a point **inside the ward**, to centre a map when someone picks a ward. It is not the location of a house or a
 street, so let people place an exact point themselves. `ward-points-report.md` and `ward-points-anomalies.csv` in `dataset/` list the
-wards without a position and why (mostly spelling differences between the 2012 postcode list and the boundary data).
+wards without a position and why.
 
 ## The Compose picker
 
