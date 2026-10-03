@@ -13,6 +13,9 @@ No network, no API key. The data ships inside the library.
 Edition `2012-07-30` of the national postcode list: **30 regions, 163 districts, 3,416 wards (5-digit postcodes),
 15,820 mtaa/villages/shehia and 16,883 kitongoji.** Zanzibar's regions are included; a shehia is stored as an mtaa.
 
+Wards also carry a position (`latitude`, `longitude`) for centring a map: **3,042 of the 3,416 wards** have one, the rest are
+`null`. It comes from OpenStreetMap ward boundaries, so it is under the ODbL and needs a credit (see [Licence](#licence)).
+
 Not covered: Songwe (created 2016) and districts created after 2012, such as Kigamboni. Sources and attribution are in
 [DATA_SOURCE.md](DATA_SOURCE.md).
 
@@ -67,6 +70,18 @@ addresses.close()
 `ilala kariakoo` finds Kariakoo under Ilala). A blank query returns an empty list; `limit` is clamped to 1..100.
 The first call installs the bundled database into app storage (about 9 MB); later calls reuse it.
 
+### Ward positions
+
+```kotlin
+val ward = addresses.byPostcode("11101")?.ward
+val lat = ward?.latitude   // Double?, null when the ward has no known position
+val lon = ward?.longitude  // both are set, or both are null
+```
+
+The position is a point **inside the ward**, to centre a map when someone picks a ward. It is not the location of a house or a
+street, so let people place an exact point themselves. `ward-points-report.md` and `ward-points-anomalies.csv` in `dataset/` list the
+wards without a position and why (mostly spelling differences between the 2012 postcode list and the boundary data).
+
 ## The Compose picker
 
 ```kotlin
@@ -104,6 +119,18 @@ postcodes, duplicates or too many parse anomalies. The bundled database is built
 (`./gradlew :data:generateAddressDb`, which also checks its table counts against the report). Then bump `VERSION_NAME`
 in `gradle.properties` and add a `CHANGELOG.md` entry.
 
+Ward positions are added to the committed `dataset/tz-address.json` by a second step (the boundary files are public and, like the
+postcode list, are not stored here; the pinned download links are in [DATA_SOURCE.md](DATA_SOURCE.md)):
+
+```
+./gradlew :importer:importWardPoints -PwardBoundaries=/path/geoBoundaries-TZA-ADM3_simplified.geojson \
+    -PdistrictBoundaries=/path/geoBoundaries-TZA-ADM2_simplified.geojson
+```
+
+It fails when fewer than 85% of wards get a position (`-PminMatchRatio` to change) or a point is outside Tanzania, and writes
+`dataset/ward-points-report.md` and `dataset/ward-points-anomalies.csv`. Re-importing the postcode list keeps the positions already in
+the dataset.
+
 ## Versioning
 
 - **MAJOR:** breaking API change, or ids (`Mtaa.id`, `Kitongoji.id`) changing for existing places.
@@ -126,6 +153,11 @@ Each release records the artifact version and the dataset in [CHANGELOG.md](CHAN
 ## Licence
 
 Code: [Apache License 2.0](LICENSE). The address data comes from a public postcode list (see [DATA_SOURCE.md](DATA_SOURCE.md)).
+
+**Ward positions** (`Ward.latitude`, `Ward.longitude`) are derived from OpenStreetMap data and are licensed under the
+[Open Database License (ODbL) 1.0](https://opendatacommons.org/licenses/odbl/1-0/). If your app uses them, credit
+**© OpenStreetMap contributors** where your app shows credits (an About or credits screen is enough; there is no per-record notice).
+The full text is in the dataset itself: `addresses.info().attribution`.
 
 ## For AI coding assistants
 

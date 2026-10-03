@@ -42,6 +42,8 @@ object Validator {
             }
         }
 
+        violations += WardPointValidator.check(dataset)
+
         val ratio = if (dataLineCount == 0) 0.0 else anomalyCount.toDouble() / dataLineCount
         if (ratio > policy.maxAnomalyRatio) {
             violations += Violation(

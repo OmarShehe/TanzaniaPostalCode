@@ -20,7 +20,7 @@ fun DatasetDto.toCore(): CoreDataset {
         for (district in region.districts) {
             districtList += District(district.code, district.name, region.code)
             for (ward in district.wards) {
-                wardList += Ward(ward.postcode, ward.name, district.code)
+                wardList += Ward(ward.postcode, ward.name, district.code, ward.latitude, ward.longitude)
                 val mtaaIds = AddressIds.mtaaIds(ward.postcode, ward.mtaas.map { it.name })
                 ward.mtaas.forEachIndexed { i, mtaa ->
                     mtaaList += Mtaa(mtaaIds[i], mtaa.name, ward.postcode)
@@ -30,5 +30,5 @@ fun DatasetDto.toCore(): CoreDataset {
             }
         }
     }
-    return CoreDataset(DatasetInfo(info.version, info.sourceEdition, info.generatedAt), regionList, districtList, wardList, mtaaList, kitongojiList)
+    return CoreDataset(DatasetInfo(info.version, info.sourceEdition, info.generatedAt, info.attribution), regionList, districtList, wardList, mtaaList, kitongojiList)
 }

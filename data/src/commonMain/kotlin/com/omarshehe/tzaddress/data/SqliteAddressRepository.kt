@@ -74,8 +74,8 @@ internal class SqliteAddressRepository private constructor(
     }
 
     override suspend fun info(): DatasetInfo = read { c ->
-        c.query("SELECT version, source_edition, generated_at FROM dataset_info") {
-            DatasetInfo(it.getText(0), it.getText(1), it.getText(2))
+        c.query("SELECT version, source_edition, generated_at, attribution FROM dataset_info") {
+            DatasetInfo(it.getText(0), it.getText(1), it.getText(2), it.getText(3))
         }.single()
     }
 
@@ -90,8 +90,8 @@ internal class SqliteAddressRepository private constructor(
     }
 
     override suspend fun wards(districtCode: String): List<Ward> = read { c ->
-        c.query("SELECT postcode, name, district_code FROM ward WHERE district_code = ? ORDER BY name COLLATE NOCASE, postcode", districtCode) {
-            Ward(it.getText(0), it.getText(1), it.getText(2))
+        c.query("SELECT postcode, name, district_code, latitude, longitude FROM ward WHERE district_code = ? ORDER BY name COLLATE NOCASE, postcode", districtCode) {
+            Ward(it.getText(0), it.getText(1), it.getText(2), it.getNullableDouble(3), it.getNullableDouble(4))
         }
     }
 

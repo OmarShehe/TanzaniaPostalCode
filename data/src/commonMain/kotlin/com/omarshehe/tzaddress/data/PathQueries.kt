@@ -21,7 +21,7 @@ internal object PathQueries {
             joins.append(" JOIN district d ON d.region_code = r.code")
         }
         if (level >= Level.WARD) {
-            columns += listOf("w.postcode", "w.name", "w.district_code")
+            columns += listOf("w.postcode", "w.name", "w.district_code", "w.latitude", "w.longitude")
             joins.append(" JOIN ward w ON w.district_code = d.code")
         }
         if (level >= Level.MTAA) {
@@ -38,9 +38,9 @@ internal object PathQueries {
     fun read(level: Level, row: SQLiteStatement): AddressPath = AddressPath(
         region = Region(row.getText(0), row.getText(1)),
         district = if (level >= Level.DISTRICT) District(row.getText(2), row.getText(3), row.getText(4)) else null,
-        ward = if (level >= Level.WARD) Ward(row.getText(5), row.getText(6), row.getText(7)) else null,
-        mtaa = if (level >= Level.MTAA) Mtaa(row.getText(8), row.getText(9), row.getText(10)) else null,
-        kitongoji = if (level >= Level.KITONGOJI) Kitongoji(row.getText(11), row.getText(12), row.getText(13)) else null,
+        ward = if (level >= Level.WARD) Ward(row.getText(5), row.getText(6), row.getText(7), row.getNullableDouble(8), row.getNullableDouble(9)) else null,
+        mtaa = if (level >= Level.MTAA) Mtaa(row.getText(10), row.getText(11), row.getText(12)) else null,
+        kitongoji = if (level >= Level.KITONGOJI) Kitongoji(row.getText(13), row.getText(14), row.getText(15)) else null,
     )
 
     /** Display name of the node a path was resolved for. */
