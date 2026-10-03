@@ -89,7 +89,7 @@ listed in the source (some wards have no mtaa, most mtaa have no kitongoji) show
 They are built on `forminput`, so a `FormInputTheme` around them changes their style and shape. The `:app` module is a working sample.
 
 **JVM hosts:** the JVM target uses [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc), so it runs on macOS (Intel and
-Apple silicon), Windows (x64, arm64) and Linux (including Alpine). It adds about 13 MB to a JVM app; Android and iOS use the AndroidX bundled SQLite.
+Apple silicon), Windows (x64, arm64) and Linux (including Alpine). It adds about 12 MB to a JVM app; Android and iOS use the AndroidX bundled SQLite.
 
 ## Updating the dataset
 
