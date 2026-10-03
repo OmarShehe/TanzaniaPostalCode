@@ -5,7 +5,7 @@ object WardPointsReport {
     private val zanzibarRegions = setOf("Mjini Magharibi", "Kusini Unguja", "Kaskazini Unguja", "Kusini Pemba", "Kaskazini Pemba")
 
     /** [problem] is the failure text when the run did not pass, or null. */
-    fun report(dataset: DatasetDto, matches: List<WardMatch>, minRatio: Double, problem: String?): String {
+    fun report(dataset: DatasetDto, matches: List<WardMatch>, minRatio: Double, problem: String?, skippedBoundaryFeatures: Int = 0): String {
         val byPostcode = matches.associateBy { it.postcode }
         val regions = dataset.regions.sortedBy { it.code }
         fun wardsOf(region: RegionDto) = region.districts.flatMap { it.wards }
@@ -27,6 +27,7 @@ object WardPointsReport {
             appendLine("- Wards: $total")
             appendLine("- With a position: $withPoint (%.3f; minimum %.3f)".format(ratio, minRatio))
             WardMatchKind.entries.forEach { kind -> appendLine("- ${kind.name}: ${matches.count { it.kind == kind }}") }
+            if (skippedBoundaryFeatures > 0) appendLine("- Boundary features skipped (no name or no usable geometry): $skippedBoundaryFeatures")
             appendLine("- Zanzibar wards with a position: ${zanzibar.sumOf { placed(it) }} of ${zanzibar.sumOf { wardsOf(it).size }}")
             appendLine()
             appendLine("## Per region")

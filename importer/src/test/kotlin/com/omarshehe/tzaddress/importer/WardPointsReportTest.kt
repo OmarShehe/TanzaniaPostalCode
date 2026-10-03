@@ -34,4 +34,10 @@ class WardPointsReportTest {
         assertEquals("postcode,region,district,ward,kind,detail", lines[0])
         assertEquals(listOf("11102,Dar es Salaam,Ilala,Kariakoo,AMBIGUOUS,\"2 boundary wards with this name in the district\"", "71101,Kusini Unguja,Kati,Jang'ombe,NO_MATCH,\"no boundary ward with this name\""), lines.drop(1))
     }
+
+    @Test
+    fun reportSaysHowManyBoundaryFeaturesWereSkipped() {
+        assertContains(WardPointsReport.report(dataset, matches, 0.5, null, skippedBoundaryFeatures = 4), "Boundary features skipped (no name or no usable geometry): 4")
+        assertEquals(false, WardPointsReport.report(dataset, matches, 0.5, null).contains("skipped"))
+    }
 }

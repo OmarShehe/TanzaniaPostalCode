@@ -2,6 +2,7 @@ package com.omarshehe.tzaddress.importer
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class GeoJsonBoundariesTest {
@@ -47,5 +48,32 @@ class GeoJsonBoundariesTest {
         assertEquals(-6.15, p.latitude)
         assertEquals(5, p.longitude.toString().substringAfter('.').length.coerceAtMost(5))
         assertTrue(p.longitude > 39.1 && p.longitude < 39.2)
+    }
+
+    @Test
+    fun skippedFeaturesAreCountedNotSilentlyDropped() {
+        val text = collection(
+            feature("Ok", """{"type":"Polygon","coordinates":[[[0,0],[4,0],[4,4],[0,4],[0,0]]]}"""),
+            feature("NoGeometry", "null"),
+            feature("Collection", """{"type":"GeometryCollection","geometries":[]}"""),
+            """{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,0]]]}}""",
+        )
+        val file = GeoJsonBoundaries.read(text)
+        assertEquals(listOf("Ok"), file.features.map { it.name })
+        assertEquals(3, file.skipped)
+    }
+
+    @Test
+    fun aNonNumericCoordinateFailsNamingTheFeature() {
+        val text = collection(feature("Broken", """{"type":"Polygon","coordinates":[[[0,0],[4,"x"],[4,4],[0,4],[0,0]]]}"""))
+        val error = assertFailsWith<IllegalArgumentException> { GeoJsonBoundaries.read(text) }
+        assertTrue("Broken" in error.message.orEmpty(), error.message)
+    }
+
+    @Test
+    fun anUnclosedRingFailsNamingTheFeature() {
+        val text = collection(feature("Open", """{"type":"Polygon","coordinates":[[[0,0],[4,0],[4,4],[0,4]]]}"""))
+        val error = assertFailsWith<IllegalArgumentException> { GeoJsonBoundaries.read(text) }
+        assertTrue("Open" in error.message.orEmpty(), error.message)
     }
 }

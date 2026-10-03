@@ -2,6 +2,7 @@ package com.omarshehe.tzaddress.importer
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.jsonArray
@@ -13,25 +14,41 @@ import org.locationtech.jts.geom.GeometryFactory
 import org.locationtech.jts.geom.LinearRing
 import org.locationtech.jts.geom.Polygon
 
-/** Reads a boundary GeoJSON file (geoBoundaries layout: `properties.shapeName`, Polygon or MultiPolygon). */
+/**
+ * Reads a boundary GeoJSON file (geoBoundaries layout: `properties.shapeName`, Polygon or MultiPolygon).
+ * A feature with no name or no polygon geometry is counted in [BoundaryFile.skipped]; a malformed polygon fails the read and
+ * names its feature, because a wrong shape would silently give a wrong point.
+ */
 object GeoJsonBoundaries {
     val factory = GeometryFactory()
 
-    fun parse(text: String): List<BoundaryFeature> =
-        Json.parseToJsonElement(text).jsonObject.getValue("features").jsonArray.mapNotNull { feature ->
-            val obj = feature.jsonObject
-            val name = obj.getValue("properties").jsonObject["shapeName"]?.jsonPrimitive?.content ?: return@mapNotNull null
-            val geometry = geometry(obj.getValue("geometry").jsonObject) ?: return@mapNotNull null
-            BoundaryFeature(name, geometry)
-        }
+    fun parse(text: String): List<BoundaryFeature> = read(text).features
 
-    private fun geometry(obj: JsonObject): Geometry? {
-        val coordinates = obj.getValue("coordinates").jsonArray
-        return when (obj.getValue("type").jsonPrimitive.content) {
-            "Polygon" -> polygon(coordinates)
-            "MultiPolygon" -> factory.createMultiPolygon(coordinates.map { polygon(it.jsonArray) }.toTypedArray())
-            else -> null
+    fun read(text: String): BoundaryFile {
+        val features = ArrayList<BoundaryFeature>()
+        var skipped = 0
+        for (element in Json.parseToJsonElement(text).jsonObject.getValue("features").jsonArray) {
+            val obj = element.jsonObject
+            val name = (obj["properties"] as? JsonObject)?.get("shapeName")?.jsonPrimitive?.content
+            val geometry = obj["geometry"] as? JsonObject
+            if (name == null || geometry == null) {
+                skipped++
+                continue
+            }
+            val shape = try {
+                geometry(geometry)
+            } catch (e: RuntimeException) {
+                throw IllegalArgumentException("Boundary '$name' is malformed: ${e.message}", e)
+            }
+            if (shape == null) skipped++ else features += BoundaryFeature(name, shape)
         }
+        return BoundaryFile(features, skipped)
+    }
+
+    private fun geometry(obj: JsonObject): Geometry? = when (obj["type"]?.jsonPrimitive?.content) {
+        "Polygon" -> polygon(obj.getValue("coordinates").jsonArray)
+        "MultiPolygon" -> factory.createMultiPolygon(obj.getValue("coordinates").jsonArray.map { polygon(it.jsonArray) }.toTypedArray())
+        else -> null
     }
 
     private fun polygon(rings: JsonArray): Polygon {
@@ -39,8 +56,10 @@ object GeoJsonBoundaries {
         return factory.createPolygon(linearRings.first(), linearRings.drop(1).toTypedArray<LinearRing>())
     }
 
-    private fun coordinate(position: kotlinx.serialization.json.JsonElement): Coordinate {
+    private fun coordinate(position: JsonElement): Coordinate {
         val parts = position.jsonArray
-        return Coordinate(parts[0].jsonPrimitive.doubleOrNull ?: 0.0, parts[1].jsonPrimitive.doubleOrNull ?: 0.0)
+        val x = parts[0].jsonPrimitive.doubleOrNull ?: throw IllegalArgumentException("coordinate '${parts[0]}' is not a number")
+        val y = parts[1].jsonPrimitive.doubleOrNull ?: throw IllegalArgumentException("coordinate '${parts[1]}' is not a number")
+        return Coordinate(x, y)
     }
 }
