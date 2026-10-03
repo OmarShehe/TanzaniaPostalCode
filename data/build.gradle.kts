@@ -76,8 +76,9 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.sqlite.bundled)
         }
-        listOf("iosArm64Main", "iosSimulatorArm64Main").forEach { name ->
-            getByName(name).dependencies {
+        // The shared iOS source set is created after this block runs, so it is configured lazily.
+        matching { it.name == "iosMain" }.configureEach {
+            dependencies {
                 implementation(libs.androidx.sqlite.bundled)
             }
         }
