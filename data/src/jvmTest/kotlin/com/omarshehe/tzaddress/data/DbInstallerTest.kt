@@ -5,6 +5,9 @@ import java.nio.file.Files
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 
 class DbInstallerTest {
@@ -48,6 +51,16 @@ class DbInstallerTest {
         val path = installer(directory = directory).install()
         assertEquals(1, bytesReads)
         assertEquals(db.length(), File(path).length())
+    }
+
+    @Test fun installsRunningAtTheSameTimeLeaveOneValidDatabase() = runBlocking(Dispatchers.Default) {
+        val directory = File(dir, "concurrent")
+        val paths = (1..8).map { async { installer(directory = directory).install() } }.awaitAll()
+        assertEquals(1, paths.toSet().size)
+        assertEquals(db.length(), File(paths.first()).length())
+        assertTrue(directory.listFiles()!!.none { it.name.endsWith(".tmp") }, "no temp file left")
+        SqliteAddressRepository.open(JdbcSQLiteDriver(), paths.first()).also { assertEquals(30, it.regions().size); it.close() }
+        Unit
     }
 
     @Test fun sidecarStampMatchesTheGeneratedDatabase() = runBlocking {

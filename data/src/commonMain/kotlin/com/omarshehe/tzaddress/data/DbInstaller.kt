@@ -8,6 +8,7 @@ import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.write
+import kotlin.random.Random
 
 /**
  * Puts the bundled database into app storage: copies it once, and again only when the bundled
@@ -28,9 +29,14 @@ internal class DbInstaller(
         return withContext(Dispatchers.Default) {
             SystemFileSystem.createDirectories(Path(directory))
             // Write beside the target and rename, so a crash never leaves a half-written database in place.
-            val temp = Path(directory, "$FILE_NAME.tmp")
-            SystemFileSystem.sink(temp).buffered().use { it.write(bytes) }
-            SystemFileSystem.atomicMove(temp, target)
+            // The name is unique, so two installs at the same moment cannot write the same file.
+            val temp = Path(directory, "$FILE_NAME.${Random.nextLong().toULong().toString(16)}.tmp")
+            try {
+                SystemFileSystem.sink(temp).buffered().use { it.write(bytes) }
+                SystemFileSystem.atomicMove(temp, target)
+            } finally {
+                SystemFileSystem.delete(temp, mustExist = false)
+            }
             target.toString()
         }
     }
