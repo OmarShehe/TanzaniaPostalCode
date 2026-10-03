@@ -36,8 +36,8 @@ Backends and headless apps use `core` + `data` and never pull in Compose. iOS li
 
 ```kotlin
 // Android: dependencies { … }.  Multiplatform: commonMain.dependencies { … }
-implementation("io.github.omarshehe:tz-address-data:0.1.1")
-implementation("io.github.omarshehe:tz-address-ui:0.1.1") // optional, the Compose widgets
+implementation("io.github.omarshehe:tz-address-data:0.2.0")
+implementation("io.github.omarshehe:tz-address-ui:0.2.0") // optional, the Compose widgets
 ```
 
 - **Repositories:** `mavenCentral()` and `google()`. On a JVM backend `google()` is needed too, because `androidx.sqlite` is only on Google's Maven.

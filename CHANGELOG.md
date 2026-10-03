@@ -2,7 +2,7 @@
 
 Versions follow [semantic versioning](README.md#versioning). Every release records the dataset behind it.
 
-## 0.2.0 (unreleased)
+## 0.2.0 (2026-10-04)
 
 - `tz-address-core`: `Ward` gains nullable `latitude` and `longitude` (a position inside the ward, for centring a map, not a property location). `DatasetInfo` gains `attribution`. The three-argument `Ward(...)` and `DatasetInfo(...)` constructors still work, for Kotlin and Java; `copy` and `componentN` on both change shape.
 - `tz-address-data`: reads the new columns; `info().attribution` returns the data notice. The bundled database is replaced on first open (dataset version `3`); no migration code needed.
