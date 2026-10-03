@@ -17,18 +17,61 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlin.concurrent.Volatile
 
-/** Read-only repository over the bundled database. One connection, serialised by a mutex, used off the caller's thread. */
+/**
+ * Read-only repository over the bundled database. One connection, serialised by a mutex, used off the caller's thread.
+ *
+ * [close] never blocks and never closes the connection under a running query: with a query in flight it only records the
+ * request, and the last query to finish closes the connection. Queries that start after [close] fail with an
+ * [IllegalStateException]. Closing twice is safe.
+ */
 internal class SqliteAddressRepository private constructor(
     private val connection: SQLiteConnection,
     private val wardPostcodes: Set<String>,
 ) : AddressStore {
     private val lock = Mutex()
 
-    private suspend fun <T> read(block: (SQLiteConnection) -> T): T =
-        withContext(Dispatchers.Default) { lock.withLock { block(connection) } }
+    /** Set by [close]; read after every query to see whether this one must close the connection. */
+    @Volatile
+    private var closeRequested = false
 
-    override fun close() = connection.close()
+    /** Only written while holding [lock]. */
+    private var closed = false
+
+    private suspend fun <T> read(block: (SQLiteConnection) -> T): T =
+        withContext(Dispatchers.Default) {
+            // A query that starts after close() fails at once instead of queueing behind the one still running.
+            check(!closeRequested) { CLOSED_MESSAGE }
+            try {
+                lock.withLock {
+                    // A query that queued before close() but gets the lock after the connection closed.
+                    check(!closed) { CLOSED_MESSAGE }
+                    block(connection)
+                }
+            } finally {
+                // Checked after the unlock: a close() that found the lock taken relies on this to run its request.
+                closeIfRequested()
+            }
+        }
+
+    override fun close() {
+        closeRequested = true
+        closeIfRequested()
+    }
+
+    /** Closes now when a close was requested and no query holds the lock; otherwise the query that does will call this when it ends. */
+    private fun closeIfRequested() {
+        if (!closeRequested || !lock.tryLock()) return
+        try {
+            if (!closed) {
+                closed = true
+                connection.close()
+            }
+        } finally {
+            lock.unlock()
+        }
+    }
 
     override suspend fun info(): DatasetInfo = read { c ->
         c.query("SELECT version, source_edition, generated_at FROM dataset_info") {
@@ -108,6 +151,7 @@ internal class SqliteAddressRepository private constructor(
         c.query(PathQueries.sql(level), id) { PathQueries.read(level, it) }.firstOrNull()
 
     companion object {
+        private const val CLOSED_MESSAGE = "The address store is closed."
         private const val CANDIDATES = 500
         private val PREFIX_LENGTHS = setOf(2, 3, 5)
 
