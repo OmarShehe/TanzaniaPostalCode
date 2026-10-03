@@ -1,0 +1,17 @@
+<resources>
+    <string name="search_label">Tafuta anwani</string>
+    <string name="search_placeholder">Andika mahali, mf. Kivukoni</string>
+    <string name="search_no_matches">Hakuna matokeo</string>
+    <string name="search_error">Utafutaji umeshindwa. Jaribu tena.</string>
+    <string name="level_region">Mkoa</string>
+    <string name="level_district">Wilaya</string>
+    <string name="level_ward">Kata</string>
+    <string name="level_mtaa">Mtaa / Kijiji</string>
+    <string name="level_kitongoji">Kitongoji</string>
+    <string name="picker_select">Chagua…</string>
+    <string name="picker_optional">%1$s (si lazima)</string>
+    <string name="picker_none_listed">Hakuna kilichoorodheshwa</string>
+    <string name="picker_select_first">Chagua %1$s kwanza</string>
+    <string name="picker_postcode">Msimbo wa posta %1$s</string>
+    <string name="picker_error">Imeshindwa kupakia anwani</string>
+</resources>

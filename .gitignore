@@ -1,14 +1,15 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
+.idea/
+.kotlin/
+gradle/gradle-daemon-jvm.properties
+# Source lists are public but are not stored in this repository.
+*.pdf
+# Local workflow notes (tickets, specs, context) stay on disk and out of the repository.
+.ai/
