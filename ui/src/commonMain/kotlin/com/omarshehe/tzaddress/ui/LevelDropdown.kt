@@ -16,7 +16,7 @@ import com.omarshehe.tzaddress.ui.resources.picker_select
 import com.omarshehe.tzaddress.ui.resources.picker_select_first
 import org.jetbrains.compose.resources.stringResource
 
-/** One read-only dropdown of the cascade, built on forminput-compose. */
+/** One read-only dropdown of the cascade, built on forminput. */
 @Composable
 internal fun LevelDropdown(
     state: PickerLevelState,
