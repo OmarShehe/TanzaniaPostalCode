@@ -45,6 +45,7 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.compose.ui.test)
             implementation(compose.desktop.currentOs)
+            implementation(project(":data")) // the picker test runs over a store with extra places
         }
     }
 }

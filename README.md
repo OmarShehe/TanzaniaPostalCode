@@ -84,6 +84,28 @@ The position is a point **inside the ward**, to centre a map when someone picks 
 street, so let people place an exact point themselves. `ward-points-report.md` and `ward-points-anomalies.csv` in `dataset/` list the
 wards without a position and why.
 
+### Your own places
+
+A place the dataset lacks (a village added since 2016, a ward with a newer postcode) can be added when you create the store. It then shows up
+in browse lists, lookups and search beside the built-in places, with the same ordering and ranking.
+
+```kotlin
+val addresses = createAddressRepository(
+    context,
+    extraPlaces = listOf(
+        ExtraPlace(Level.MTAA, "Soko Jipya", parentId = "11101"),                  // a village under ward 11101
+        ExtraPlace(Level.WARD, "Mji Mpya", parentId = "11", postcode = "11110"),   // a ward under district 11
+    ),
+)
+addresses.extraPlaceStatuses()   // each entry with its id and ACTIVE or SHADOWED
+```
+
+- Wards, mtaa/villages and kitongoji only. Extra regions and districts, and moving a ward to another district, are not supported.
+- `parentId` is a district code for a ward, a ward postcode for an mtaa, and an mtaa id for a kitongoji (built-in or extra). A ward needs a five-digit postcode that starts with its district code; it can also carry `latitude` and `longitude`.
+- A bad list fails creation with an `ExtraPlacesInvalidException` that lists every problem.
+- A place the dataset already has (same postcode, or same parent and name) is `SHADOWED`: the built-in one is returned, and you can drop your entry.
+- The library stores nothing: keep the list in your app and pass it each time. It is meant for tens or hundreds of places.
+
 ## The Compose picker
 
 ```kotlin

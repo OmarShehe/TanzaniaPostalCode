@@ -8,6 +8,7 @@ Versions follow [semantic versioning](README.md#versioning). Every release recor
 - `tz-address-data`: reads the new columns; `info().attribution` returns the data notice. The bundled database is replaced on first open (dataset version `3`); no migration code needed.
 - Dataset: `DatasetInfo.version` = `3`, source edition `2016-04-22 (Gazette Notice 240); Zanzibar 2012-07-30`: 31 regions, 168 districts, 4,058 wards, 17,039 mtaa/shehia, 64,262 kitongoji. Adds Songwe and the districts created after 2012 (Kigamboni, Ubungo, Malinyi, Kibiti, and the four Songwe districts). 3,194 wards have a position, from OpenStreetMap ward boundaries (ODbL 1.0; see the README's Licence section).
 - Migration: 162 wards have a new postcode, and ward postcodes are ids, so postcodes saved from 0.1.x may no longer match. `dataset/edition-changes.md` lists old and new postcodes.
+- `tz-address-data`: `createAddressRepository(..., extraPlaces)` adds an app's own wards, mtaa/villages and kitongoji beside the bundled ones (`ExtraPlace`, `ExtraPlaceStatus`, `ExtraPlaceEntry` in `tz-address-core`; `AddressStore.extraPlaceStatuses()`). The existing factory functions are unchanged.
 - Importer: `importPostcodes` reads a folder of TCRA regional files (`-PpdfDir`); new `importWardPoints` task; new reports `edition-changes.md`, `ward-points-report.md` and `ward-points-anomalies.csv` in `dataset/`. The ward-position coverage gate is now 75%.
 
 ## 0.1.1 (2026-10-03)
