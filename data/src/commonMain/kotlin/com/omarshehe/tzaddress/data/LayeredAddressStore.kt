@@ -6,6 +6,7 @@ import com.omarshehe.tzaddress.AddressText
 import com.omarshehe.tzaddress.Level
 import com.omarshehe.tzaddress.model.DatasetInfo
 import com.omarshehe.tzaddress.model.District
+import com.omarshehe.tzaddress.model.ExtraPlace
 import com.omarshehe.tzaddress.model.ExtraPlaceEntry
 import com.omarshehe.tzaddress.model.ExtraPlaceStatus
 import com.omarshehe.tzaddress.model.Kitongoji
@@ -31,6 +32,9 @@ internal class LayeredAddressStore private constructor(
     private val mtaasById = mtaas.associateBy { it.id }
     private val kitongojisById = kitongojis.associateBy { it.id }
 
+    /** The path of every active extra place, resolved once at creation: the extras and the bundled data never change while the store is open. */
+    private val paths = HashMap<Pair<Level, String>, AddressPath>()
+
     override fun extraPlaceStatuses(): List<ExtraPlaceEntry> = entries
 
     override suspend fun info(): DatasetInfo = base.info()
@@ -46,20 +50,21 @@ internal class LayeredAddressStore private constructor(
     override suspend fun kitongojis(mtaaId: String): List<Kitongoji> =
         (base.kitongojis(mtaaId) + kitongojis.filter { it.mtaaId == mtaaId }).sortedWith(compareBy({ it.name.lowercase() }, { it.id }))
 
-    override suspend fun byPostcode(postcode: String): AddressPath? = wardsByPostcode[postcode]?.let { wardPath(it) } ?: base.byPostcode(postcode)
+    override suspend fun byPostcode(postcode: String): AddressPath? =
+        if (postcode in wardsByPostcode) paths[Level.WARD to postcode] else base.byPostcode(postcode)
 
     override suspend fun byPrefix(prefix: String): List<AddressPath> {
         val fromBase = base.byPrefix(prefix)
         if (prefix.length !in PREFIX_LENGTHS || !prefix.all { it in '0'..'9' }) return fromBase
-        val extra = wards.filter { it.postcode.startsWith(prefix) }.mapNotNull { wardPath(it) }
+        val extra = wards.filter { it.postcode.startsWith(prefix) }.mapNotNull { paths[Level.WARD to it.postcode] }
         return (fromBase + extra).sortedBy { it.ward!!.postcode }
     }
 
     override suspend fun path(level: Level, id: String): AddressPath? = when (level) {
         Level.REGION, Level.DISTRICT -> base.path(level, id)
-        Level.WARD -> wardsByPostcode[id]?.let { wardPath(it) } ?: base.path(level, id)
-        Level.MTAA -> mtaasById[id]?.let { m -> pathOfWard(m.wardPostcode)?.copy(mtaa = m) } ?: base.path(level, id)
-        Level.KITONGOJI -> kitongojisById[id]?.let { k -> path(Level.MTAA, k.mtaaId)?.copy(kitongoji = k) } ?: base.path(level, id)
+        Level.WARD -> if (id in wardsByPostcode) paths[level to id] else base.path(level, id)
+        Level.MTAA -> if (id in mtaasById) paths[level to id] else base.path(level, id)
+        Level.KITONGOJI -> if (id in kitongojisById) paths[level to id] else base.path(level, id)
     }
 
     override fun isValidPostcode(postcode: String): Boolean = postcode in wardsByPostcode || base.isValidPostcode(postcode)
@@ -71,7 +76,7 @@ internal class LayeredAddressStore private constructor(
         val found = LinkedHashMap<Pair<Level, String>, AddressMatch>()
         base.search(query, max, levels).forEach { found[it.level to idOf(it.level, it.path)] = it }
         extraNodes().filter { it.first in levels }.forEach { (level, id) ->
-            val path = path(level, id) ?: return@forEach
+            val path = paths[level to id] ?: return@forEach
             val haystack = listOfNotNull(path.region.name, path.district?.name, path.ward?.name, path.mtaa?.name, path.kitongoji?.name)
                 .flatMap { AddressText.tokens(it) }
             if (queryTokens.all { t -> haystack.any { it.startsWith(t) } }) {
@@ -88,9 +93,18 @@ internal class LayeredAddressStore private constructor(
 
     override fun close() = base.close()
 
-    private suspend fun wardPath(ward: Ward): AddressPath? = base.path(Level.DISTRICT, ward.districtCode)?.copy(ward = ward)
-
-    private suspend fun pathOfWard(postcode: String): AddressPath? = wardsByPostcode[postcode]?.let { wardPath(it) } ?: base.path(Level.WARD, postcode)
+    /** Resolves every extra place's path, wards first, so an mtaa under an extra ward (and a kitongoji under an extra mtaa) finds its parent. */
+    private suspend fun resolvePaths() {
+        for (ward in wards) base.path(Level.DISTRICT, ward.districtCode)?.copy(ward = ward)?.let { paths[Level.WARD to ward.postcode] = it }
+        for (mtaa in mtaas) {
+            val parent = paths[Level.WARD to mtaa.wardPostcode] ?: base.path(Level.WARD, mtaa.wardPostcode)
+            parent?.copy(mtaa = mtaa)?.let { paths[Level.MTAA to mtaa.id] = it }
+        }
+        for (kitongoji in kitongojis) {
+            val parent = paths[Level.MTAA to kitongoji.mtaaId] ?: base.path(Level.MTAA, kitongoji.mtaaId)
+            parent?.copy(kitongoji = kitongoji)?.let { paths[Level.KITONGOJI to kitongoji.id] = it }
+        }
+    }
 
     private fun extraNodes(): List<Pair<Level, String>> =
         wards.map { Level.WARD to it.postcode } + mtaas.map { Level.MTAA to it.id } + kitongojis.map { Level.KITONGOJI to it.id }
@@ -106,8 +120,12 @@ internal class LayeredAddressStore private constructor(
     companion object {
         private val PREFIX_LENGTHS = setOf(2, 3, 5)
 
-        /** Validates [extras] against [base] and layers them on it; [base] is closed when validation fails. */
-        suspend fun create(base: AddressStore, extras: List<com.omarshehe.tzaddress.model.ExtraPlace>): LayeredAddressStore =
-            LayeredAddressStore(base, ExtraPlaceValidator.resolve(base, extras))
+        /** Validates [extras] against [base] and layers them on it; [base] is closed when that fails. */
+        suspend fun create(base: AddressStore, extras: List<ExtraPlace>): LayeredAddressStore = try {
+            LayeredAddressStore(base, ExtraPlaceValidator.resolve(base, extras)).also { it.resolvePaths() }
+        } catch (e: Throwable) {
+            base.close()
+            throw e
+        }
     }
 }

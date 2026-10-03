@@ -124,4 +124,28 @@ class LayeredAddressStoreTest {
         layered.close()
         assertFailsWith<IllegalStateException> { runBlocking { base.regions() } }
     }
+
+    @Test fun aFailedCreationClosesTheBaseStore() {
+        val victim = runBlocking { SqliteAddressRepository.open(JdbcSQLiteDriver(), TestDb.path) }
+        assertFailsWith<ExtraPlacesInvalidException> { runBlocking { LayeredAddressStore.create(victim, listOf(ExtraPlace(Level.MTAA, " ", "99999"))) } }
+        assertFailsWith<IllegalStateException> { runBlocking { victim.regions() } }
+    }
+
+    @Test fun anExtraKitongojiUnderABuiltInMtaaHasTheBuiltInAncestors() = runBlocking {
+        var mtaaId: String? = null
+        search@ for (region in plain.regions()) for (district in plain.districts(region.code)) for (ward in plain.wards(district.code)) for (mtaa in plain.mtaas(ward.postcode)) {
+            if (plain.kitongojis(mtaa.id).isNotEmpty()) {
+                mtaaId = mtaa.id
+                break@search
+            }
+        }
+        val parent = assertNotNull(mtaaId)
+        val store = LayeredAddressStore.create(runBlocking { SqliteAddressRepository.open(JdbcSQLiteDriver(), TestDb.path) }, listOf(ExtraPlace(Level.KITONGOJI, "Kitongoji Kipya Sana", parent)))
+        val builtIn = plain.kitongojis(parent).map { it.name }
+        assertEquals((builtIn + "Kitongoji Kipya Sana").sortedBy { it.lowercase() }, store.kitongojis(parent).map { it.name })
+        val path = assertNotNull(store.path(Level.KITONGOJI, "$parent/kitongoji-kipya-sana"))
+        assertEquals(plain.path(Level.MTAA, parent), path.copy(kitongoji = null))
+        assertEquals("Kitongoji Kipya Sana", store.search("kitongoji kipya sana").first().label)
+        store.close()
+    }
 }

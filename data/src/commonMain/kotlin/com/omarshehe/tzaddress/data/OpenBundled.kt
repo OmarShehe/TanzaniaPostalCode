@@ -18,10 +18,5 @@ internal suspend fun openBundled(
     )
     val store = SqliteAddressRepository.open(driver, installer.install())
     if (extraPlaces.isEmpty()) return store
-    return try {
-        LayeredAddressStore.create(store, extraPlaces)
-    } catch (e: Throwable) {
-        store.close()
-        throw e
-    }
+    return LayeredAddressStore.create(store, extraPlaces)
 }
