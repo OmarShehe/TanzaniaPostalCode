@@ -1,6 +1,8 @@
 package com.omarshehe.tzaddress.model
 
-public data class DatasetInfo(
+import kotlin.jvm.JvmOverloads
+
+public data class DatasetInfo @JvmOverloads constructor(
     val version: String,
     val sourceEdition: String,
     /** ISO-8601 timestamp. */

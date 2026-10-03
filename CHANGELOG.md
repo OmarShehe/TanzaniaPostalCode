@@ -4,7 +4,7 @@ Versions follow [semantic versioning](README.md#versioning). Every release recor
 
 ## 0.2.0 (unreleased)
 
-- `tz-address-core`: `Ward` gains nullable `latitude` and `longitude` (a position inside the ward, for centring a map, not a property location). `DatasetInfo` gains `attribution`. `Ward(postcode, name, districtCode)` still compiles; `copy` and `componentN` on `Ward` and `DatasetInfo` change shape.
+- `tz-address-core`: `Ward` gains nullable `latitude` and `longitude` (a position inside the ward, for centring a map, not a property location). `DatasetInfo` gains `attribution`. The three-argument `Ward(...)` and `DatasetInfo(...)` constructors still work, for Kotlin and Java; `copy` and `componentN` on both change shape.
 - `tz-address-data`: reads the new columns; `info().attribution` returns the data notice. The bundled database is replaced on first open (dataset version `2`); no migration code needed.
 - Dataset: `DatasetInfo.version` = `2`, source edition `2012-07-30`; 3,042 of 3,416 wards have a position. The positions come from OpenStreetMap ward boundaries via geoBoundaries and are under the ODbL 1.0: credit "© OpenStreetMap contributors" where your app shows credits (see the README's Licence section and `DATA_SOURCE.md`).
 - Importer: new `importWardPoints` task, plus `ward-points-report.md` and `ward-points-anomalies.csv` in `dataset/`.
