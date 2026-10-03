@@ -10,13 +10,15 @@ No network, no API key. The data ships inside the library.
 
 ## What data it covers
 
-Edition `2012-07-30` of the national postcode list: **30 regions, 163 districts, 3,416 wards (5-digit postcodes),
-15,820 mtaa/villages/shehia and 16,883 kitongoji.** Zanzibar's regions are included; a shehia is stored as an mtaa.
+The mainland regions come from TCRA's regional postcode lists (Government Gazette Notice No. 240 of 22 April 2016); Zanzibar comes
+from the 2012-07-30 list, which is the only one that has it: **31 regions, 168 districts, 4,058 wards (5-digit postcodes),
+17,039 mtaa/villages/shehia and 64,262 kitongoji.** A shehia is stored as an mtaa.
 
-Wards also carry a position (`latitude`, `longitude`) for centring a map: **3,042 of the 3,416 wards** have one, the rest are
+Wards also carry a position (`latitude`, `longitude`) for centring a map: **3,100 of the 4,058 wards** have one, the rest are
 `null`. It comes from OpenStreetMap ward boundaries, so it is under the ODbL and needs a credit (see [Licence](#licence)).
 
-Not covered: Songwe (created 2016) and districts created after 2012, such as Kigamboni. Sources and attribution are in
+A ward's postcode is its id. Between the 2012 list and this one, 162 wards got a new postcode, so postcodes you stored from 0.1.x may no
+longer match; [`dataset/edition-changes.md`](dataset/edition-changes.md) lists each old and new postcode. Sources and attribution are in
 [DATA_SOURCE.md](DATA_SOURCE.md).
 
 ## Artifacts
@@ -111,10 +113,14 @@ Apple silicon), Windows (x64, arm64) and Linux (including Alpine). It adds about
 The dataset is regenerated from the published postcode list (see [DATA_SOURCE.md](DATA_SOURCE.md)), never edited by hand:
 
 ```
-./gradlew :importer:importPostcodes -Ppdf=/path/to/postcode-list -PsourceEdition="<label>"
+./gradlew :importer:importPostcodes -Ppdf=/path/to/2012-postcode-list.pdf -PpdfDir=/path/to/tcra-regional-pdfs
 ```
 
-This rewrites `dataset/tz-address.json`, `dataset/import-report.md` and `dataset/import-anomalies.csv`, and fails on bad
+`-PpdfDir` is a folder of TCRA's regional files (`Arusha_23000.pdf`, ...); `-Ppdf` is the 2012 list, used for Zanzibar. Without `-PpdfDir` the
+single 2012 list is imported alone (add `-PsourceEdition="<label>"`).
+
+This rewrites `dataset/tz-address.json`, `dataset/import-report.md`, `dataset/import-anomalies.csv` and, when the edition changed,
+`dataset/edition-changes.md`. It fails on bad
 postcodes, duplicates or too many parse anomalies. The bundled database is built from that file at build time
 (`./gradlew :data:generateAddressDb`, which also checks its table counts against the report). Then bump `VERSION_NAME`
 in `gradle.properties` and add a `CHANGELOG.md` entry.
@@ -127,7 +133,7 @@ postcode list, are not stored here; the pinned download links are in [DATA_SOURC
     -PdistrictBoundaries=/path/geoBoundaries-TZA-ADM2_simplified.geojson
 ```
 
-It fails when fewer than 85% of wards get a position (`-PminMatchRatio` to change) or a point is outside Tanzania, and writes
+It fails when fewer than 75% of wards get a position (`-PminMatchRatio` to change) or a point is outside Tanzania, and writes
 `dataset/ward-points-report.md` and `dataset/ward-points-anomalies.csv`. Re-importing the postcode list keeps the positions already in
 the dataset.
 

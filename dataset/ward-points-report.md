@@ -2,43 +2,44 @@
 
 **Result: PASSED**
 
-- Wards: 3416
-- With a position: 3042 (0.891; minimum 0.850)
-- MATCHED_DISTRICT: 2613
-- MATCHED_UNIQUE_NAME: 429
-- AMBIGUOUS: 115
-- NO_MATCH: 259
+- Wards: 4058
+- With a position: 3100 (0.764; minimum 0.750)
+- MATCHED_DISTRICT: 2669
+- MATCHED_UNIQUE_NAME: 431
+- AMBIGUOUS: 189
+- NO_MATCH: 769
 - Zanzibar wards with a position: 119 of 140
 
 ## Per region
 
 | Code | Region | Wards | With a position | Without |
 |---|---|---|---|---|
-| 11000 | Dar es Salaam | 90 | 88 | 2 |
-| 21000 | Tanga | 206 | 192 | 14 |
-| 23000 | Arusha | 123 | 102 | 21 |
-| 25000 | Kilimanjaro | 153 | 140 | 13 |
-| 27000 | Manyara | 124 | 97 | 27 |
-| 30000 | Geita | 98 | 88 | 10 |
-| 31000 | Mara | 155 | 146 | 9 |
-| 33000 | Mwanza | 152 | 137 | 15 |
-| 35000 | Kagera | 181 | 168 | 13 |
-| 37000 | Shinyanga | 93 | 84 | 9 |
-| 39000 | Simiyu | 110 | 100 | 10 |
-| 41000 | Dodoma | 182 | 164 | 18 |
-| 43000 | Singida | 124 | 115 | 9 |
-| 45000 | Tabora | 163 | 149 | 14 |
-| 47000 | Kigoma | 103 | 89 | 14 |
-| 50000 | Katavi | 41 | 37 | 4 |
-| 51000 | Iringa | 93 | 83 | 10 |
-| 53000 | Mbeya | 218 | 192 | 26 |
-| 55000 | Rukwa | 62 | 54 | 8 |
-| 57000 | Ruvuma | 140 | 125 | 15 |
-| 59000 | Njombe | 94 | 87 | 7 |
-| 61000 | Pwani | 111 | 108 | 3 |
-| 63000 | Mtwara | 150 | 130 | 20 |
-| 65000 | Lindi | 142 | 123 | 19 |
-| 67000 | Morogoro | 168 | 125 | 43 |
+| 11000 | Dar es Salaam | 102 | 83 | 19 |
+| 21000 | Tanga | 245 | 198 | 47 |
+| 23000 | Arusha | 158 | 104 | 54 |
+| 25000 | Kilimanjaro | 168 | 130 | 38 |
+| 27000 | Manyara | 142 | 101 | 41 |
+| 30000 | Geita | 121 | 89 | 32 |
+| 31000 | Mara | 178 | 146 | 32 |
+| 33000 | Mwanza | 191 | 142 | 49 |
+| 35000 | Kagera | 195 | 169 | 26 |
+| 37000 | Shinyanga | 130 | 106 | 24 |
+| 39000 | Simiyu | 133 | 104 | 29 |
+| 41000 | Dodoma | 209 | 171 | 38 |
+| 43000 | Singida | 136 | 116 | 20 |
+| 45000 | Tabora | 206 | 146 | 60 |
+| 47000 | Kigoma | 103 | 88 | 15 |
+| 50000 | Katavi | 58 | 36 | 22 |
+| 51000 | Iringa | 106 | 85 | 21 |
+| 53000 | Mbeya | 178 | 137 | 41 |
+| 54100 | Songwe | 93 | 61 | 32 |
+| 55000 | Rukwa | 97 | 58 | 39 |
+| 57000 | Ruvuma | 172 | 127 | 45 |
+| 59000 | Njombe | 107 | 87 | 20 |
+| 61000 | Pwani | 133 | 104 | 29 |
+| 63000 | Mtwara | 191 | 134 | 57 |
+| 65000 | Lindi | 153 | 123 | 30 |
+| 67000 | Morogoro | 213 | 136 | 77 |
 | 71000 | Mjini Magharibi | 34 | 30 | 4 |
 | 72000 | Kusini Unguja | 22 | 15 | 7 |
 | 73000 | Kaskazini Unguja | 22 | 17 | 5 |

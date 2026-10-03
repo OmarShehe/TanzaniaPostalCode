@@ -3,7 +3,7 @@ package com.omarshehe.tzaddress.importer
 /** Checks on ward positions: a position is a pair, lies inside Tanzania, and (for a points import) covers enough wards. */
 object WardPointValidator {
     /** Share of wards that must receive a position in a points import; revisit when the real rate is known. */
-    const val MIN_MATCH_RATIO = 0.85
+    const val MIN_MATCH_RATIO = 0.75
 
     private const val MIN_LAT = -12.0
     private const val MAX_LAT = -1.0

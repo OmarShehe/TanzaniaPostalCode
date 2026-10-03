@@ -99,4 +99,11 @@ class ValidatorTest {
             assertTrue(ViolationKind.BAD_DISTRICT_CODE in kinds(d), "code '$code'")
         }
     }
+
+    @Test fun oldPostcodeUsedByTwoWards_isAWarningNotAFailure() {
+        val result = Validator.validate(valid(), 0, 1000, policy, mapOf("53101" to "53100", "53102" to "53100"))
+        assertTrue(result.passed, result.violations.toString())
+        assertEquals(listOf(WarningKind.DUPLICATE_OLD_POSTCODE), result.warnings.map { it.kind })
+        assertTrue("53100" in result.warnings.single().message)
+    }
 }

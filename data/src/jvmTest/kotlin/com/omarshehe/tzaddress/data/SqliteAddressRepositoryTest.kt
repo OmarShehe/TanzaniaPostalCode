@@ -20,8 +20,8 @@ class SqliteAddressRepositoryTest {
 
     @Test fun info_isReadFromTheDatabase() = runBlocking {
         val info = repository.info()
-        assertEquals("2", info.version)
-        assertEquals("2012-07-30", info.sourceEdition)
+        assertEquals("3", info.version)
+        assertEquals("2016-04-22 (Gazette Notice 240); Zanzibar 2012-07-30", info.sourceEdition)
     }
 
     @Test fun search_kivu_findsKivukoniWithFullHierarchyAndPostcode() = runBlocking {
@@ -47,15 +47,15 @@ class SqliteAddressRepositoryTest {
     }
 
     @Test fun search_exactNameOutranksPrefix() = runBlocking {
-        val matches = repository.search("kariakoo")
+        val matches = repository.search("kariakoo", limit = 100)
         assertEquals("Kariakoo", matches.first().label)
         assertTrue(matches.first().score > matches.first { it.label == "Kariakoo Magharibi" }.score)
     }
 
     @Test fun search_exactNamesSurviveTheCandidateCap() = runBlocking {
-        // "b" matches thousands of rows, and at least 97 places are named just B (also as "B" / 'B'): all lead the results.
-        val matches = repository.search("b", limit = 100)
-        assertTrue(matches.take(97).all { it.score == 4.0 }, matches.take(100).map { it.label to it.score }.toString())
+        // More places are named just Majengo than the candidate cap holds, and "majengo" also prefixes other names: the exact ones lead.
+        val matches = repository.search("majengo", limit = 100)
+        assertTrue(matches.all { it.score == 4.0 }, matches.map { it.label to it.score }.toString())
     }
 
     @Test fun search_blankAndClamping() = runBlocking {
@@ -126,7 +126,7 @@ class SqliteAddressRepositoryTest {
             assertEquals(region, path.region)
             assertTrue(repository.isValidPostcode(ward.postcode))
         }
-        assertEquals(3416, wards)
+        assertEquals(4058, wards)
     }
 
     @Test fun path_resolvesEveryLevel() = runBlocking {
@@ -147,7 +147,7 @@ class SqliteAddressRepositoryTest {
 
     @Test fun browse_isOrderedByName_andUnknownParentIsEmpty() = runBlocking {
         val regions = repository.regions()
-        assertEquals(30, regions.size)
+        assertEquals(31, regions.size)
         assertEquals(regions.map { it.name.lowercase() }.sorted(), regions.map { it.name.lowercase() })
         val wards = repository.wards("11")
         assertEquals(wards.map { it.name.lowercase() }.sorted(), wards.map { it.name.lowercase() })

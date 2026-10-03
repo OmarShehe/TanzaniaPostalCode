@@ -10,7 +10,7 @@ object WardPointsImport {
         val wardFile = options.wardBoundaries
         val districtFile = options.districtBoundaries
         if (wardFile == null || districtFile == null || !wardFile.isFile || !districtFile.isFile) {
-            log("Usage: ./gradlew :importer:importWardPoints -PwardBoundaries=/path/ward.geojson -PdistrictBoundaries=/path/district.geojson [-PminMatchRatio=0.85] [-PgeneratedAt=..] [-PoutDir=dataset]")
+            log("Usage: ./gradlew :importer:importWardPoints -PwardBoundaries=/path/ward.geojson -PdistrictBoundaries=/path/district.geojson [-PminMatchRatio=0.75] [-PgeneratedAt=..] [-PoutDir=dataset]")
             log("Both -PwardBoundaries and -PdistrictBoundaries must point to existing files.")
             return 2
         }

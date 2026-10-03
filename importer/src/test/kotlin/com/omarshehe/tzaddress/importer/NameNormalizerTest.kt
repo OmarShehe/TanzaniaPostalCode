@@ -89,4 +89,13 @@ class NameNormalizerTest {
         assertEquals("TANESCO", NameNormalizer.normalize("TANESCO", shortAllCapsAreAcronyms = true))
         assertEquals("Kituo Cha TANESCO", NameNormalizer.normalize("Kituo cha Tanesco", shortAllCapsAreAcronyms = true))
     }
+
+    @Test fun trailingFootnoteStar_isDropped() {
+        assertEquals("Kariakoo", NameNormalizer.normalize("Kariakoo*"))
+        assertEquals("Kimbugu \"B\"", NameNormalizer.normalize("Kimbugu \"B\"*"))
+    }
+
+    @Test fun acuteAccentInsideAName_isAnApostrophe() {
+        assertEquals("Chang'ombe", NameNormalizer.normalize("Chang\u00B4ombe"))
+    }
 }

@@ -28,7 +28,7 @@ class DbInstallerTest {
         assertEquals(1, bytesReads)
         assertTrue(File(path).length() == db.length())
         assertTrue(File(path).parentFile.listFiles()!!.none { it.name.endsWith(".tmp") }, "no temp file left")
-        SqliteAddressRepository.open(JdbcSQLiteDriver(), path).also { assertEquals(30, it.regions().size); it.close() }
+        SqliteAddressRepository.open(JdbcSQLiteDriver(), path).also { assertEquals(31, it.regions().size); it.close() }
         Unit
     }
 
@@ -53,7 +53,7 @@ class DbInstallerTest {
         }
         val path = installer(directory = directory).install()
         assertEquals(1, bytesReads, "the older database is replaced by the bundled one")
-        assertEquals("2", SqliteAddressRepository.open(JdbcSQLiteDriver(), path).let { it.info().version.also { _ -> it.close() } })
+        assertEquals("3", SqliteAddressRepository.open(JdbcSQLiteDriver(), path).let { it.info().version.also { _ -> it.close() } })
     }
 
     @Test fun corruptInstalledFileIsReplaced() = runBlocking {
@@ -70,7 +70,7 @@ class DbInstallerTest {
         assertEquals(1, paths.toSet().size)
         assertEquals(db.length(), File(paths.first()).length())
         assertTrue(directory.listFiles()!!.none { it.name.endsWith(".tmp") }, "no temp file left")
-        SqliteAddressRepository.open(JdbcSQLiteDriver(), paths.first()).also { assertEquals(30, it.regions().size); it.close() }
+        SqliteAddressRepository.open(JdbcSQLiteDriver(), paths.first()).also { assertEquals(31, it.regions().size); it.close() }
         Unit
     }
 
