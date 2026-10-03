@@ -40,4 +40,16 @@ class WardPointsReportTest {
         assertContains(WardPointsReport.report(dataset, matches, 0.5, null, skippedBoundaryFeatures = 4), "Boundary features skipped (no name or no usable geometry): 4")
         assertEquals(false, WardPointsReport.report(dataset, matches, 0.5, null).contains("skipped"))
     }
+
+    @Test
+    fun reportListsEverySimilarNamePairWithItsScore() {
+        val withSimilar = matches.map {
+            if (it.postcode == "11102") WardMatch("11102", WardMatchKind.MATCHED_SIMILAR_NAME, WardPoint(-6.9, 39.2), "similar to boundary ward 'Kariakoo B' (0.92)") else it
+        }
+        val text = WardPointsReport.report(dataset, withSimilar, 0.5, null)
+        assertContains(text, "MATCHED_SIMILAR_NAME: 1")
+        assertContains(text, "## Similar-name matches")
+        assertContains(text, "- 11102 Kariakoo (Ilala): similar to boundary ward 'Kariakoo B' (0.92)")
+        assertEquals(false, WardPointsReport.report(dataset, matches, 0.5, null).contains("Similar-name matches"))
+    }
 }

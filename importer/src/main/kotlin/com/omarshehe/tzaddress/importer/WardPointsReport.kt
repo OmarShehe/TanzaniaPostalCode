@@ -35,6 +35,15 @@ object WardPointsReport {
             appendLine("| Code | Region | Wards | With a position | Without |")
             appendLine("|---|---|---|---|---|")
             regions.forEach { appendLine("| ${it.code} | ${it.name} | ${wardsOf(it).size} | ${placed(it)} | ${wardsOf(it).size - placed(it)} |") }
+            val similar = dataset.regions.flatMap { r -> r.districts.flatMap { d -> d.wards.map { w -> Pair(d, w) } } }
+                .sortedBy { (_, ward) -> ward.postcode }
+                .mapNotNull { (district, ward) -> byPostcode[ward.postcode]?.takeIf { it.kind == WardMatchKind.MATCHED_SIMILAR_NAME }?.let { "- ${ward.postcode} ${ward.name} (${district.name}): ${it.detail}" } }
+            if (similar.isNotEmpty()) {
+                appendLine()
+                appendLine("## Similar-name matches")
+                appendLine()
+                similar.forEach { appendLine(it) }
+            }
         }
     }
 

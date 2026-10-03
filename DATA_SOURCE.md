@@ -34,12 +34,14 @@ The boundary files are not stored in this repository.
 
 The boundary data has names only (no district), so the importer places each boundary ward in a district polygon, then pairs it with a
 ward of the postcode list by name (case, spacing, punctuation and the source numbering prefix are ignored): first by district and name, then
-by a name that is unique in both lists. A name that fits more than one ward, or a boundary ward wanted twice, gets no position.
+by a name that is unique in both lists, then by a spelling variant in the same district (for example `Hananasif` and `Hananasifu`) when one
+boundary ward is clearly the closest in both directions. A name that fits more than one ward, a boundary ward wanted twice, and split wards
+such as `Matale A` get no position.
 `dataset/ward-points-report.md` gives the counts per region and `dataset/ward-points-anomalies.csv` lists every ward without a position and why.
 
-Result for this edition: 3,100 of 4,058 wards have a position (2,669 by district and name, 431 by unique name); 189 are ambiguous and 769 have no
-usable boundary (no boundary ward of that name, or the only one lies in a district that the list has only in another region). Most of those are
-wards created after the 2015 boundaries. Zanzibar: 119 of 140.
+Result for this edition: 3,194 of 4,058 wards have a position (2,669 by district and name, 431 by unique name, 94 by a similar name; the pairs
+are listed in `dataset/ward-points-report.md`); 189 are ambiguous and 675 have no usable boundary (no boundary ward of that name, or the only
+one lies in a district that the list has only in another region). Most of those are wards created after the 2015 boundaries. Zanzibar: 120 of 140.
 
 ## What the importer does
 
@@ -52,6 +54,6 @@ them to the importer (see the README). `dataset/edition-changes.md` compares thi
 
 ## Known gaps
 
-- 958 wards have no position (the list is in `dataset/ward-points-anomalies.csv`).
+- 864 wards have no position (the list is in `dataset/ward-points-anomalies.csv`).
 - Zanzibar is from the 2012 list; ward changes after 2016 are not reflected.
 - Names appear as printed, including a few entries with a source numbering prefix (for example `60. Kaseme A Mabamba`).
