@@ -19,7 +19,8 @@ object NameNormalizer {
      * (CCM). Wards and districts are sometimes printed entirely in capitals as ordinary words (HAI, KIA), so there it stays off.
      */
     fun normalize(raw: String, shortAllCapsAreAcronyms: Boolean = false): String =
-        raw.replace('\u2019', '\'').replace('\u2018', '\'').replace('`', '\'')
+        raw.replace('\u2019', '\'').replace('\u2018', '\'').replace('`', '\'').replace('\u00B4', '\'')
+            .trimEnd().removeSuffix("*")
             .replace('\u201C', '"').replace('\u201D', '"')
             .replace(typographicHyphens, "-")
             .trim().replace(whitespace, " ")

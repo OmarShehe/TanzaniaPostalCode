@@ -24,7 +24,7 @@ class WardPositionTest {
     }
 
     @Test fun unmatchedWardHasNoPositionAndNoError() = runBlocking {
-        val ward = assertNotNull(repository.byPostcode("15122")?.ward)
+        val ward = assertNotNull(repository.byPostcode("50124")?.ward)
         assertNull(ward.latitude)
         assertNull(ward.longitude)
     }
@@ -57,7 +57,7 @@ class WardPositionTest {
 
     @Test fun infoCarriesTheVersionAndTheAttribution() = runBlocking {
         val info = repository.info()
-        assertEquals("2", info.version)
+        assertEquals("3", info.version)
         assertContains(info.attribution, "© OpenStreetMap contributors")
         assertContains(info.attribution, "ODbL")
     }

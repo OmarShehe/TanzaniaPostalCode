@@ -77,7 +77,7 @@ class SqliteAddressRepositoryCloseTest {
         assertEquals(0, driver.closeCalls.get(), "must not close under a running query")
 
         driver.release()
-        assertEquals(30, running.await().size, "the running query still returns its rows")
+        assertEquals(31, running.await().size, "the running query still returns its rows")
         assertEquals(1, driver.closeCalls.get(), "closed once the query finished")
     }
 
@@ -99,7 +99,7 @@ class SqliteAddressRepositoryCloseTest {
         assertTrue("closed" in error.message.orEmpty(), error.message)
 
         driver.release()
-        assertEquals(30, running.await().size)
+        assertEquals(31, running.await().size)
         assertEquals(1, driver.closeCalls.get())
     }
 

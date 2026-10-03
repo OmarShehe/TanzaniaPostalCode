@@ -10,7 +10,7 @@ class CreateAddressRepositoryTest {
         val dir = Files.createTempDirectory("public-entry").toFile()
         val store = createAddressRepository(dir.path)
         try {
-            assertEquals(30, store.regions().size)
+            assertEquals(31, store.regions().size)
             assertEquals("Kivukoni", store.byPostcode("11101")?.ward?.name)
         } finally {
             store.close()
@@ -21,7 +21,7 @@ class CreateAddressRepositoryTest {
         val dir = Files.createTempDirectory("odd?name=1&x").toFile()
         val store = createAddressRepository(dir.path)
         try {
-            assertEquals(30, store.regions().size)
+            assertEquals(31, store.regions().size)
         } finally {
             store.close()
         }

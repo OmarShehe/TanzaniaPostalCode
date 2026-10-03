@@ -1,20 +1,20 @@
 # Data source
 
-The address data in `dataset/tz-address.json` is derived from the Tanzanian postcode list, which is publicly available.
-References:
+The address data in `dataset/tz-address.json` is derived from the Tanzanian postcode list published by the Tanzania Communications
+Regulatory Authority (TCRA). References:
 
+- <https://www.tcra.go.tz/services/publication-of-postcode-list> (the regional lists, Government Gazette Notice No. 240 of 22 April 2016)
 - <https://www.tanzaniapostcode.com/>
-- <https://www.tcra.go.tz/services/publication-of-postcode-list>
 
 The repository publishes only the facts extracted from that list (region, district and ward names and codes, mtaa/village
 and kitongoji names) as `dataset/tz-address.json`. It does not store copies of the source files.
 
 | Fact | Value |
 |---|---|
-| Data | Tanzanian postcode list, edition dated 2012-07-30 |
+| Data | Mainland: TCRA's 26 regional postcode lists (PDF, produced February 2016, uploaded to the TCRA site 22 June 2021, retrieved 2026-10-04). Zanzibar: the postcode list dated 2012-07-30, because TCRA's regional lists do not include Zanzibar. |
 | Availability | publicly available online (see the references above) |
 | Licence / redistribution terms | none stated here; the data is a list of place names and postal codes. Anyone with a stricter requirement should check the references directly. |
-| Attribution | Postcode data: public Tanzanian postcode list (2012-07-30 edition); see <https://www.tanzaniapostcode.com/> and <https://www.tcra.go.tz/services/publication-of-postcode-list>. |
+| Attribution | Postcode data: Tanzania Communications Regulatory Authority (TCRA) postcode list, Government Gazette Notice No. 240 of 22 April 2016; Zanzibar from the 2012-07-30 list. See <https://www.tcra.go.tz/services/publication-of-postcode-list>. |
 
 ## Ward positions
 
@@ -37,19 +37,21 @@ ward of the postcode list by name (case, spacing, punctuation and the source num
 by a name that is unique in both lists. A name that fits more than one ward, or a boundary ward wanted twice, gets no position.
 `dataset/ward-points-report.md` gives the counts per region and `dataset/ward-points-anomalies.csv` lists every ward without a position and why.
 
-Result for this edition: 3,042 of 3,416 wards have a position (2,613 by district and name, 429 by unique name); 115 are ambiguous and 259 have no
-usable boundary (no boundary ward of that name, or the only one lies in a district that the list has only in another region). Zanzibar: 119 of 140.
+Result for this edition: 3,100 of 4,058 wards have a position (2,669 by district and name, 431 by unique name); 189 are ambiguous and 769 have no
+usable boundary (no boundary ward of that name, or the only one lies in a district that the list has only in another region). Most of those are
+wards created after the 2015 boundaries. Zanzibar: 119 of 140.
 
 ## What the importer does
 
-`:importer` reads the published list file and rebuilds the Region → District → Ward → Mtaa/Village → Kitongoji hierarchy. It
+`:importer` reads the published list files and rebuilds the Region → District → Ward → Mtaa/Village → Kitongoji hierarchy. It
 normalises names and reports anomalies in `dataset/import-report.md` and `dataset/import-anomalies.csv`. It never edits the
-source; where the list is inconsistent (for example 140 wards that list kitongoji without an mtaa), the dataset keeps what is
-printed and the report says so. To rebuild the dataset, download the list from the references above and pass its path to the
-importer (see the README).
+source; where the list is inconsistent (for example 206 lines that list a kitongoji without an mtaa), the dataset keeps what is
+printed and the report says so. A ward whose postcode is malformed or does not start with its district code is left out and named in
+`dataset/import-report.md` (three wards in this edition). To rebuild the dataset, download the lists from the references above and pass
+them to the importer (see the README). `dataset/edition-changes.md` compares this edition with the 2012 one.
 
 ## Known gaps
 
-- 374 wards have no position (the list is in `dataset/ward-points-anomalies.csv`).
-- 30 regions only: Songwe (2016) and post-2012 districts such as Kigamboni are not in this edition.
-- Names appear as printed, including 16 entries with a source numbering prefix (for example `60. Kaseme A Mabamba`).
+- 958 wards have no position (the list is in `dataset/ward-points-anomalies.csv`).
+- Zanzibar is from the 2012 list; ward changes after 2016 are not reflected.
+- Names appear as printed, including a few entries with a source numbering prefix (for example `60. Kaseme A Mabamba`).

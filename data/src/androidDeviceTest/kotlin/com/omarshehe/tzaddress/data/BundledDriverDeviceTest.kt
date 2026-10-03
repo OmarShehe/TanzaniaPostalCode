@@ -33,7 +33,7 @@ class BundledDriverDeviceTest {
         val ward = repository.search("kivu").first { it.label == "Kivukoni" && it.postcode == "11101" }
         assertEquals("Dar es Salaam", ward.path.region.name)
         assertEquals("Ilala CBD", ward.path.district?.name)
-        assertEquals(30, repository.regions().size)
+        assertEquals(31, repository.regions().size)
         assertTrue(repository.isValidPostcode("11101"))
     }
 

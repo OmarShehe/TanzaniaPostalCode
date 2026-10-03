@@ -3,7 +3,7 @@ package com.omarshehe.tzaddress.importer
 object LayoutDetector {
 
     private val BANNER = Regex("^(.+?)\\s+REGION\\s*[-\\u2010-\\u2015\\u2212]\\s*(\\d{5})$")
-    private val HEADER_TOKENS = setOf("REGION", "POSTCODE", "DISTRICT", "WARD", "MTAA/VILLAGE", "KITONGOJI", "SHEHIA")
+    private val HEADER_TOKENS = setOf("REGION", "POSTCODE", "DISTRICT", "WARD", "MTAA/VILLAGE", "KITONGOJI", "SHEHIA", "OLD")
 
     private val ROLES = mapOf(
         LayoutKind.A to listOf(Role.DISTRICT_NAME, Role.DISTRICT_CODE, Role.WARD_NAME, Role.WARD_CODE, Role.MTAA, Role.KITONGOJI),
@@ -22,7 +22,14 @@ object LayoutDetector {
         if (lines.isEmpty()) return PageStructure(PageKind.BLANK, null, null, emptyList())
         val finished = ArrayList<PageSegment>()
         var current = SegmentBuilder()
+        var oldWord: Word? = null
         for (line in lines) {
+            if (isOldLabel(line) && (!current.hasHeader || current.body.isEmpty())) {
+                // "OLD POSTCODE" is stacked over two lines around the header row
+                if (!current.hasHeader) oldWord = line.words.firstOrNull { it.text == "OLD" } ?: oldWord
+                else current.layout = current.layout?.withOldColumnNoFurtherRightThan(line.words.minOf { it.x0 })
+                continue
+            }
             val banner = BANNER.matchEntire(line.text.trim())?.let { Banner(it.groupValues[1].trim(), it.groupValues[2]) }
             when {
                 banner != null -> {
@@ -38,7 +45,8 @@ object LayoutDetector {
                         current = SegmentBuilder()
                     }
                     current.hasHeader = true
-                    current.layout = layoutOf(line)
+                    current.layout = layoutOf(line, oldWord)
+                    oldWord = null
                 }
                 else -> current.body += line
             }
@@ -58,12 +66,18 @@ object LayoutDetector {
         fun build() = PageSegment(banner, layout, body.toList())
     }
 
+    /** The line is only a stacked label of the old-postcode column ("OLD", "POSTCODE" or both), not data. */
+    private fun isOldLabel(line: Line): Boolean {
+        val texts = line.words.map { it.text }
+        return texts.isNotEmpty() && texts.size <= 2 && texts.all { it == "OLD" || it == "POSTCODE" }
+    }
+
     private fun isHeader(line: Line): Boolean {
         val texts = line.words.map { it.text }
         return "POSTCODE" in texts && ("MTAA/VILLAGE" in texts || "SHEHIA" in texts)
     }
 
-    private fun layoutOf(header: Line): PageLayout? {
+    private fun layoutOf(header: Line, oldWord: Word?): PageLayout? {
         val tokens = header.words.filter { it.text in HEADER_TOKENS }
         val texts = tokens.map { it.text }
         val kind = when {
@@ -71,8 +85,16 @@ object LayoutDetector {
             "DISTRICT" in texts -> LayoutKind.B
             else -> LayoutKind.A
         }
-        val roles = ROLES.getValue(kind)
-        if (tokens.size != roles.size) return null
-        return PageLayout(kind, tokens.mapIndexed { i, word -> Column(roles[i], word.x0) })
+        val base = ROLES.getValue(kind)
+        val columns = when {
+            tokens.size == base.size -> tokens.mapIndexed { i, word -> Column(base[i], word.x0) }
+                .let { if (oldWord != null && kind != LayoutKind.Z) (it + Column(Role.OLD_WARD_CODE, oldWord.x0)).sortedBy { c -> c.x } else it }
+            tokens.size == base.size + 1 && kind != LayoutKind.Z -> {
+                val roles = base.toMutableList().also { it.add(it.indexOf(Role.WARD_CODE) + 1, Role.OLD_WARD_CODE) }
+                tokens.mapIndexed { i, word -> Column(roles[i], word.x0) }
+            }
+            else -> return null
+        }
+        return PageLayout(kind, columns)
     }
 }

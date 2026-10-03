@@ -64,4 +64,15 @@ class ImportOptionsTest {
         assertEquals(30, ImportOptions.DEFAULT_EXPECTED_REGIONS)
         assertEquals(0.005, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO)
     }
+
+    @Test fun pdfDir_defaultsExpectedRegionsToMainlandPlusZanzibar() {
+        val o = parse("--pdfDir=/tmp/regions", "--pdf=/tmp/2012.pdf")
+        assertEquals(File("/tmp/regions"), o.pdfDir)
+        assertEquals(31, o.policy.expectedRegions)
+        assertEquals(99, parse("--pdfDir=/tmp/r", "--expectedRegions=99").policy.expectedRegions)
+    }
+
+    @Test fun withoutPdfDir_theSingleFileDefaultStays() {
+        assertNull(parse("--pdf=/tmp/a.pdf").pdfDir)
+    }
 }

@@ -8,7 +8,11 @@ package com.omarshehe.tzaddress.importer
  * - a ward/district code can sit on the line after its name, or the line before it;
  * - a long ward/district name can wrap over two lines, with the code on either line.
  */
-class HierarchyBuilder {
+class HierarchyBuilder(
+    private val keepRegion: (Banner) -> Boolean = { true },
+    /** True for regional files, which print the column header on the first page only. */
+    private val headerOncePerRegion: Boolean = false,
+) {
     private val regions = ArrayList<RegionNode>()
     private val anomalies = ArrayList<Anomaly>()
     private var dataLines = 0
@@ -18,6 +22,7 @@ class HierarchyBuilder {
     private var district: DistrictNode? = null
     private var ward: WardNode? = null
     private var mtaa: MtaaNode? = null
+    private var skipping = false
 
     private class PendingWard(val node: WardNode, val owner: DistrictNode, val anomaly: Anomaly)
     private class PendingDistrict(val node: DistrictNode, val owner: RegionNode, val anomaly: Anomaly)
@@ -33,9 +38,13 @@ class HierarchyBuilder {
         var lineIndex = 0
         for (segment in segments) {
             segment.banner?.let { startRegion(it) }
+            if (skipping) {
+                lineIndex += segment.body.size
+                continue
+            }
             if (segment.layout != null) {
                 lastLayout = segment.layout
-            } else if (segment.body.isNotEmpty()) {
+            } else if (segment.body.isNotEmpty() && !(headerOncePerRegion && lastLayout != null)) {
                 anomalies += Anomaly(page, lineIndex, AnomalyKind.MISSING_HEADER, "no usable header row; reusing the previous columns")
             }
             val active = segment.layout ?: lastLayout ?: continue
@@ -52,9 +61,12 @@ class HierarchyBuilder {
         return BuildResult(regions.toList(), anomalies.toList(), dataLines)
     }
 
-    private fun startRegion(banner: Banner) {
+    /** Begins a region; its pages have no banner when the caller supplies it (one regional file per region). */
+    fun startRegion(banner: Banner) {
+        if (region?.code == banner.regionCode && !skipping) return
         settleAll()
-        region = RegionNode(banner.regionCode, NameNormalizer.normalize(banner.regionName)).also { regions += it }
+        skipping = !keepRegion(banner)
+        region = if (skipping) null else RegionNode(banner.regionCode, NameNormalizer.normalize(banner.regionName)).also { regions += it }
         district = null
         ward = null
         mtaa = null
@@ -99,6 +111,15 @@ class HierarchyBuilder {
         }
     }
 
+    /**
+     * A mtaa printed in the district column (no district code, no ward on the row, mtaa or kitongoji cells beside it)
+     * belongs to the current ward; a district name that wraps has nothing else on its row.
+     */
+    private fun isStrayMtaa(cells: Map<Role, String>): Boolean =
+        Role.DISTRICT_NAME in cells && ward != null && district?.code?.isNotEmpty() == true &&
+            Role.DISTRICT_CODE !in cells && Role.WARD_NAME !in cells && Role.WARD_CODE !in cells &&
+            (Role.MTAA in cells || Role.KITONGOJI in cells)
+
     private fun process(page: Int, line: Int, row: Row, text: String) {
         fun flag(kind: AnomalyKind) { anomalies += Anomaly(page, line, kind, text) }
 
@@ -117,7 +138,11 @@ class HierarchyBuilder {
         }
 
         if (row.unassigned.isNotEmpty()) flag(AnomalyKind.UNASSIGNED_TEXT)
-        val cells = row.cells
+        var cells = row.cells
+        if (isStrayMtaa(cells)) {
+            mtaa = MtaaNode(NameNormalizer.normalize(cells.getValue(Role.DISTRICT_NAME), shortAllCapsAreAcronyms = true)).also { ward!!.mtaas += it }
+            cells = cells - Role.DISTRICT_NAME
+        }
 
         // District
         val districtName = cells[Role.DISTRICT_NAME]
@@ -191,6 +216,12 @@ class HierarchyBuilder {
             prevWard?.let { settleWard(it) }
         }
         if (stashed != null && !stashUsed) anomalies += stashed.anomaly
+
+        // Previous postcode of the ward, when the list has that column
+        cells[Role.OLD_WARD_CODE]?.let { old ->
+            val currentWard = ward
+            if (currentWard != null && PostcodeRules.ward.matches(old)) currentWard.oldPostcode = old else flag(AnomalyKind.UNEXPECTED_CELL)
+        }
 
         // Mtaa / shehia
         cells[Role.MTAA]?.let { name ->

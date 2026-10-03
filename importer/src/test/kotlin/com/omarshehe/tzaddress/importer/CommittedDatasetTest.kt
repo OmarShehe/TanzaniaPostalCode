@@ -13,7 +13,7 @@ class CommittedDatasetTest {
     @Test fun datasetExists() = assertTrue(file.isFile, "run :importer:importPostcodes and commit dataset/")
 
     @Test fun datasetPassesValidation() {
-        val result = Validator.validate(dataset, 0, 1, Policy(ImportOptions.DEFAULT_EXPECTED_REGIONS, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO))
+        val result = Validator.validate(dataset, 0, 1, Policy(ImportOptions.DEFAULT_EXPECTED_REGIONS_WITH_REGION_FILES, ImportOptions.DEFAULT_MAX_ANOMALY_RATIO))
         assertTrue(result.passed, result.violations.toString())
     }
 
@@ -44,6 +44,31 @@ class CommittedDatasetTest {
         }
     }
 
+    @Test fun songwe_andTheDistrictsCreatedAfter2012_arePresent() {
+        val songwe = dataset.regions.single { it.name == "Songwe" }
+        assertEquals("54100", songwe.code)
+        assertEquals(listOf("Songwe", "Mbozi", "Ileje", "Momba"), songwe.districts.sortedBy { it.code }.map { it.name })
+        val districts = dataset.regions.flatMap { r -> r.districts.map { r.name to it.name } }
+        listOf("Dar es Salaam" to "Ubungo", "Dar es Salaam" to "Kigamboni", "Morogoro" to "Malinyi", "Pwani" to "Kibiti").forEach {
+            assertTrue(it in districts, "missing $it")
+        }
+    }
+
+    @Test fun tabora_keepsItsFirstDistrictNameAndTheWardMtaaPrintedBesideIt() {
+        val district = dataset.regions.single { it.name == "Tabora" }.districts.single { it.code == "451" }
+        assertEquals("tabora cbd", district.name.lowercase())
+        assertTrue("Sokoni" in district.wards.single { it.postcode == "45101" }.mtaas.map { it.name })
+    }
+
+    @Test fun wangingombe_isNotBrokenInTwo() {
+        assertEquals("Wanging'ombe", dataset.regions.single { it.name == "Njombe" }.districts.single { it.code == "593" }.name)
+    }
+
+    @Test fun datasetCarriesTheTcraSourceEdition() {
+        assertTrue("Gazette Notice 240" in dataset.info.sourceEdition && "Zanzibar" in dataset.info.sourceEdition, dataset.info.sourceEdition)
+        assertTrue("TCRA" in dataset.info.attribution, dataset.info.attribution)
+    }
+
     private val wards by lazy { dataset.regions.flatMap { r -> r.districts.flatMap { d -> d.wards.map { w -> r to w } } } }
 
     @Test fun wardPositionsAreValidAndCoverEnoughWards() {
@@ -52,8 +77,8 @@ class CommittedDatasetTest {
     }
 
     @Test fun wardWhoseOnlySameNamedBoundaryIsInAnotherDistrictGetsNoPosition() {
-        // Ugalla (Mlele, Katavi): the only boundary ward called Ugalla is in Urambo, Tabora, 42 km away.
-        val ugalla = wards.single { (_, w) -> w.postcode == "50313" }.second
+        // Ugalla (Mpanda CBD, Katavi): the only boundary ward called Ugalla is in Urambo, Tabora, 42 km away.
+        val ugalla = wards.single { (_, w) -> w.postcode == "50124" }.second
         assertEquals(null, ugalla.latitude)
         assertEquals(null, ugalla.longitude)
     }

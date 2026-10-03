@@ -1,7 +1,7 @@
 package com.omarshehe.tzaddress.importer
 
 object Validator {
-    fun validate(dataset: DatasetDto, anomalyCount: Int, dataLineCount: Int, policy: Policy): ValidationResult {
+    fun validate(dataset: DatasetDto, anomalyCount: Int, dataLineCount: Int, policy: Policy, oldPostcodes: Map<String, String> = emptyMap()): ValidationResult {
         val violations = ArrayList<Violation>()
         val warnings = ArrayList<Warning>()
 
@@ -40,6 +40,10 @@ object Validator {
                     }
                 }
             }
+        }
+
+        EditionChanges.duplicateOldPostcodes(oldPostcodes).toSortedMap().forEach { (old, wards) ->
+            warnings += Warning(WarningKind.DUPLICATE_OLD_POSTCODE, "Old postcode $old is given by wards ${wards.joinToString(", ")}")
         }
 
         violations += WardPointValidator.check(dataset)

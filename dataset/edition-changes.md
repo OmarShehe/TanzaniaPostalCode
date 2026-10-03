@@ -1,0 +1,1100 @@
+# Edition changes
+
+- Previous edition: 2012-07-30
+- This edition: 2016-04-22 (Gazette Notice 240); Zanzibar 2012-07-30
+
+Wards are matched by postcode; a ward whose new list gives an old postcode is re-coded. Ward ids are postcodes, so a re-coded ward has a new id.
+
+## Totals
+
+- Wards added: 665
+- Wards removed: 24
+- Wards re-coded: 162
+- Wards renamed: 171
+- Regions added: 1, removed: 0
+- Districts added: 8, removed: 3
+
+## Per region
+
+| Region | Code | Added | Removed | Re-coded | Renamed |
+|---|---|---|---|---|---|
+| Dar es Salaam | 11000 | 12 | 0 | 23 | 2 |
+| Tanga | 21000 | 39 | 0 | 0 | 9 |
+| Arusha | 23000 | 35 | 0 | 0 | 11 |
+| Kilimanjaro | 25000 | 15 | 0 | 0 | 17 |
+| Manyara | 27000 | 20 | 2 | 0 | 7 |
+| Geita | 30000 | 23 | 0 | 0 | 2 |
+| Mara | 31000 | 24 | 1 | 17 | 7 |
+| Mwanza | 33000 | 39 | 0 | 8 | 3 |
+| Kagera | 35000 | 26 | 12 | 0 | 4 |
+| Shinyanga | 37000 | 38 | 1 | 4 | 11 |
+| Simiyu | 39000 | 24 | 1 | 0 | 2 |
+| Dodoma | 41000 | 27 | 0 | 1 | 21 |
+| Singida | 43000 | 12 | 0 | 0 | 5 |
+| Tabora | 45000 | 43 | 0 | 0 | 9 |
+| Katavi | 50000 | 17 | 0 | 11 | 4 |
+| Iringa | 51000 | 13 | 0 | 0 | 5 |
+| Mbeya | 53000 | 25 | 1 | 0 | 6 |
+| Songwe | 54100 | 29 | 0 | 64 | 0 |
+| Rukwa | 55000 | 37 | 3 | 1 | 2 |
+| Ruvuma | 57000 | 32 | 0 | 6 | 10 |
+| Njombe | 59000 | 13 | 0 | 4 | 4 |
+| Pwani | 61000 | 22 | 0 | 14 | 3 |
+| Mtwara | 63000 | 43 | 2 | 0 | 13 |
+| Lindi | 65000 | 11 | 0 | 0 | 2 |
+| Morogoro | 67000 | 46 | 1 | 9 | 12 |
+
+## Regions added (1)
+
+- 54100 Songwe
+
+## Districts added (8)
+
+- 16 Ubungo (region 11000)
+- 17 Kigamboni (region 11000)
+- 541 Songwe (region 54100)
+- 542 Mbozi (region 54100)
+- 543 Ileje (region 54100)
+- 544 Momba (region 54100)
+- 618 Kibiti (region 61000)
+- 678 Malinyi (region 67000)
+
+## Districts removed (3)
+
+- 533 Mbozi (region 53000)
+- 534 Ileje (region 53000)
+- 539 Momba (region 53000)
+
+## Wards re-coded (162)
+
+- 14117 to 16101 Mburahati
+- 14114 to 16102 Sinza
+- 14115 to 16103 Ubungo
+- 14120 to 16104 Kimara
+- 14131 to 16105 Saranga
+- 14119 to 16106 Makuburi
+- 14103 to 16107 Makurumla
+- 14105 to 16108 Manzese
+- 14116 to 16109 Mabibo
+- 14127 to 16110 Kibamba
+- 14133 to 16111 Kwembe
+- 14123 to 16112 Goba
+- 14124 to 16113 Mbezi
+- 14132 to 16114 Msigani
+- 15123 to 17101 Kimbiji
+- 15121 to 17102 Somangila
+- 15126 to 17103 Tungi
+- 15122 to 17104 Kisarawe II
+- 15124 to 17105 Pembamnazi
+- 15120 to 17106 Mjimwema
+- 15110 to 17107 Kigamboni
+- 15111 to 17108 Vijibweni
+- 15119 to 17109 Kibada
+- 31211 to 31117 Mugango
+- 31215 to 31118 Nyamrandirira
+- 31216 to 31119 Nyambono
+- 31219 to 31121 Bwasi
+- 31214 to 31122 Suguti
+- 31221 to 31123 Bukumi
+- 31220 to 31124 Makojo
+- 31210 to 31125 Tegeruka
+- 31222 to 31126 Bugwema
+- 31212 to 31127 Kiriba
+- 31217 to 31128 Murangi
+- 31218 to 31130 Bukima
+- 31227 to 31132 Busambara
+- 31226 to 31133 Bulinga
+- 31234 to 31135 Etaro
+- 31229 to 31136 Nyegina
+- 31203 to 31137 Nyakatende
+- 33210 to 33112 Mkolani
+- 33208 to 33114 Buhongwa
+- 33202 to 33116 Butimba
+- 33203 to 33118 Igoma
+- 33211 to 33120 Mahina
+- 33107 to 33220 Kitangiri
+- 33106 to 33221 Kirumba
+- 33108 to 33222 Nyamanoro
+- 37218 to 37115 Lubaga
+- 37216 to 37116 Masekelo
+- 37217 to 37117 Ndembezi
+- 37110 to 37229 Mwantini
+- 41429 to 41322 Babayu
+- 50302 to 50114 Magamba
+- 50307 to 50115 Kasokola
+- 50308 to 50116 Nsimbo
+- 50304 to 50117 Kapalala
+- 50303 to 50118 Mtapenda
+- 50305 to 50119 Machimboni
+- 50309 to 50121 Itenka
+- 50306 to 50122 Sitalike
+- 50314 to 50123 Urwila
+- 50313 to 50124 Ugalla
+- 50323 to 50125 Litapunga
+- 53814 to 54101 Gua
+- 53824 to 54102 Ngwala
+- 53818 to 54103 Kapalala
+- 53817 to 54104 Mbangala
+- 53830 to 54105 Saza
+- 53812 to 54106 Mkwajuni
+- 53827 to 54107 Mwambani
+- 53815 to 54108 Totowe
+- 53816 to 54110 Namkukwe
+- 53829 to 54112 Magamba
+- 53831 to 54113 Galula
+- 53813 to 54115 Chang'ombe
+- 53806 to 54116 Kanga
+- 53828 to 54117 Ifwenkenya
+- 53301 to 54201 Vwawa
+- 53302 to 54202 Mlowo
+- 53303 to 54203 Igamba
+- 53304 to 54204 Msia
+- 53305 to 54205 Ihanda
+- 53306 to 54206 Isandula
+- 53307 to 54207 Nyimbili
+- 53308 to 54208 Halungu
+- 53309 to 54209 Mlangali
+- 53310 to 54210 Iyula
+- 53311 to 54211 Myovizi
+- 53312 to 54212 Ruanda
+- 53313 to 54213 Itaka
+- 53314 to 54214 Nambinzo
+- 53315 to 54215 Nanyala
+- 53316 to 54216 Ipunga
+- 53317 to 54217 Bara
+- 53829 to 54228 Magamba
+- 53401 to 54301 Itumba
+- 53402 to 54302 Isongole
+- 53403 to 54303 Ndola
+- 53404 to 54304 Bupigu
+- 53405 to 54305 Chitete
+- 53406 to 54306 Mbebe
+- 53407 to 54307 Itale
+- 53408 to 54308 Ibaba
+- 53409 to 54309 Malangali
+- 53410 to 54310 Kafule
+- 53411 to 54311 Ikinga
+- 53412 to 54312 Sange
+- 53413 to 54313 Lubanda
+- 53414 to 54314 Ngulugulu
+- 53415 to 54315 Luswisi
+- 53416 to 54316 Ngulilo
+- 53417 to 54317 Mlale
+- 53418 to 54318 Kalembo
+- 53901 to 54401 Tunduma
+- 53902 to 54402 Chiwezi
+- 53903 to 54403 Nkangamo
+- 53904 to 54404 Ndalambo
+- 53905 to 54405 Msangano
+- 53906 to 54406 Chitete
+- 53907 to 54407 Ivuna
+- 53908 to 54408 Kamsamba
+- 53909 to 54409 Chilulumo
+- 53910 to 54410 Myunga
+- 53911 to 54411 Kapele
+- 53912 to 54412 Mkulwe
+- 53913 to 54413 Mpapa
+- 53914 to 54414 Nzoka
+- 53221 to 55303 Isale
+- 57218 to 57116 Ndilimalitembo
+- 57219 to 57117 Msamala
+- 57220 to 57118 Seedfarm
+- 57223 to 57119 Mateka
+- 57221 to 57120 Mwengemshindo
+- 57222 to 57121 Mjimwema
+- 59214 to 59118 Matola
+- 59213 to 59123 Kitandililo
+- 59211 to 59124 Mahongole
+- 59212 to 59125 Utengule
+- 61621 to 61801 Salale
+- 61624 to 61802 Kiongoroni
+- 61622 to 61803 Maparoni
+- 61623 to 61804 Mbuchi
+- 61614 to 61806 Mlanzi
+- 61619 to 61807 Mahege
+- 61613 to 61808 Mchukwi
+- 61618 to 61809 Mjawa
+- 61616 to 61810 Mtunda
+- 61620 to 61811 Mwambao
+- 61615 to 61812 Ruaruke
+- 61610 to 61813 Kibiti
+- 61612 to 61814 Mtawanya
+- 61611 to 61815 Dimani
+- 67605 to 67801 Itete
+- 67630 to 67802 Njiwa
+- 67616 to 67803 Mtimbira
+- 67617 to 67804 Usangule
+- 67618 to 67805 Sofi
+- 67619 to 67806 Malinyi
+- 67631 to 67807 Igawa
+- 67620 to 67808 Biro
+- 67621 to 67809 Ngoheranga
+
+## Wards renamed (171)
+
+- 14109 Hananasifu to Hananasif
+- 14134 Mabwe Pande to Mabwepande
+- 21301 Pangani Magharibi to Pangani
+- 21302 Pangani Mashariki to Pangani
+- 21406 Tanganyika -Mtaa to Tanganyika
+- 21504 Kigongoi to Kigongoi Magharibi
+- 21515 Parungu /Kasera to Parungu Kasera
+- 21622 Magamba Kwalukonge to Magamba
+- 21718 Dule (M) to Dule 'M'
+- 21729 Dule (B) to Dule "B"
+- 21807 Kwaluguru Magamba to Kwaluguru
+- 23108 Daraja Mbili to Daraja II
+- 23115 Sokon to Sokon 1
+- 23213 Kimnyak to Kimnyaki
+- 23413 Lepuliko to Lepurko
+- 23505 Ol-molog to Olmolog
+- 23512 Matale to Matale A
+- 23514 Gelai Meingoi to Gelai Meirugoi
+- 23614 Endamaghan to Endamaghang
+- 23706 Maaloni to Maalon
+- 23711 Oldonyo-sambu to Oldonyosambu
+- 23720 Endulen to Enduleni
+- 25113 Kiboroloni to Kiborloni
+- 25116 Longuo B to Longuo
+- 25211 Kirima to Kibosho Kirima
+- 25213 Okaoni to Kibosho Okaoni
+- 25223 Makuyuni to Makuyuni (Himo)
+- 25303 Machame Weruweru to Weruweru
+- 25304 Machame Kusini to Mnadani
+- 25312 Hai Mjini to Bomang'ombe
+- 25707 Keni Mengeni to Mengeni
+- 25708 Keni Aleni to Aleni
+- 25711 Kelamfua Mokala to Kelamfua/Mokala
+- 25712 Ushiri Ikuini to Ushiri/Ikuini
+- 25714 Kirua Keni to KirwaKeni
+- 25715 Katangara Mrere to Katangara/Mrere
+- 25720 Kitirima Kingachi to Kitirima
+- 25722 Nanjara Reha to Nanjara
+- 25724 Motamburu Kitendeni to Chala
+- 27307 Dirima to Dirma
+- 27417 Mosqaroda to Masqaroda
+- 27418 Yeada Ampay to Yaeda Ampa
+- 27419 Murray to Muray
+- 27502 Bwagamoyo (Kaloleni) to Bwagamoyo
+- 27519 Makami to Makame
+- 27616 Endiamtu to Endiamutu
+- 30135 Kakubiro to Kakubilo
+- 30322 Butengurumasa to Butengu Rumasa
+- 31232 Sirori - Simba to SiroriSimba
+- 31418 Nyarokoba to Nyarukoba
+- 31423 Nyamaraga to Gwitiryo
+- 31425 Keore to Kiore
+- 31427 Nyansicha to Nyasincha
+- 31429 Ketare to Katere
+- 31515 Sarama to Salama
+- 33304 Mwambaluhi to Mwabaluhi
+- 33415 Sheshani to Shishani
+- 33525 Isenengeja to Isengengeja
+- 35201 Buhendangabo to Behendangabo
+- 35314 Kasambya to Kassambya
+- 35531 Magatalarutanga to Magata/Karutanga
+- 35719 Mulukulazo to Murukurazo
+- 37219 Old Shinyanga to Puni
+- 37220 Puni to Nyida
+- 37221 Nyida to Nsalala
+- 37222 Nsalala to Bukene
+- 37223 Bukene to Masengwa
+- 37224 Masengwa to Mwalukwa
+- 37225 Mwalukwa to Nyamalogo
+- 37226 Nyamalogo to Lyamidati
+- 37227 Lyamidati to Mwenge
+- 37228 Mwenge to Lyabusalu
+- 37306 Wendakulima to Mwandakulima
+- 39104 Sima (Mji Mdogo) to Sima
+- 39403 Mwakisadu to Mwakisandu
+- 41204 Hombolo to Hombolo Bwawani
+- 41208 Ng'hongh'ona to Zuzu
+- 41209 Zuzu to Nala
+- 41210 Nala to Mbabala
+- 41211 Mbabala to Mbalawala
+- 41212 Mbalawala to Mpunguzi
+- 41213 Mpunguzi to Mnadani
+- 41214 Mnadani to Chigongwe
+- 41215 Chigongwe to Chahwa
+- 41216 Chahwa to Chang'ombe
+- 41217 Chang'ombe to Ipagala
+- 41218 Ipagala to Iyumbu
+- 41219 Iyumbu to Ntyuka
+- 41220 Ntyuka to Nzuguni
+- 41221 Nzuguni to Hombolo Makulu
+- 41305 Mpwamamtwa to Mpamamtwa
+- 41317 Ibughule to Ibugule
+- 41413 Mvumi Mission to Mvumi Misheni
+- 41516 Matogoro to Matongoro
+- 41702 Suruke(siruke) to Suruke
+- 41722 Kinyasi Kati to Kinyasi
+- 43209 Mwasuya to Mwasauya
+- 43304 Kyengege to Kyengenge
+- 43410 Heka Azimio to Heka
+- 43425 Itigi to Itigi Mjini
+- 43602 Iseke to Isseke
+- 45105 Mtendeni to Mtenedeni
+- 45106 Tambukareli to Tambuka-Reli
+- 45314 Ngonywa to Ngoywa
+- 45401 Nzega Mjini to Nzega Mjini Magharibi
+- 45430 Kahama Nhalanga to Kamanhalanga
+- 45437 Milamboitobo to Milambo Itobo
+- 45624 Choma to Chomachankola
+- 45625 Mwashiku to Mwashikumbili
+- 45706 Ukumbisiganga to Ukumbi Siganga
+- 50101 Kawajanse to Kawajense
+- 50209 Mpanda Ndogo to Mishamo
+- 50210 Mishamo to Isengule
+- 50310 Nsekwa to Nsenkwa
+- 51103 Kitanzini / Miomboni to Kitanzini
+- 51207 Kiwele to Kiwere
+- 51209 Ilolo Mpya to Ilolompya
+- 51222 Nduli/Kising'a to Kising'a
+- 51401 Boma/Mafinga to Boma
+- 53203 Tembela-Simambwe to Tembela
+- 53506 Ikama to Itagata
+- 53507 Ibingi to Ibigi
+- 53536 Kikole to Matwebe
+- 53701 Kyela Mjini to Kyela
+- 53819 Lupatingatinga to Lupa
+- 55113 Molo to Mollo
+- 55414 Legeza Mwendo to Legezamwendo
+- 57109 Mshangano to Mashangano
+- 57205 Magagura to Magagula
+- 57212 Mhukuru to Muhukuru
+- 57215 Mbinga Mhaule to Mbinga Mhalule
+- 57315 Likuyeseka to Likuyuseka
+- 57411 Mperai(Mpepai) to Mpepai
+- 57412 Kigonsera to Kingonsera
+- 57413 Kiangi Mahuka to Kihangi Mahuka
+- 57615 Nalasi to Nalasi Magharibi
+- 57635 Nalai Mashariki to Nalasi Mashariki
+- 59110 Utalingolo to Utalingoro
+- 59113 Ubena to Makambako
+- 59206 Mafriga to Mfriga
+- 59516 Kipagalo to Kapagalo
+- 61414 Chole Samvula to Chole
+- 61510 Njia Nne to Njianne
+- 61602 Chem Chem to Chemchem
+- 63101 Railways to Reli
+- 63221 Kiyanga to Kianga
+- 63226 Mbembeleo to Mbembaleo
+- 63302 Kitama to Kitama 1
+- 63305 Nahnyanga to Nanhyanga
+- 63317 Mdimba to Mdimba Mnyoma
+- 63413 Chiteketa to Chitekete
+- 63418 Chiwonga/Nandwahi to Chiwonga
+- 63421 Ndimba/Mpelepele to Mdimba Mpelempele
+- 63534 Chikolopola to Chikoropora
+- 63535 Mwenge to Matawale
+- 63606 Napacho to Nakopi
+- 63607 Likokona Nakopi to Likokona
+- 65326 Kilima Rondo to Kilimarondo
+- 65405 Migumbi to Mingumbi
+- 67102 Mjimkuu to Mji Mkuu
+- 67113 Mwembe Songo to Mwembesongo
+- 67128 Kihonda Magorofani to Kihonda Maghorofani
+- 67205 Mkambalani to Mkalambani
+- 67223 Bwakila Chini to Bwakira Chini
+- 67225 Bwakila Juu to Bwakira Juu
+- 67318 Msongozi/Dom A to Doma
+- 67406 Kilangali(Kitang Ali) to Kilangali
+- 67407 Mabwerebwer E to Mabwerebwere
+- 67437 Ruhembe to Uleling'ombe
+- 67601 Mahenge to Mahenge Mjini
+- 67607 Lupilo to Lupiro
+
+## Wards added (665)
+
+- 12118 Mnyamani
+- 12119 Liwiti
+- 12120 Bonyokwa
+- 12121 Kipunguni
+- 12122 Kisukulu
+- 12123 Minazi Mirefu
+- 12124 Buyuni
+- 12125 Zingiziwa
+- 12126 Mzinga
+- 12127 Pugu Station
+- 15131 Kibondemaji
+- 15132 Kilungule
+- 21115 Magaoni
+- 21116 Mnyanjani
+- 21117 Masiwani
+- 21314 Masaika
+- 21434 Kwezitu
+- 21435 Kwemingoji
+- 21436 Kwabada
+- 21437 Makole
+- 21522 Kigongoi Mashariki
+- 21629 Bagamoyo
+- 21630 Majengo
+- 21631 Masuguru
+- 21632 Mlungui
+- 21633 Mgwashi
+- 21634 Lewa
+- 21635 Magila Gereza
+- 21636 Mkumbala
+- 21637 Kalalani
+- 21638 Foroforo
+- 21639 Makumba
+- 21640 Hale
+- 21745 Magamba
+- 21746 Mbwei
+- 21747 Mbaru
+- 21748 Shagayu
+- 21749 Migambo
+- 21750 Kisiwani
+- 21751 Kwemkomole
+- 21824 Kitumbi
+- 21825 Mlimani
+- 21826 Konje
+- 21827 Msasa
+- 21828 Kwamagome
+- 21829 Mdoe
+- 21830 Kwenjugo
+- 21831 Kwediyamba
+- 21832 Malezi
+- 21833 Mabanda
+- 21921 Bokwa
+- 23120 Moivaro
+- 23121 Sinoni
+- 23122 Muriet
+- 23123 Osunyai Jr
+- 23124 Sakina
+- 23125 Olmoti
+- 23222 Lemanyata
+- 23223 Oldonyowass
+- 23224 Laroi
+- 23225 Kiutu
+- 23226 Tarakwa
+- 23227 Ilboru
+- 23318 Shambarai Burka
+- 23319 Majengo
+- 23320 Malula
+- 23321 Uwiro
+- 23322 Ngabobo
+- 23323 Maruvango
+- 23324 Imbaseni
+- 23325 Ambureni
+- 23326 Nkoanekoli
+- 23416 Mfereji
+- 23417 Lashaine
+- 23418 Naalarami
+- 23419 Lemooti
+- 23420 Migungani
+- 23517 Noondoto
+- 23518 Sinya
+- 23723 Ngoile
+- 23724 Misigiyo
+- 23725 Eyasi
+- 23726 Alaitolei
+- 23727 Kirangi
+- 23728 Engaresero
+- 23729 Piyaya
+- 25232 Njia Panda
+- 25315 Romu
+- 25316 Muungano
+- 25317 Bondeni
+- 25413 Songu
+- 25414 Ormelili
+- 25415 Donyomurwak
+- 25416 Miti Mirefu
+- 25417 Kirua
+- 25632 Bangalala
+- 25633 Gavao - Saweni
+- 25634 Tae
+- 25725 Shimbi Kwadele
+- 25726 Kingachi
+- 25727 Reha
+- 27223 Ayalagaya
+- 27224 Secheda
+- 27225 Kisangaji
+- 27226 Qameyu
+- 27326 Wareta
+- 27327 Darwar
+- 27328 Ishponga
+- 27329 Garawja
+- 27330 Mulbadaw
+- 27331 Endagaw
+- 27332 Dumbeta
+- 27333 Jordon
+- 27433 Gidhimu
+- 27434 Labay
+- 27435 Endahagichan
+- 27436 Silaloda
+- 27520 Ndirgishi
+- 27521 Laiseri
+- 27522 Kaloleni
+- 27523 Bwawani
+- 30136 Nyalwanzaja
+- 30137 Nyaruyeye
+- 30138 Nyamwilolelwa
+- 30139 Magenge
+- 30140 Butundwe
+- 30141 Nyawilimilwa
+- 30142 Izumacheli
+- 30143 Nyamboge
+- 30144 Buhalahala
+- 30145 Nyankumbu
+- 30146 Mgusu
+- 30147 Kanyala
+- 30148 Shiloleli
+- 30149 Ludete
+- 30213 Nundu
+- 30214 Nyamtukuza
+- 30215 Kaboha
+- 30323 Minkoto
+- 30417 Bunigonzi
+- 30514 Katente
+- 30515 Bulangwa
+- 30516 Katome
+- 30517 Bulega
+- 31114 Rwamlimi
+- 31115 Kwangwa
+- 31116 Mshikamano
+- 31120 Bugoji
+- 31129 Musanja
+- 31131 Rusoli
+- 31134 Ifulifu
+- 31235 Kamugegi
+- 31322 Kinyenche
+- 31323 Kyangasaga
+- 31324 Baraki
+- 31325 Nyaburongo
+- 31326 Raranya
+- 31431 Nkende
+- 31432 Kenyamanyori
+- 31433 Regicheri
+- 31434 Kwihancha
+- 31529 Nyamihoro
+- 31530 Kabarimu
+- 31531 Nyamakokoto
+- 31532 Manyamanyama
+- 31630 Nagusi
+- 31631 Moguteni
+- 31632 Matare
+- 33111 Mabatini
+- 33113 Luchelele
+- 33115 Lwanhima
+- 33117 Nyegezi
+- 33119 Kishili
+- 33121 Mhandu
+- 33212 Mecco
+- 33213 Buzuruga
+- 33214 Nyasaka
+- 33215 Kahama
+- 33216 Kiseke
+- 33217 Kayenze
+- 33218 Shibula
+- 33219 Kawekamo
+- 33223 Ibungilo
+- 33224 Nyamhongolo
+- 33335 Bitoto
+- 33336 Kahumulo
+- 33337 Nyamizeze
+- 33338 Mission
+- 33339 Ibondo
+- 33340 Luhuza
+- 33341 Uharanyonga
+- 33342 Bugoro
+- 33343 Bukokwa
+- 33344 Kasisa
+- 33345 Bangwe
+- 33346 Iligamba
+- 33347 Ngoma
+- 33417 Kandawe
+- 33418 Buhumbi
+- 33419 Bujora
+- 33420 Bukandwe
+- 33421 Chabula
+- 33422 Kabila
+- 33423 Jinjimili
+- 33424 Itumbili
+- 33425 Isandula
+- 33625 Kakukuru
+- 35230 Kyaitoke
+- 35442 Kamagambo
+- 35443 Nyakahanga
+- 35444 Ndama
+- 35445 Ihanda
+- 35544 Mushabago
+- 35616 Nyanza
+- 35617 Katahoka
+- 35721 Nyamagoma
+- 35722 Kibogora
+- 35809 Nyaruzumbura
+- 35810 Businde
+- 35811 Bugara
+- 35812 Mabira
+- 35813 Nyakatuntu
+- 35814 Kamuli
+- 35815 Kitwe
+- 35816 Kimuli
+- 35817 Kakanja
+- 35818 Kikukuru
+- 35819 Rwabwere
+- 35820 Iteera
+- 35821 Nkwenda
+- 35822 Rukuraijo
+- 35823 Kitwechenchura
+- 35824 Songambele
+- 37118 Old Shinyanga
+- 37331 Nyandekwa
+- 37332 Kilago
+- 37333 Iyenze
+- 37334 Ntobo
+- 37335 Ngaya
+- 37336 Ikinda
+- 37337 Shilela
+- 37338 Mwakata
+- 37339 Chona
+- 37340 Chambo
+- 37341 Kisuke
+- 37342 Nyamilangano
+- 37343 Mapamba
+- 37344 Bukomela
+- 37345 Ukune
+- 37346 Igunda
+- 37347 Kinamapula
+- 37348 Igwamanoni
+- 37349 Mpunze
+- 37350 Sabasabini
+- 37351 Idahina
+- 37352 Bulungwa
+- 37353 Nyankende
+- 37354 Ulewe
+- 37355 Ushetu
+- 37356 Uyogo
+- 37357 Ulowa
+- 37358 Ubagwe
+- 37521 Maganzo
+- 37522 Mwaweja
+- 37523 Bupipi
+- 37524 Busangwa
+- 37525 Mwataga
+- 37526 Ndoleleji
+- 37527 Mwasubi
+- 37528 Igaga
+- 37529 Idukilo
+- 39127 Masewa
+- 39128 Mwasubuya
+- 39129 Itubukilo
+- 39130 Ihusi
+- 39131 Gibishi
+- 39132 Benemhi
+- 39327 Busangi
+- 39328 Jija
+- 39329 Mbaragane
+- 39330 Sangamwalugesha
+- 39331 Mwabaratulu
+- 39332 Bugarama
+- 39333 Mataba
+- 39334 Mwabayanda
+- 39335 Sola
+- 39336 Shanwa
+- 39426 Isengwa
+- 39427 Mbugayabanghya
+- 39428 Mbushi
+- 39429 Kabondo
+- 39512 Nyashimo
+- 39513 Lamadi
+- 39514 Lutubiga
+- 39515 Imalamate
+- 41117 Nkuhungu
+- 41118 Ihumwa
+- 41119 Ng'onng'onha
+- 41120 Matumbulu
+- 41321 Mpinga
+- 41434 Chamwino
+- 41435 Nghaheleze
+- 41436 Ikombolinga
+- 41437 Mlowa Barabarani
+- 41631 Mlembule
+- 41632 Wangi
+- 41633 Mang'aliza
+- 41723 Hondomairo
+- 41724 Bereko
+- 41725 Salanka
+- 41726 Keikei
+- 41727 Serya
+- 41728 Bolisa
+- 41729 Changaa
+- 41819 Songolo
+- 41820 Soya
+- 41821 Kimaha
+- 41822 Kidoka
+- 41823 Babayu
+- 41824 Tumbakose
+- 41825 Kinyamshindo
+- 41826 Lahoda
+- 43117 Unyianga
+- 43118 Kisaki
+- 43318 Old Kiomboi
+- 43319 Maluga
+- 43320 Mukulu
+- 43431 Tambukareli
+- 43432 Kalangali
+- 43515 Tumuli
+- 43516 Nkalakala
+- 43517 Kinampundu
+- 43627 Makilawa
+- 43628 Makiungu
+- 45126 Mpela
+- 45127 Mwinyi
+- 45128 Kidongochekundu
+- 45129 Mapambano
+- 45225 Kalola
+- 45226 Makazi
+- 45227 Mmale
+- 45228 Igulungu
+- 45229 Nzubuka
+- 45230 Isila
+- 45318 Mkolye
+- 45319 Nyahua
+- 45320 Kilumbi
+- 45438 Nzega Mjini Mashariki
+- 45439 Uchama
+- 45440 Kitangili
+- 45441 Mwanzoli
+- 45442 Mwasala
+- 45443 Mwantundu
+- 45444 Mbagwa
+- 45445 Ugembe
+- 45446 Mbutu
+- 45513 Mchikichini
+- 45514 Kiyungi
+- 45627 Lugubu
+- 45628 Mtunguru
+- 45629 Mwamakoma
+- 45630 Ugaka
+- 45631 Mwamala
+- 45632 Kitangili
+- 45633 Iborogelo
+- 45634 Uswaya
+- 45635 Tambalale
+- 45719 Ufukutwa
+- 45720 Usenye
+- 45721 Usimba
+- 45722 Nhwande
+- 45723 Makingi
+- 45724 Kona Nne
+- 45725 Ilege
+- 45726 Milambo
+- 45727 Igombemkulu
+- 45728 Mkindo
+- 50110 Majengo
+- 50111 Uwanja wa Ndege
+- 50112 Kazima
+- 50113 Mwamkulu
+- 50120 Ibindi
+- 50126 Kanoge
+- 50127 Katumba
+- 50208 Mpanda Ndogo
+- 50211 Kasekese
+- 50212 Mnyagala
+- 50213 Tongwe
+- 50214 Ilangu
+- 50215 Bulamata
+- 50216 Ipwaga
+- 50324 Ilunde
+- 50325 Kamsisi
+- 50326 Chamalendi
+- 51117 Mkimbizi
+- 51118 Igumbilo
+- 51226 Kihanga
+- 51227 Masaka
+- 51228 Mboliboli
+- 51323 Kising'a
+- 51324 Nyanzwa
+- 51431 Idete
+- 51432 Maduma
+- 51433 Ikongosi
+- 51434 Changarawe
+- 51435 Wambi
+- 51436 Upendo
+- 53226 Igale
+- 53227 Mjele
+- 53228 Shizuvi
+- 53229 Izyra
+- 53539 Iponjola
+- 53540 Lupepo
+- 53541 Ndanto
+- 53542 Ntaba
+- 53543 Mpata
+- 53721 Nkokwa
+- 53722 Mababu
+- 53723 Mikoroshoni
+- 53724 Mbugani
+- 53725 Mwanganyanga
+- 53726 Serengeti
+- 53727 Itunge
+- 53728 Nkuyu
+- 53729 Ndandalo
+- 53730 Ipyana
+- 53731 Bondeni
+- 53732 Ibanda
+- 53832 Kasanga
+- 53833 Upendo
+- 53834 Nkung'ungu
+- 53837 Bwawani
+- 54109 Mpona
+- 54111 Manda
+- 54114 Mbuyuni
+- 54218 Ilolo
+- 54219 Ichenjezya
+- 54220 Hasanga
+- 54221 Hasamba
+- 54222 Isansa
+- 54223 Shiwinga
+- 54224 Itumpi
+- 54225 Kilimampimbi
+- 54226 Wasa
+- 54227 Hezya
+- 54229 Idiwili
+- 54415 Ikana
+- 54416 Mkomba
+- 54417 Majengo
+- 54418 Mpande
+- 54419 Chapwa
+- 54420 Maporomoko
+- 54421 Kaloleni
+- 54422 Sogea
+- 54423 Makambini
+- 54424 Katete
+- 54425 Mpemba
+- 54426 Muungano
+- 54427 Mwakakati
+- 54428 Chipaka
+- 54429 Uwanjani
+- 55116 Mafulala
+- 55117 Msua
+- 55118 Momoka
+- 55119 Lwiche
+- 55214 Nankanga
+- 55215 Kapenta
+- 55216 Kilangawana
+- 55217 Zimba
+- 55218 Kalumbaleza
+- 55219 Mfinga
+- 55220 Mwadui
+- 55221 Ikozi
+- 55222 Mpwapwa
+- 55223 Lyangalile
+- 55224 Kanda
+- 55225 Msanda Muungano
+- 55226 Kasanzama
+- 55227 Mnokola
+- 55318 Mkwamba
+- 55319 Myula
+- 55320 Kizumbi
+- 55321 Mkinga
+- 55322 Majengo
+- 55323 Isunta
+- 55324 Kipindu
+- 55325 Ntatumbila
+- 55326 Mashete
+- 55327 Paramawe
+- 55328 Isale Asilia
+- 55329 Itete
+- 55418 Samazi
+- 55419 Mpombwe
+- 55420 Lyowa
+- 55421 Mbuluma
+- 55422 Sundu
+- 55423 Kanyezi
+- 55424 Kilesha
+- 57224 Parangu
+- 57225 Liganga
+- 57226 Lilahi
+- 57228 Kizuka
+- 57229 Litapwasi
+- 57230 Mateteleka
+- 57319 Mkongo Gulioni
+- 57320 Lisimonji
+- 57321 Msisima
+- 57435 Wukiro
+- 57436 Mateka
+- 57437 Mhongozi
+- 57438 Amani Makolo
+- 57439 Lukarasi
+- 57440 Kagugu
+- 57441 Muungano
+- 57442 Mbambi
+- 57443 Lusonga
+- 57444 Matarawe
+- 57445 Masumuni
+- 57446 Mbinga Mjini B
+- 57447 Luhuwiko
+- 57448 Betrehemu
+- 57516 Mipotopoto
+- 57517 Upolo
+- 57518 Mpepo
+- 57519 Lumeme
+- 57520 Linga
+- 57636 Chiwana
+- 57637 Namakambale
+- 57638 Majimaji
+- 57639 Tinginya
+- 59119 Maguvani
+- 59120 Majengo
+- 59121 Kitisi
+- 59122 Kivavi
+- 59215 Ukalawa
+- 59216 Kichiwa
+- 59317 Itulahumba
+- 59318 Igwachanya
+- 59319 Uhenga
+- 59320 Udonja
+- 59321 Malangali
+- 59426 Lubonde
+- 59523 Kinyika
+- 61112 Tangini
+- 61113 Sofu
+- 61114 Viziwa Ziwa
+- 61212 Mtambani
+- 61213 Mtongani
+- 61214 Kawawa
+- 61323 Mapinga
+- 61324 Nia Njema
+- 61325 Kisutu
+- 61326 Makurunge
+- 61416 Boga
+- 61417 Kazimzumbwi
+- 61519 Dondo
+- 61520 Msonga
+- 61521 Kisegesege
+- 61522 Beta
+- 61523 Tengelea
+- 61524 Mwandege
+- 61525 Mipeko
+- 61628 Kipugira
+- 61629 Mohoro
+- 61805 Msala
+- 63116 Magomeni
+- 63117 Mtawanya
+- 63118 Tandika
+- 63229 Dinyecha
+- 63230 Nyundo
+- 63231 Mnongodi
+- 63232 Hinju
+- 63233 Msimbati
+- 63234 Nalingu
+- 63235 Moma
+- 63236 Lipwidi
+- 63237 Mangopachanne
+- 63238 Mkunwa
+- 63331 Malopokelo
+- 63332 Mkwedu
+- 63429 Mpwapwa
+- 63430 Mnyeu
+- 63431 Mikumbi
+- 63432 Julia
+- 63433 Nangwala
+- 63434 Tulindane
+- 63435 Mkulung'ulu
+- 63436 Mahumbika
+- 63437 Mtumachi
+- 63438 Muungano
+- 63536 Mitesa
+- 63537 Makong'onda
+- 63538 Mpeta
+- 63539 Lupaso
+- 63540 Mjelejele
+- 63541 Chikukwe
+- 63542 Nangoo
+- 63543 Chikundi
+- 63544 Ndanda
+- 63545 Mpindimbi
+- 63546 Msikisi
+- 63547 Chanikanguo
+- 63548 Napupa
+- 63549 Mumbaka
+- 63550 Chikunja
+- 63615 Kamundi
+- 63616 Kilimanihewa
+- 63617 Michiga
+- 65119 Kitumbikwela
+- 65120 Mnazimmoja
+- 65231 Kinyope
+- 65232 Mvuleni
+- 65333 Raha Leo
+- 65334 Chiumbati Shuleni
+- 65335 Boma
+- 65336 Ugawaji
+- 65422 Namayuni
+- 65423 Somanga
+- 65622 Mbwemkuru (Machang'anja)
+- 67230 Kibuko
+- 67231 Tomondo
+- 67324 Mangae
+- 67325 Homboza
+- 67326 Lubungo
+- 67327 Msongozi
+- 67328 Mkindo
+- 67329 Kichangani
+- 67330 Mziha
+- 67416 Parakuyo
+- 67418 Madoto
+- 67419 Mbigiri
+- 67420 Kitete
+- 67422 Mvumi
+- 67423 Maguha
+- 67424 Mabula
+- 67425 Mtumbatu
+- 67431 Kidodi
+- 67434 Ruhembe
+- 67435 Ruaha
+- 67436 Vidunda
+- 67438 Mhenda
+- 67439 Tindiga
+- 67440 Mikumi
+- 67524 Mang'ula "B"
+- 67525 Signal
+- 67526 Msolwa Station
+- 67527 Kalengakelo
+- 67528 Namwawala
+- 67529 Mbasa
+- 67530 Katindiuka
+- 67531 Lipangalala
+- 67532 Mlabani
+- 67533 Viwanjasitini
+- 67534 Ching'anda
+- 67535 Igima
+- 67709 Chigela
+- 67710 Madege
+- 67711 Idibo
+- 67712 Leshata
+- 67713 Italagwe
+- 67714 Nongwe
+- 67715 Ukwamani
+- 67716 Magoweko
+- 67717 Mkalama
+- 67718 Msingisi
+
+## Wards removed (24)
+
+- 27213 Mwikantsi
+- 27422 Qaloda
+- 31601 Mugumu Mjini
+- 35228 Butulage
+- 35422 Rwabwere
+- 35423 Kimuli
+- 35424 Mabira
+- 35425 Nkwenda
+- 35428 Kamuli
+- 35431 Nyakatuntu
+- 35432 Kikukuru
+- 35433 Businde
+- 35434 Rukulaijo
+- 35435 Songambele
+- 35502 Rushwa
+- 37229 Lyabusalu
+- 39126 Ng'wang'wali
+- 53508 Katumba
+- 55303 Isale
+- 55306 Mkwamba
+- 55407 Kalambazite
+- 63503 Mchenghani
+- 63504 Lisekese
+- 67622 Kilosampepo
