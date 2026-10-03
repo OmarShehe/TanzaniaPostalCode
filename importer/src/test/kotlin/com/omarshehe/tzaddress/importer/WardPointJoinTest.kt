@@ -117,4 +117,63 @@ class WardPointJoinTest {
         assertEquals(listOf("11101", "12101", "12102"), first.map { it.postcode })
         assertEquals(first, WardPointJoin.join(data, wards.reversed(), listOf(districtB, districtA)))
     }
+
+    @Test
+    fun aSpellingVariantInTheSameDistrictMatchesAndIsMarkedSimilar() {
+        val data = dataset("Alpha" to listOf("11101" to "Mikinguni"))
+        val match = WardPointJoin.join(data, listOf(square("Mikunguni", 31.0, -4.0)), listOf(districtA)).single()
+        assertEquals(WardMatchKind.MATCHED_SIMILAR_NAME, match.kind)
+        assertEquals(WardPoint(-3.5, 31.5), match.point)
+        assertEquals("similar to boundary ward 'Mikunguni' (0.89)", match.detail)
+    }
+
+    @Test
+    fun aSpellingVariantOnlyInAnotherDistrictStaysNoMatch() {
+        val data = dataset("Alpha" to listOf("11101" to "Mikinguni"))
+        val match = WardPointJoin.join(data, listOf(square("Mikunguni", 35.0, -4.0)), listOf(districtA, districtB)).single()
+        assertEquals(WardMatchKind.NO_MATCH, match.kind)
+        assertNull(match.point)
+    }
+
+    @Test
+    fun twoEquallyCloseBoundaryWardsLeaveItUnmatched() {
+        val data = dataset("Alpha" to listOf("11101" to "Mwakasumbe"))
+        val boundaries = listOf(square("Mwakasumba", 30.5, -4.0, 0.4), square("Mwakasumbo", 31.5, -4.0, 0.4))
+        assertEquals(WardMatchKind.NO_MATCH, WardPointJoin.join(data, boundaries, listOf(districtA)).single().kind)
+    }
+
+    @Test
+    fun twoWardsEquallyCloseToOneBoundaryWardBothStayUnmatched() {
+        val data = dataset("Alpha" to listOf("11101" to "Mikinguni", "11102" to "Mikanguni"))
+        val matches = WardPointJoin.join(data, listOf(square("Mikunguni", 31.0, -4.0)), listOf(districtA))
+        assertEquals(mapOf("11101" to WardMatchKind.NO_MATCH, "11102" to WardMatchKind.NO_MATCH), kinds(matches))
+    }
+
+    @Test
+    fun aBoundaryWardAlreadyTakenByAnExactNameIsNotReused() {
+        val data = dataset("Alpha" to listOf("11101" to "Mikunguni", "11102" to "Mikinguni"))
+        val matches = WardPointJoin.join(data, listOf(square("Mikunguni", 31.0, -4.0)), listOf(districtA))
+        assertEquals(mapOf("11101" to WardMatchKind.MATCHED_DISTRICT, "11102" to WardMatchKind.NO_MATCH), kinds(matches))
+    }
+
+    @Test
+    fun aDifferentFirstLetterIsNotAVariant() {
+        val data = dataset("Alpha" to listOf("11101" to "Bwakasumbe"))
+        assertEquals(WardMatchKind.NO_MATCH, WardPointJoin.join(data, listOf(square("Mwakasumbe", 31.0, -4.0)), listOf(districtA)).single().kind)
+    }
+
+    @Test
+    fun anAmbiguousWardIsNotRetriedAsASpellingVariant() {
+        val data = dataset("Alpha" to listOf("11101" to "Kati"))
+        val matches = WardPointJoin.join(data, listOf(square("Kati", 30.5, -4.0, 0.4), square("Kati", 31.5, -4.0, 0.4)), listOf(districtA))
+        assertEquals(WardMatchKind.AMBIGUOUS, matches.single().kind)
+    }
+
+    @Test
+    fun aWardWithASplitSuffixIsNotMatchedToItsParentBoundary() {
+        // "Matale A" and "Kitama 1" look like later splits of a ward; the boundary data has only the parent polygon.
+        val data = dataset("Alpha" to listOf("11101" to "Matale A", "11102" to "Kitama 1"))
+        val boundaries = listOf(square("Matale", 30.5, -4.0, 0.4), square("Kitama", 31.5, -4.0, 0.4))
+        assertEquals(mapOf("11101" to WardMatchKind.NO_MATCH, "11102" to WardMatchKind.NO_MATCH), kinds(WardPointJoin.join(data, boundaries, listOf(districtA))))
+    }
 }

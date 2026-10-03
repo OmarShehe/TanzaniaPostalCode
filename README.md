@@ -14,7 +14,7 @@ The mainland regions come from TCRA's regional postcode lists (Government Gazett
 from the 2012-07-30 list, which is the only one that has it: **31 regions, 168 districts, 4,058 wards (5-digit postcodes),
 17,039 mtaa/villages/shehia and 64,262 kitongoji.** A shehia is stored as an mtaa.
 
-Wards also carry a position (`latitude`, `longitude`) for centring a map: **3,100 of the 4,058 wards** have one, the rest are
+Wards also carry a position (`latitude`, `longitude`) for centring a map: **3,194 of the 4,058 wards** have one, the rest are
 `null`. It comes from OpenStreetMap ward boundaries, so it is under the ODbL and needs a credit (see [Licence](#licence)).
 
 A ward's postcode is its id. Between the 2012 list and this one, 162 wards got a new postcode, so postcodes you stored from 0.1.x may no

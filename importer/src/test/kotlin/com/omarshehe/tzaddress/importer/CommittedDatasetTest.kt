@@ -83,6 +83,14 @@ class CommittedDatasetTest {
         assertEquals(null, ugalla.longitude)
     }
 
+    @Test fun spellingVariantsInTheSameDistrictGetAPosition_butLookAlikesAndSplitWardsDoNot() {
+        val byPostcode = wards.associate { (_, w) -> w.postcode to w }
+        assertTrue(byPostcode.getValue("14109").latitude != null, "Hananasif (Kinondoni) is Hananasifu on the boundary map")
+        assertEquals(null, byPostcode.getValue("15132").latitude, "Kilungule is not Kisungule")
+        assertEquals(null, byPostcode.getValue("23512").latitude, "Matale A is a split of Matale")
+        assertTrue(wards.count { (_, w) -> w.latitude != null } > 3100)
+    }
+
     @Test fun datasetWithPositionsCarriesTheOpenStreetMapNotice() {
         assertTrue(wards.any { (_, w) -> w.latitude != null })
         assertTrue("OpenStreetMap" in dataset.info.attribution && "ODbL" in dataset.info.attribution, dataset.info.attribution)

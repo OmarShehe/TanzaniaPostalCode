@@ -8,6 +8,9 @@ enum class WardMatchKind(val matched: Boolean) {
     /** The district could not be used, but the name is unique among boundary wards and among ours. */
     MATCHED_UNIQUE_NAME(true),
 
+    /** No exact name, but one boundary ward in the same district is clearly the best spelling variant (see [WardPointJoin.SIMILAR_NAME_THRESHOLD]). */
+    MATCHED_SIMILAR_NAME(true),
+
     /** More than one boundary ward could be meant, or two of our wards want the same one. */
     AMBIGUOUS(false),
 
