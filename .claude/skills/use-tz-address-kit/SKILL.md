@@ -15,11 +15,11 @@ Offline Tanzanian address data (no network, no API key; the data ships inside th
 |---|---|
 | `io.github.omarshehe:tz-address-core` | the model and the `AddressRepository` interface only |
 | `io.github.omarshehe:tz-address-data` | the bundled database and the repository (includes core); backends and headless apps stop here |
-| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose Multiplatform 1.12, built on `forminput-compose` 2.1.0, pulled in transitively) |
+| `io.github.omarshehe:tz-address-ui` | `AddressSearchField` and `AddressPicker` (Compose Multiplatform 1.12, built on `io.github.omarshehe:forminput` 2.1.0, pulled in transitively) |
 
 Targets: Android (minSdk 21 for core, **23** for data and ui), JVM 17, iOS (arm64, simulator arm64). Kotlin 2.2+ for core and data; iOS consumers need Kotlin 2.4+.
 On a JVM backend add `google()` next to `mavenCentral()` (`androidx.sqlite` is only on Google's Maven).
-`tz-address-ui` needs `forminput-compose` on a repository: until it is public, run `./gradlew :forminput-compose:publishToMavenLocal` in the FormInputs repo and keep `mavenLocal()` in `settings.gradle.kts`.
+`tz-address-ui` pulls in `io.github.omarshehe:forminput` from Maven Central, so no extra repository is needed beyond `google()` and `mavenCentral()`.
 
 ## Create the store once
 
@@ -66,8 +66,8 @@ AddressPicker(repository = addresses, value = value, onValueChange = { value = i
 
 - `AddressPicker` reports `null` until `requiredLevel` is chosen. A level with nothing listed in the source (some wards have no mtaa, most mtaa have no kitongoji)
   shows "None listed" and counts as complete.
-- Both use your `MaterialTheme`, ship English and Swahili strings, and survive rotation. They are built on `forminput-compose`, so a `FormInputTheme` around
-  them can change their style and shape (see the `use-forminput-compose` skill in the FormInputs repo).
+- Both use your `MaterialTheme`, ship English and Swahili strings, and survive rotation. They are built on `forminput`, so a `FormInputTheme` around
+  them can change their style and shape (see the `use-forminput` skill in the FormInputs repo).
 - The `:app` module is a working sample.
 
 ## Testing your own code

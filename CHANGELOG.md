@@ -4,7 +4,7 @@ Versions follow [semantic versioning](README.md#versioning). Every release recor
 
 ## Unreleased
 
-- `tz-address-ui`: the search field and the level dropdowns now use `forminput-compose` 2.1.0 (outlined text field and dropdown).
+- `tz-address-ui`: the search field and the level dropdowns now use [`io.github.omarshehe:forminput`](https://github.com/OmarShehe/FormInputs) 2.1.0 (outlined text field and dropdown).
 
 ## 0.1.0 (unreleased)
 

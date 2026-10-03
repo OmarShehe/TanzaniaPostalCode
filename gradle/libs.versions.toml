@@ -23,7 +23,7 @@ composeMaterial3 = "1.9.0"
 activityCompose = "1.13.0"
 composeAndroidTest = "1.12.1"
 mavenPublish = "0.37.0"
-forminputCompose = "2.1.0"
+forminput = "2.1.0"
 espresso = "3.7.0"
 
 [libraries]
@@ -49,7 +49,7 @@ compose-ui-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "composeAndroidTest" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeAndroidTest" }
-forminput-compose = { module = "com.github.OmarShehe:forminput-compose", version.ref = "forminputCompose" }
+forminput = { module = "io.github.omarshehe:forminput", version.ref = "forminput" }
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestExt" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
