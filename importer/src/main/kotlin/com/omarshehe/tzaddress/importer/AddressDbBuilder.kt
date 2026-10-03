@@ -63,9 +63,15 @@ object AddressDbBuilder {
             }
             st.executeBatch()
         }
-        c.prepareStatement("INSERT INTO ward(postcode, name, district_code) VALUES (?, ?, ?)").use { st ->
+        c.prepareStatement("INSERT INTO ward(postcode, name, district_code, latitude, longitude) VALUES (?, ?, ?, ?, ?)").use { st ->
             d.wards.forEach {
-                st.setString(1, it.postcode); st.setString(2, it.name); st.setString(3, it.districtCode); st.addBatch()
+                st.setString(1, it.postcode); st.setString(2, it.name); st.setString(3, it.districtCode)
+                if (it.latitude == null || it.longitude == null) {
+                    st.setNull(4, java.sql.Types.REAL); st.setNull(5, java.sql.Types.REAL)
+                } else {
+                    st.setDouble(4, it.latitude!!); st.setDouble(5, it.longitude!!)
+                }
+                st.addBatch()
                 val district = districts.getValue(it.districtCode)
                 indexRow(Level.WARD, it.postcode, it.name, listOf(regions.getValue(district.regionCode).name, district.name))
             }
@@ -92,8 +98,8 @@ object AddressDbBuilder {
         }
         index.executeBatch()
         index.close()
-        c.prepareStatement("INSERT INTO dataset_info(version, source_edition, generated_at) VALUES (?, ?, ?)").use { st ->
-            st.setString(1, d.info.version); st.setString(2, d.info.sourceEdition); st.setString(3, d.info.generatedAt)
+        c.prepareStatement("INSERT INTO dataset_info(version, source_edition, generated_at, attribution) VALUES (?, ?, ?, ?)").use { st ->
+            st.setString(1, d.info.version); st.setString(2, d.info.sourceEdition); st.setString(3, d.info.generatedAt); st.setString(4, d.info.attribution)
             st.executeUpdate()
         }
     }

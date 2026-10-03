@@ -45,6 +45,17 @@ class DbInstallerTest {
         assertEquals(2, bytesReads)
     }
 
+    @Test fun databaseFromTheFirstDatasetVersionIsReplaced() = runBlocking {
+        val directory = File(dir, "v1").apply { mkdirs() }
+        val installed = File(directory, "tz-address.db").also { db.copyTo(it) }
+        java.sql.DriverManager.getConnection("jdbc:sqlite:${installed.absolutePath}").use { c ->
+            c.createStatement().use { it.executeUpdate("UPDATE dataset_info SET version = '1'") }
+        }
+        val path = installer(directory = directory).install()
+        assertEquals(1, bytesReads, "the older database is replaced by the bundled one")
+        assertEquals("2", SqliteAddressRepository.open(JdbcSQLiteDriver(), path).let { it.info().version.also { _ -> it.close() } })
+    }
+
     @Test fun corruptInstalledFileIsReplaced() = runBlocking {
         val directory = File(dir, "corrupt").apply { mkdirs() }
         File(directory, "tz-address.db").writeText("not a database")

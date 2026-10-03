@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.pdfbox)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.sqlite.jdbc)
+    implementation(libs.jts.core)
     testImplementation(libs.kotlin.test)
 }
 
@@ -29,6 +30,18 @@ tasks.register<JavaExec>("importPostcodes") {
     mainClass.set("com.omarshehe.tzaddress.importer.ImportMainKt")
     val root = rootProject.layout.projectDirectory.asFile
     val options = listOf("pdf", "sourceEdition", "generatedAt", "outDir", "expectedRegions", "maxAnomalyRatio", "force")
+    val passed = options.mapNotNull { name -> providers.gradleProperty(name).orNull?.let { "--$name=$it" } }
+    args = passed + "--root=${root.absolutePath}"
+}
+
+// ./gradlew :importer:importWardPoints -PwardBoundaries=/path/ward.geojson -PdistrictBoundaries=/path/district.geojson [-PminMatchRatio=0.85] [-PgeneratedAt=...] [-PoutDir=dataset]
+tasks.register<JavaExec>("importWardPoints") {
+    group = "import"
+    description = "Adds a position to each ward in dataset/tz-address.json from ward boundary GeoJSON, plus a ward-points report."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("com.omarshehe.tzaddress.importer.WardPointsMainKt")
+    val root = rootProject.layout.projectDirectory.asFile
+    val options = listOf("wardBoundaries", "districtBoundaries", "generatedAt", "outDir", "minMatchRatio")
     val passed = options.mapNotNull { name -> providers.gradleProperty(name).orNull?.let { "--$name=$it" } }
     args = passed + "--root=${root.absolutePath}"
 }

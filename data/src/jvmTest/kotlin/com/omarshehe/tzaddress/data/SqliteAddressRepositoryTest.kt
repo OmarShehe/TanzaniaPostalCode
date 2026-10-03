@@ -20,7 +20,7 @@ class SqliteAddressRepositoryTest {
 
     @Test fun info_isReadFromTheDatabase() = runBlocking {
         val info = repository.info()
-        assertEquals("1", info.version)
+        assertEquals("2", info.version)
         assertEquals("2012-07-30", info.sourceEdition)
     }
 

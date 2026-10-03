@@ -43,4 +43,34 @@ class CommittedDatasetTest {
             assertTrue(it in names, "missing $it")
         }
     }
+
+    private val wards by lazy { dataset.regions.flatMap { r -> r.districts.flatMap { d -> d.wards.map { w -> r to w } } } }
+
+    @Test fun wardPositionsAreValidAndCoverEnoughWards() {
+        assertEquals(emptyList(), WardPointValidator.check(dataset))
+        assertEquals(null, WardPointValidator.coverage(dataset, WardPointValidator.MIN_MATCH_RATIO))
+    }
+
+    @Test fun wardWhoseOnlySameNamedBoundaryIsInAnotherDistrictGetsNoPosition() {
+        // Ugalla (Mlele, Katavi): the only boundary ward called Ugalla is in Urambo, Tabora, 42 km away.
+        val ugalla = wards.single { (_, w) -> w.postcode == "50313" }.second
+        assertEquals(null, ugalla.latitude)
+        assertEquals(null, ugalla.longitude)
+    }
+
+    @Test fun datasetWithPositionsCarriesTheOpenStreetMapNotice() {
+        assertTrue(wards.any { (_, w) -> w.latitude != null })
+        assertTrue("OpenStreetMap" in dataset.info.attribution && "ODbL" in dataset.info.attribution, dataset.info.attribution)
+        assertEquals(DatasetVersion.CURRENT, dataset.info.version)
+    }
+
+    @Test fun zanzibarAndDarEsSalaamPositionsAreInTheirAreas() {
+        val zanzibar = setOf("Mjini Magharibi", "Kusini Unguja", "Kaskazini Unguja", "Kusini Pemba", "Kaskazini Pemba")
+        val islands = wards.filter { (r, w) -> r.name in zanzibar && w.latitude != null }
+        assertTrue(islands.isNotEmpty())
+        assertTrue(islands.all { (_, w) -> w.latitude!! in -6.5..-4.8 && w.longitude!! in 39.1..39.9 })
+        val dar = wards.filter { (r, w) -> r.name == "Dar es Salaam" && w.latitude != null }
+        assertTrue(dar.isNotEmpty())
+        assertTrue(dar.all { (_, w) -> w.latitude!! in -7.2..-6.5 && w.longitude!! in 39.0..39.6 })
+    }
 }

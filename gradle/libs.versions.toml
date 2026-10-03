@@ -6,6 +6,7 @@ pdfbox = "3.0.8"
 serialization = "1.11.0"
 androidxSqlite = "2.7.1"
 sqliteJdbc = "3.53.4.0"
+jts = "1.20.0"
 kotlinxIo = "0.9.1"
 compileSdk = "37"
 minSdkApp = "23"
@@ -38,6 +39,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "androidxSqlite" }
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "androidxSqlite" }
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIo" }
+jts-core = { module = "org.locationtech.jts:jts-core", version.ref = "jts" }
 sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqliteJdbc" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }

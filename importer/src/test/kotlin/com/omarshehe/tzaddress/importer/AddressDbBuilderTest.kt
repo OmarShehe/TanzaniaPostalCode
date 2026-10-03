@@ -49,6 +49,26 @@ class AddressDbBuilderTest {
     }
 
     @Test
+    fun storesWardPositionsAndNullForUnmatchedWards() {
+        val withPoints = DatasetDto(
+            InfoDto("2", "test", "2026-01-01T00:00:00Z", "© OpenStreetMap contributors"),
+            listOf(
+                RegionDto(
+                    "11000", "Dar es Salaam",
+                    listOf(DistrictDto("11", "Ilala", listOf(WardDto("11101", "Kivukoni", emptyList(), -6.81234, 39.28765), WardDto("11102", "Kariakoo", emptyList())))),
+                ),
+            ),
+        ).toCore()
+        val file = File(dir, "points.db")
+        AddressDbBuilder.build(withPoints, file)
+        val rows = query(file, "SELECT postcode, latitude, longitude FROM ward ORDER BY postcode") {
+            Triple(it.getString(1), it.getObject(2) as Double?, it.getObject(3) as Double?)
+        }
+        assertEquals(listOf(Triple("11101", -6.81234, 39.28765), Triple("11102", null, null)), rows)
+        assertEquals(listOf("© OpenStreetMap contributors"), query(file, "SELECT attribution FROM dataset_info") { it.getString(1) })
+    }
+
+    @Test
     fun searchIndexHasOneRowPerNodeWithNormalisedText() {
         val file = File(dir, "c.db")
         AddressDbBuilder.build(dataset, file)
