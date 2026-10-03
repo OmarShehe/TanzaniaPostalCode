@@ -176,4 +176,13 @@ class WardPointJoinTest {
         val boundaries = listOf(square("Matale", 30.5, -4.0, 0.4), square("Kitama", 31.5, -4.0, 0.4))
         assertEquals(mapOf("11101" to WardMatchKind.NO_MATCH, "11102" to WardMatchKind.NO_MATCH), kinds(WardPointJoin.join(data, boundaries, listOf(districtA))))
     }
+
+    @Test
+    fun theThresholdIsPinned_oneEditInSevenLettersMatchesAndOneEditInSixDoesNot() {
+        assertEquals(0.85, WardPointJoin.SIMILAR_NAME_THRESHOLD)
+        val seven = WardPointJoin.join(dataset("Alpha" to listOf("11101" to "Kimanga")), listOf(square("Kimunga", 31.0, -4.0)), listOf(districtA))
+        assertEquals(WardMatchKind.MATCHED_SIMILAR_NAME, seven.single().kind)
+        val six = WardPointJoin.join(dataset("Alpha" to listOf("11101" to "Mwanga")), listOf(square("Mwangi", 31.0, -4.0)), listOf(districtA))
+        assertEquals(WardMatchKind.NO_MATCH, six.single().kind)
+    }
 }
