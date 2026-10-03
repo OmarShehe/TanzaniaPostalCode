@@ -117,9 +117,11 @@ Each release records the artifact version and the dataset in [CHANGELOG.md](CHAN
 - `./gradlew :core:jvmTest :data:jvmTest :ui:jvmTest` runs the unit and desktop UI tests; `./gradlew :app:connectedDebugAndroidTest`
   runs both widgets over the real database on a device.
 - `./gradlew publishToMavenLocal` publishes `core`, `data` and `ui` to `~/.m2` for trying them in another project (add `mavenLocal()` first there).
-- Pushing a `v*` tag runs `.github/workflows/release.yml`. It refuses to publish without signing secrets and a `LICENSE`, or while
-  `DATA_SOURCE.md` contains a `TODO(maintainer)` marker, and it only **stages** the deployment: open the Central Portal →
-  *Deployments* and press *Publish* (or use `publishToMavenCentral(automaticRelease = true)`). `:app` and `:importer` are never published.
+- **Releasing:** set `VERSION_NAME`, update `CHANGELOG.md`, commit and push. Then run `./gradlew publishAndReleaseToMavenCentral`
+  (needs the Central token and signing key in `~/.gradle/gradle.properties`): it signs, uploads and releases once Central validates.
+  `./gradlew publishToMavenCentral` only stages the deployment for a manual *Publish* in the Central Portal. A release cannot be undone.
+  Afterwards push the tag (`git tag v<version> && git push origin v<version>`): `.github/workflows/release.yml` checks the repository and
+  attaches the database files to the GitHub release. `:app` and `:importer` are never published.
 
 ## Licence
 
