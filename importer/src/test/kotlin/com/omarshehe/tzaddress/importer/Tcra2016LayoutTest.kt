@@ -207,4 +207,26 @@ class Tcra2016LayoutTest {
         assertEquals(listOf("Tukutuku", "Sokoni", "Kazehil", "Kiyungi"), district.wards.single().mtaas.map { it.name })
         assertTrue(r.anomalies.isEmpty(), r.anomalies.toString())
     }
+
+    @Test
+    fun aDistrictNameWrappedOntoASecondLine_stillJoinsTheDistrict() {
+        val builder = HierarchyBuilder(headerOncePerRegion = true)
+        builder.startRegion(Banner("Njombe", "59000"))
+        builder.addPage(
+            1,
+            structure(
+                line(
+                    110.0, x[0] to "REGION", x[1] to "POSTCODE", x[2] to "DISTRICT", x[3] to "POSTCODE", x[4] to "WARD",
+                    x[5] to "POSTCODE", x[7] to "MTAA/VILLAGE", x[8] to "KITONGOJI",
+                ),
+                line(130.0, x[1] to "59", x[2] to "WANGING'O", x[3] to "593", x[4] to "Ward", x[5] to "59301", x[7] to "Mtaa"),
+                line(146.0, x[2] to "MBE"),
+                line(162.0, x[4] to "Ward", x[5] to "59302", x[7] to "Mtaa Two"),
+            ),
+        )
+        val district = builder.result().regions.single().districts.single()
+        assertEquals("wanging'o mbe", district.name.lowercase())
+        assertEquals(listOf("59301", "59302"), district.wards.map { it.postcode })
+        assertEquals(listOf("Mtaa"), district.wards.first().mtaas.map { it.name })
+    }
 }

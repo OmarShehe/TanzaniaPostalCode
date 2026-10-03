@@ -115,17 +115,10 @@ class HierarchyBuilder(
      * A mtaa printed in the district column (no district code, no ward on the row, mtaa or kitongoji cells beside it)
      * belongs to the current ward; a district name that wraps has nothing else on its row.
      */
-    private fun withoutStrayMtaa(cells: Map<Role, String>): Map<Role, String> {
-        val name = cells[Role.DISTRICT_NAME] ?: return cells
-        val currentWard = ward
-        val districtComplete = district?.code?.isNotEmpty() == true
-        val strayMtaa = currentWard != null && districtComplete && pendingDistrict == null &&
+    private fun isStrayMtaa(cells: Map<Role, String>): Boolean =
+        Role.DISTRICT_NAME in cells && ward != null && district?.code?.isNotEmpty() == true &&
             Role.DISTRICT_CODE !in cells && Role.WARD_NAME !in cells && Role.WARD_CODE !in cells &&
             (Role.MTAA in cells || Role.KITONGOJI in cells)
-        if (!strayMtaa) return cells
-        mtaa = MtaaNode(NameNormalizer.normalize(name, shortAllCapsAreAcronyms = true)).also { currentWard!!.mtaas += it }
-        return cells - Role.DISTRICT_NAME
-    }
 
     private fun process(page: Int, line: Int, row: Row, text: String) {
         fun flag(kind: AnomalyKind) { anomalies += Anomaly(page, line, kind, text) }
@@ -145,7 +138,11 @@ class HierarchyBuilder(
         }
 
         if (row.unassigned.isNotEmpty()) flag(AnomalyKind.UNASSIGNED_TEXT)
-        val cells = withoutStrayMtaa(row.cells)
+        var cells = row.cells
+        if (isStrayMtaa(cells)) {
+            mtaa = MtaaNode(NameNormalizer.normalize(cells.getValue(Role.DISTRICT_NAME), shortAllCapsAreAcronyms = true)).also { ward!!.mtaas += it }
+            cells = cells - Role.DISTRICT_NAME
+        }
 
         // District
         val districtName = cells[Role.DISTRICT_NAME]

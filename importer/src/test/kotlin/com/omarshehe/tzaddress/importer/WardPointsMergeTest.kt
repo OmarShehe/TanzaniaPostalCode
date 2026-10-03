@@ -15,7 +15,7 @@ class WardPointsMergeTest {
     @Test
     fun carryOverCopiesPointsByPostcodeAndLeavesUnknownWardsEmpty() {
         val existing = dataset("© OSM", WardDto("11101", "A", emptyList(), -6.1, 39.1), WardDto("11102", "B", emptyList()))
-        val fresh = dataset("", WardDto("11101", "A renamed", emptyList()), WardDto("11102", "B", emptyList()), WardDto("11103", "C", emptyList()))
+        val fresh = dataset("", WardDto("11101", "a", emptyList()), WardDto("11102", "B", emptyList()), WardDto("11103", "C", emptyList()))
         val merged = CarryOverPoints.merge(fresh, existing)
         val wards = wardsOf(merged)
         assertEquals(-6.1, wards.getValue("11101").latitude)
@@ -23,6 +23,15 @@ class WardPointsMergeTest {
         assertNull(wards.getValue("11102").latitude)
         assertNull(wards.getValue("11103").latitude)
         assertEquals("© OSM", merged.info.attribution)
+    }
+
+    @Test
+    fun carryOverSkipsAPostcodeNowHeldByAnotherWard() {
+        val existing = dataset("© OSM", WardDto("37220", "Puni", emptyList(), -3.7, 33.4))
+        val fresh = dataset("", WardDto("37220", "Nyida", emptyList()))
+        val merged = CarryOverPoints.merge(fresh, existing)
+        assertNull(wardsOf(merged).getValue("37220").latitude)
+        assertEquals("", merged.info.attribution)
     }
 
     @Test
